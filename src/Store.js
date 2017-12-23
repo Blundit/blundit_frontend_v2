@@ -1,18 +1,10 @@
-import { Provider } from 'react-redux'
-import { createStore } from 'redux'
+import { combineReducers, createStore } from 'redux'
 
-const counter = ( state = 0, action) => {
-  switch (action.type) {
-    case 'INCREMENT':
-      return state + 1
-    case 'DESCREMENT': 
-      return state - 1
-    default:
-      return state;
-  }
-}
+import user from './reducers/user';
+import predictions from './reducers/predictions';
+import claims from './reducers/claims';
 
-let Store = createStore(counter)
-Store.dispatch({ type: 'INCREMENT'});
+let rootReducer = combineReducers({ user, predictions, claims })
+let Store = createStore(rootReducer);
 
 export default Store;
