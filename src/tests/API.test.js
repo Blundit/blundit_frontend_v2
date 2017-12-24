@@ -95,3 +95,4 @@ it('API: do method returns error if path is invalid', () => {
   let response = { errors: ["params_path_not_found_in_list"] };
   expect(API.do(params)).toEqual(response);
 })
+

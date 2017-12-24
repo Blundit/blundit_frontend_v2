@@ -362,6 +362,9 @@ class API {
   }
 
   static do (params) {
+    // TODO: Convert to promises
+    // https://developers.google.com/web/updates/2015/03/introduction-to-fetch
+    
     let validPath = this.validatePath(params);
     if (validPath != true) return validPath;
     
