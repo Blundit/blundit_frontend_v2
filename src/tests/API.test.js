@@ -96,3 +96,20 @@ it('API: do method returns error if path is invalid', () => {
   expect(API.do(params)).toEqual(response);
 })
 
+it('API: fetch will return something', () => {
+  let params = {
+    path: "login",
+    data: {
+      email: "brian@hoggworks.com",
+      password: "password"
+    }
+  }
+
+  let dummyData = {"data": {"avatar_content_type": "image/jpeg", "avatar_file_name": "IMG_3771.JPG", "avatar_file_size": 1943474, "avatar_updated_at": "2017-04-19T18:03:42.000Z", "claims_added": 0, "comments_count": 12, "email": "brian@hoggworks.com", "experts_added": 0, "first_name": "Brian", "id": 3, "last_name": "Hogg", "name": "Brian Hogg", "nickname": null, "notification_frequency": "as_they_happen", "predictions_added": 0, "provider": "email", "uid": "brian@hoggworks.com", "user_comments_count": 12, "votes_count": 4}}
+  let myMock = jest.fn();
+  
+  myMock.mockReturnValueOnce(dummyData);
+
+  expect.assertions(1);
+  expect(myMock()).toEqual(dummyData);
+})

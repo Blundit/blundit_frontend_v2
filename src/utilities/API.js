@@ -284,10 +284,12 @@ class API {
 
 
   static serverBase () {
-    this.s = "http://localhost:5000/";
-    if (window.location.href.indexOf("localhost", 0) === -1) {
-      this.s = "https://fast-earth-30912.herokuapp.com/";
-    }
+    // this.s = "http://localhost:5000/";
+    // if (window.location.href.indexOf("localhost", 0) === -1) {
+      // this.s = "https://fast-earth-30912.herokuapp.com/";
+    // }
+
+    this.s = "https://fast-earth-30912.herokuapp.com/";
 
     return this.s;
   }
@@ -364,46 +366,39 @@ class API {
   static do (params) {
     // TODO: Convert to promises
     // https://developers.google.com/web/updates/2015/03/introduction-to-fetch
-    
     let validPath = this.validatePath(params);
     if (validPath != true) return validPath;
-    
     let formData = new FormData();
     for (let prop in params.data) {
       formData.append(prop, params.data[prop]);
     }
 
-    let config = { 
-      method: this.method(params),
-      mode: 'no-cors',
-      cache: 'default',
-      body: formData
-    };
-
-    let xhr = new XMLHttpRequest();
-    xhr.open(this.method(params), this.path(params), true);
-
+    let headers = {};
     if (Cookies.getCookie("auth_token")) {
-      xhr.setRequestHeader("Authorization", "Token " + Cookies.getCookie("auth_token"));
+      headers = { "Authorization": "Token " + Cookies.getCookie("auth_token") };
     }
 
-    xhr.responseType = 'json';
-    xhr.onload = () => {
-      let response = xhr.response;
-      let header = null;
-      if (xhr.status.toString().indexOf("2", 0) == 0) {
-        params.success(response, xhr.getAllResponseHeaders());
-      } else {
-        params.error(response);
+    return fetch(this.path(params), {
+      method: this.method(params),
+      headers: headers,
+      responseType: "json",
+      body: formData,
+    })
+    .then(function(response) {
+      var contentType = response.headers.get("content-type");
+      let headers = {};
+
+      if (response.headers) {
+        // set headers
+        headers = response.headers.map;
       }
-    }
 
-    xhr.onerror = () => {
-      params.error(xhr.statusText)
-    }
-    xhr.send(formData);
+      if(contentType && contentType.includes("application/json")) {
+        return { headers: headers, data: response.json() };
+      }
+    })
+    .catch(function(error) { console.log(error); });
   }
- 
 }
 
 export default API;
