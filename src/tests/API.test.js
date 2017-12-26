@@ -113,3 +113,6 @@ it('API: fetch will return something', () => {
   expect.assertions(1);
   expect(myMock()).toEqual(dummyData);
 })
+
+it('API: Login will return headers')
+it('API: Register will return headers')
