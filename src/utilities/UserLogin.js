@@ -16,6 +16,7 @@ export const UserLogin = (username, password, success = null, error = null) => {
   return API.do(params).then(function(resolve, reject) {
     // set user 
     // TODO: add user with new info to state
+    
   })
 }
 

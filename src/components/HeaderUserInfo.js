@@ -1,5 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import { Link } from 'react-router-dom';
 
 const mapStateToPros = (state) => {
   return {
@@ -25,8 +26,8 @@ const HeaderUserInfo = (props) => {
   const { login, logout } = props;  
   return <div>
       {user && user.user}
-      {!user && <div onClick={login}>Login</div>}
-      {user && <div onClick={logout}>Logout</div>}
+      {!user && <Link to="/login">Login</Link>}
+      {user && <Link to="/logout">Logout</Link>}
     </div>
 }
 
