@@ -10,13 +10,13 @@ it('UserLogin: UserLogout exists', () => {
 
 it('UserLogin: UserLogin properties required', () => {
   let attempt = UserLogin()
-  let response = { errors: ["username_required", "password_required"] }
+  let response = { errors: ["email_required", "password_required"] }
   expect(attempt).toEqual(response)
 })
 
 it('UserLogin: UserLogin catches empty parameters', () => {
   let attempt = UserLogin(" ", " ");
-  let response = { errors: ["username_required", "password_required"] }
+  let response = { errors: ["email_required", "password_required"] }
   expect(attempt).toEqual(response)
 })
 
