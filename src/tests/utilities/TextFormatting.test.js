@@ -1,4 +1,4 @@
-import TextFormatting from './../utilities/TextFormatting';
+import TextFormatting from './../../utilities/TextFormatting';
 
 it('TextFormatting: sentenceCase transforms text', () => {
   let input = "how is the now"

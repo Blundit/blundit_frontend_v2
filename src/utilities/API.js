@@ -1,4 +1,6 @@
 import Cookies from './Cookies';
+import Sessions from './Sessions';
+
 /*
 API Class.
 Usage to call is like this:
@@ -12,10 +14,8 @@ params = {
     claim_id: 1
   data:
     id: "xxx"
-  success: @function
-  error: @function
 }
-API.do(params)
+API.do(params).then(function(result, error) { ... })
  */
 
 class API {
@@ -388,16 +388,31 @@ class API {
       var contentType = response.headers.get("content-type");
       let headers = {};
 
+      if (response.status != 200) {
+        return { error: true, status: response.status, errorText: response.statusText }
+      }
+
       if (response.headers) {
         // set headers
         headers = response.headers.map;
+        Sessions.setUser(headers);
+      } else {
+        Sessions.clearUser();
       }
 
-      if(contentType && contentType.includes("application/json")) {
+      if (contentType && contentType.includes("application/json")) {
         return { headers: headers, data: response.json() };
       }
     })
     .catch(function(error) { console.log(error); });
+  }
+
+  static setUser (headers) {
+
+  }
+
+  static clearUser () {
+    Cookies.deleteCookie("auth_token");
   }
 }
 

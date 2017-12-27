@@ -1,4 +1,4 @@
-import Cookies from './../utilities/Cookies';
+import Cookies from './../../utilities/Cookies';
 
 it('Cookies: test setCookie functionality', () => {
   let setCookie = Cookies.setCookie("test", "tester")

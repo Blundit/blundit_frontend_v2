@@ -1,4 +1,4 @@
-import API from '../utilities/API'
+import API from './../../utilities/API'
 
 it('API: exists', () => {
   expect(typeof(API)).toEqual("function")
@@ -114,5 +114,52 @@ it('API: fetch will return something', () => {
   expect(myMock()).toEqual(dummyData);
 })
 
-it('API: Login will return headers')
-it('API: Register will return headers')
+it('API: Login will return headers', () => {
+  let params = {
+    path: "login",
+    data: {
+      email: "brian@hoggworks.com",
+      password: "password"
+    }
+  }
+  let dummyData = {data: {}, headers: {"access-token": "1234"}}
+  let myMock = jest.fn();
+  
+  myMock.mockReturnValueOnce(dummyData);
+  const response = myMock()
+  expect(response).toHaveProperty('headers')
+  expect(response.headers).toHaveProperty('access-token')
+})
+
+it('API: Bad login will return error', () => {
+  let params = {
+    path: "login",
+    data: {
+      email: "brian@hoggwo.com",
+      password: "password"
+    }
+  }
+  let dummyData = {"error": true, "errorText": "Unprocessable Entity", "status": 422}
+  let myMock = jest.fn();
+  
+  myMock.mockReturnValueOnce(dummyData);
+  expect(myMock()).toHaveProperty('error', true)
+})
+
+it('API: Bad register will return error', () => {
+  let params = {
+    path: "register",
+    data: {
+      email: "brian+confirm234@hoggworks.com",
+      password: "passw",
+      password_cofirmation: "password"
+    }
+  }
+
+  let dummyData = {"error": true, "errorText": "Unprocessable Entity", "status": 422}
+  let myMock = jest.fn();
+  
+  myMock.mockReturnValueOnce(dummyData);
+  expect(myMock()).toHaveProperty('error', true)
+})
+

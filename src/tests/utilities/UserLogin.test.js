@@ -1,4 +1,4 @@
-import { UserLogin, UserLogout } from './../utilities/UserLogin';
+import { UserLogin, UserLogout } from './../../utilities/UserLogin';
 
 it('UserLogin: UserLogin exists', () => {
   expect(UserLogin).not.toBe(null);
