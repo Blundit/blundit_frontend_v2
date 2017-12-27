@@ -2,7 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 
-const mapStateToPros = (state) => {
+const mapStateToProps = (state) => {
   return {
     user: state.user
   }
@@ -25,10 +25,10 @@ const HeaderUserInfo = (props) => {
   const { user } = props;
   const { login, logout } = props;  
   return <div>
-      {user && user.user}
+      {user && user.name}
       {!user && <Link to="/login">Login</Link>}
       {user && <Link to="/logout">Logout</Link>}
     </div>
 }
 
-export default connect(mapStateToPros, mapDispatchToProps)(HeaderUserInfo);
+export default connect(mapStateToProps, mapDispatchToProps)(HeaderUserInfo);

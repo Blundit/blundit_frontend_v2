@@ -378,14 +378,11 @@ class API {
 
     return fetch(this.path(params), {
       method: this.method(params),
-      mode: "no-cors",
       headers: headers,
       responseType: "json",
       body: formData,
     })
     .then(function(response) {
-      console.log("API")
-      console.log(response)
       var contentType = response.headers.get("content-type");
       let headers = {};
 
@@ -402,7 +399,11 @@ class API {
       }
 
       if (contentType && contentType.includes("application/json")) {
-        return { headers: headers, data: response.json() };
+        return response.json().then(function(data) {
+          return data.data
+        })
+      } else {
+        return { error: true, errorText: "no_json_returned" }
       }
     })
     .catch(function(error) { console.log(error); });

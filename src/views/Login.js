@@ -1,9 +1,9 @@
 import React, { Component } from 'react'
 import Header from './../components/Header'
+import API from './../utilities/API'
 import { connect } from 'react-redux'
 import { Link } from 'react-router-dom'
 import { Form, Text, Radio, RadioGroup, Select, Checkbox } from 'react-form';
-import { UserLogin } from './../utilities/UserLogin'
 
 const mapStateToProps = (state) => {
   return {
@@ -11,12 +11,25 @@ const mapStateToProps = (state) => {
   }
 }
 
+
+const mapDispatchToProps = (dispatch, ownProps) => {
+  console.log(ownProps)
+  return {
+    login: (ownProps) => dispatch({ 
+      type: "USER_LOGIN",
+      value: ownProps
+    })
+  }
+}
+
+
 const errorValidator = (values) => { 
   return {
     email: !values.email || values.email.trim() === '' || values.email.length < 6 ? 'Email is a required field' : null,
     password: !values.password || values.password.trim() == '' ? 'Password required' : null
   };
 };
+
 
 class Login extends Component {
   
@@ -37,10 +50,10 @@ class Login extends Component {
       <Header/>
       <div>
         <div>{this.state.email}</div>
-        {(!user || !user.username) && 
+        {(!user || !user.id) && 
           this.loginForm()
         }
-        {user && user.username &&
+        {user && user.id &&
           <React.Fragment>
             <div>You're already logged in.</div>
             <Link to="/logout">Logout</Link>
@@ -50,12 +63,46 @@ class Login extends Component {
     </div>
   }
 
-  submitForm = async (value) => {
-    let login = await UserLogin(value.email, value.password)
-    if (login.error) {
-      this.setState({loginError: true})
+    
+
+    // TODO: PUT LOGOUT SOMEWHERE ELSE
+    //   logout = (token, success = null, error = null) => {
+    //     if (!token) {
+    //       return { errors: ["user_token_required"] }
+    //     }
+    
+    //     let params = { path: "logout" }
+    //     return API.do(params).then(function(result) {
+    //       Sessions.clearUser()
+    //     }, 
+    //     function(error) {
+    //       console.log(error)
+    //     });
+    //   }
+
+
+  submitForm = (value) => {
+    this.setState({ loginError: false })
+    let params = {
+      path: "login",
+      data: { email: value.email, password: value.password },
     }
+
+    API.do(params).then((result) => {
+      if (result.error == true) {
+        console.error("problem logging in");
+        this.setState({loginError: true})
+      } else {
+        this.props.login(result)
+      }
+  
+    }, 
+    (reject) => {
+      console.error("problem logging in");
+      this.setState({loginError: true})
+    })
   }
+
 
   loginForm() {
     return <React.Fragment>
@@ -88,4 +135,4 @@ class Login extends Component {
   }
 }
 
-export default connect(mapStateToProps, null)(Login);
+export default connect(mapStateToProps, mapDispatchToProps)(Login);
