@@ -3,7 +3,7 @@ import Header from './../components/Header'
 import API from './../utilities/API'
 import { connect } from 'react-redux'
 import { Link } from 'react-router-dom'
-import { Form, Text, Radio, RadioGroup, Select, Checkbox } from 'react-form';
+import { Form, Text } from 'react-form';
 
 const mapStateToProps = (state) => {
   return {
@@ -13,8 +13,9 @@ const mapStateToProps = (state) => {
 
 
 const mapDispatchToProps = (dispatch, ownProps) => {
+  // TODO: Do I need to call some other dispatch?
   return {
-    login: (ownProps) => dispatch({ 
+    register: (ownProps) => dispatch({ 
       type: "USER_LOGIN",
       value: ownProps
     })
@@ -25,17 +26,17 @@ const mapDispatchToProps = (dispatch, ownProps) => {
 const errorValidator = (values) => { 
   return {
     email: !values.email || values.email.trim() === '' || values.email.length < 6 ? 'Email is a required field' : null,
-    password: !values.password || values.password.trim() == '' ? 'Password required' : null
+    password: !values.password || values.password.trim() == '' ? 'Password required' : null,
+    password_confirmation: values.password != values.password_confirmation ? 'Password and Password Confirmation must match' : null
   };
 };
 
 
-class Login extends Component {
-  
+class Register extends Component {
   constructor(props) {
     super(props)
     this.state = {
-      loginError: false
+      registerError: false
     }
   }
   
@@ -44,17 +45,17 @@ class Login extends Component {
 
     return <div>
       <h1>
-        Login
+        Register
         </h1>
       <Header/>
       <div>
         <div>{this.state.email}</div>
         {(!user || !user.id) && 
-          this.loginForm()
+          this.registerForm()
         }
         {user && user.id &&
           <React.Fragment>
-            <div>You're already logged in.</div>
+            <div>You're already logged in, so you can't register.</div>
             <Link to="/logout">Logout</Link>
           </React.Fragment>
         }
@@ -62,34 +63,46 @@ class Login extends Component {
     </div>
   }
 
+    
+
+    // TODO: PUT LOGOUT SOMEWHERE ELSE
+    //   logout = (token, success = null, error = null) => {
+    //     if (!token) {
+    //       return { errors: ["user_token_required"] }
+    //     }
+    
+    //     let params = { path: "logout" }
+    //     return API.do(params).then(function(result) {
+    //       Sessions.clearUser()
+    //     }, 
+    //     function(error) {
+    //       console.log(error)
+    //     });
+    //   }
+
 
   submitForm = (value) => {
-    this.setState({ loginError: false })
+    this.setState({ registerError: false })
     let params = {
-      path: "login",
-      data: { email: value.email, password: value.password },
+      path: "register",
+      data: { email: value.email, password: value.password, password_confirmation: value.password_confirmation },
     }
 
     API.do(params).then((result) => {
-      console.log(result);
-      // TODO: Differentiate login errors
-      if (!result) {
-        this.setState({ loginError: true })
-      } else if (result.error == true) {
-        console.error("problem logging in");
-        this.setState({loginError: true})
+      if (result.error == true) {
+        this.setState({registerError: true})
       } else {
-        this.props.login(result)
+        this.props.register(result)
       }
     }, 
     (reject) => {
-      console.error("problem logging in");
-      this.setState({loginError: true})
+      console.error("problem registering");
+      this.setState({registerError: true})
     })
   }
 
 
-  loginForm() {
+  registerForm() {
     return <React.Fragment>
       <Form
         onSubmit={submittedValues => this.submitForm(submittedValues) }
@@ -109,8 +122,15 @@ class Login extends Component {
               {formApi.errors.password && <span className="error">{formApi.errors.password}</span>}
               <br/>
             </div>
-            <button type="submit">Submit</button>
-            {this.state.loginError &&
+            <div>
+              <label htmlFor="password">Password Confirmation</label>
+              <Text type="password" field="password_confirmation" id="password_confirmation" />
+              <br/>
+              {formApi.errors.password_confirmation && <span className="error">{formApi.errors.password_confirmation}</span>}
+              <br/>
+            </div>
+            <button type="submit">Register</button>
+            {this.state.registerError &&
               <div className="error">ERROR!</div>
             }
           </form>
@@ -120,4 +140,4 @@ class Login extends Component {
   }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(Login);
+export default connect(mapStateToProps, mapDispatchToProps)(Register);

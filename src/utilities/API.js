@@ -389,11 +389,13 @@ class API {
       if (response.status != 200) {
         return { error: true, status: response.status, errorText: response.statusText }
       }
-
       if (response.headers) {
         // set headers
         headers = response.headers.map;
-        Sessions.setUser(headers);
+        Sessions.setUser({
+          "access-token": response.headers.get('access-token'),
+          "uid" : response.headers.get('uid')
+        })
       } else {
         Sessions.clearUser();
       }

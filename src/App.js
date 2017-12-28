@@ -8,7 +8,8 @@ import {
 
 import Header from './components/Header';
 import Login from './views/Login';
-
+import Logout from './views/Logout';
+import Register from './views/Register';
 import store from './Store';
 
 import { Provider } from 'react-redux';
@@ -24,6 +25,8 @@ class App extends Component {
             <Switch>
               <Route exact path="/" component={Home} />
               <Route path="/login" component={Login} />
+              <Route path="/logout" component={Logout} />
+              <Route path="/register" component={Register} />
               <Route component={NotFound} />
             </Switch>
 
