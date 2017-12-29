@@ -261,8 +261,8 @@ class API {
   static validatePath(params) {
     let errors = [];
 
-    if (!params || typeof(params) != "object") errors.push("params_missing");
-    if (params && (!params.path || params.path.trim() == "")) errors.push("valid_param_path_required");
+    if (!params || typeof(params) !== "object") errors.push("params_missing");
+    if (params && (!params.path || params.path.trim() === "")) errors.push("valid_param_path_required");
     if (params && params.path && !this.paths(params.path)) errors.push("params_path_not_found_in_list")
 
     if (errors.length > 0) return { errors: errors }
@@ -272,10 +272,10 @@ class API {
 
   static server (params) {
     let validPath = this.validatePath(params);
-    if (validPath != true) return validPath;
+    if (validPath !== true) return validPath;
 
     this.s = this.serverBase();
-    if ((this.paths(params.path).non_api != null) && this.paths(params.path).non_api === true) {
+    if ((this.paths(params.path).non_api !== null) && this.paths(params.path).non_api === true) {
       return this.s;
     }
 
@@ -365,7 +365,7 @@ class API {
 
   static do (params) {
     let validPath = this.validatePath(params);
-    if (validPath != true) return validPath;
+    if (validPath !== true) return validPath;
     let formData = new FormData();
     for (let prop in params.data) {
       formData.append(prop, params.data[prop]);
@@ -384,18 +384,18 @@ class API {
     })
     .then(function(response) {
       var contentType = response.headers.get("content-type");
-      let headers = {};
 
-      if (response.status != 200) {
+      if (response.status !== 200) {
         return { error: true, status: response.status, errorText: response.statusText }
       }
       if (response.headers) {
         // set headers
-        headers = response.headers.map;
-        Sessions.setUser({
-          "access-token": response.headers.get('access-token'),
-          "uid" : response.headers.get('uid')
-        })
+        if (response.headers.get('access-token')) {
+          Sessions.setUser({
+            "access-token": response.headers.get('access-token'),
+            "uid" : response.headers.get('uid')
+          })
+        } 
       } else {
         Sessions.clearUser();
       }
@@ -408,7 +408,9 @@ class API {
         return { error: true, errorText: "no_json_returned" }
       }
     })
-    .catch(function(error) { console.log(error); });
+    .catch(function(error) {
+      return { error: true, errorText: error }
+    });
   }
 
   static setUser (headers) {

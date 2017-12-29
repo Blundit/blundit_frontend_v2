@@ -3,7 +3,7 @@ import Header from './../components/Header'
 import API from './../utilities/API'
 import { connect } from 'react-redux'
 import { Link } from 'react-router-dom'
-import { Form, Text, Radio, RadioGroup, Select, Checkbox } from 'react-form';
+import { Form, Text } from 'react-form';
 
 const mapStateToProps = (state) => {
   return {
@@ -25,7 +25,7 @@ const mapDispatchToProps = (dispatch, ownProps) => {
 const errorValidator = (values) => { 
   return {
     email: !values.email || values.email.trim() === '' || values.email.length < 6 ? 'Email is a required field' : null,
-    password: !values.password || values.password.trim() == '' ? 'Password required' : null
+    password: !values.password || values.password.trim() === '' ? 'Password required' : null
   };
 };
 
@@ -70,16 +70,17 @@ class Login extends Component {
       data: { email: value.email, password: value.password },
     }
 
+    const { login } = this.props;
+
     API.do(params).then((result) => {
-      console.log(result);
       // TODO: Differentiate login errors
       if (!result) {
         this.setState({ loginError: true })
-      } else if (result.error == true) {
-        console.error("problem logging in");
+      } else if (result.error === true) {
+        console.error("Problem logging in");
         this.setState({loginError: true})
       } else {
-        this.props.login(result)
+        login(result)
       }
     }, 
     (reject) => {
@@ -116,6 +117,7 @@ class Login extends Component {
           </form>
         )}
       </Form>
+      <div>Don't have an account? <Link to="/register">Click here to register.</Link></div>
     </React.Fragment>
   }
 }

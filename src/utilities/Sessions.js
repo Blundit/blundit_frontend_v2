@@ -17,6 +17,7 @@ class Sessions {
     Cookies.deleteCookie('Uid');
 
     // TODO: Wipe out user object here
+    
   }
 
 

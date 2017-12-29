@@ -10,22 +10,15 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    login: () => dispatch({ 
-      type: "USER_LOGIN",
-      value: { user: "tester", id: 1}
-    }),
-    logout: () => dispatch({
-      type: "USER_LOGOUT"
-    })
   }
 }
 
 
 const HeaderUserInfo = (props) => {
   const { user } = props;
-  const { login, logout } = props;  
   return <div>
       {user && user.name}
+      {user && user.email}
       {!user && <Link to="/login">Login</Link>}
       {user && <Link to="/logout">Logout</Link>}
     </div>

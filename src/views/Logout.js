@@ -23,11 +23,6 @@ const mapDispatchToProps = (dispatch, ownProps) => {
 
 
 class Logout extends Component {
-  constructor(props) {
-    super(props)
-  }
-
-
   componentDidMount() {
     this.logout();
   }
@@ -57,11 +52,14 @@ class Logout extends Component {
 
   logout = () => {
     let params = { path: "logout" }
+    const { logout } = this.props;
     return API.do(params).then(function(result) {
       Sessions.clearUser()
+      logout()
     }, 
     function(error) {
-      console.log(error)
+      Sessions.clearUser()
+      logout()
     });
   }
 }

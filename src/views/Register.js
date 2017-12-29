@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import Header from './../components/Header'
 import API from './../utilities/API'
+import Cookies from './../utilities/Cookies'
 import { connect } from 'react-redux'
 import { Link } from 'react-router-dom'
 import { Form, Text } from 'react-form';
@@ -26,8 +27,8 @@ const mapDispatchToProps = (dispatch, ownProps) => {
 const errorValidator = (values) => { 
   return {
     email: !values.email || values.email.trim() === '' || values.email.length < 6 ? 'Email is a required field' : null,
-    password: !values.password || values.password.trim() == '' ? 'Password required' : null,
-    password_confirmation: values.password != values.password_confirmation ? 'Password and Password Confirmation must match' : null
+    password: !values.password || values.password.trim() === '' ? 'Password required' : null,
+    password_confirmation: values.password !== values.password_confirmation ? 'Password and Password Confirmation must match' : null
   };
 };
 
@@ -36,7 +37,8 @@ class Register extends Component {
   constructor(props) {
     super(props)
     this.state = {
-      registerError: false
+      registerError: false,
+      registerSuccess: false
     }
   }
   
@@ -50,35 +52,23 @@ class Register extends Component {
       <Header/>
       <div>
         <div>{this.state.email}</div>
-        {(!user || !user.id) && 
+        {this.state.registerSuccess == false && Cookies.getCookie("auth_token") === null && 
           this.registerForm()
         }
-        {user && user.id &&
+
+        {this.state.registerSuccess == true &&
           <React.Fragment>
-            <div>You're already logged in, so you can't register.</div>
-            <Link to="/logout">Logout</Link>
+            <div>Thanks for registering! You'll get a confirmation email shortly, which will allow you to properly log-in.</div>
+          </React.Fragment>
+        }
+        {(user && user.id && Cookies.getCookie("auth_token") !== null) &&
+          <React.Fragment>
+            <div>You're registered, and logged in. You shouldn't be seeing this.</div>
           </React.Fragment>
         }
       </div>
     </div>
   }
-
-    
-
-    // TODO: PUT LOGOUT SOMEWHERE ELSE
-    //   logout = (token, success = null, error = null) => {
-    //     if (!token) {
-    //       return { errors: ["user_token_required"] }
-    //     }
-    
-    //     let params = { path: "logout" }
-    //     return API.do(params).then(function(result) {
-    //       Sessions.clearUser()
-    //     }, 
-    //     function(error) {
-    //       console.log(error)
-    //     });
-    //   }
 
 
   submitForm = (value) => {
@@ -88,16 +78,19 @@ class Register extends Component {
       data: { email: value.email, password: value.password, password_confirmation: value.password_confirmation },
     }
 
+    const { register } = this.props;
+
     API.do(params).then((result) => {
-      if (result.error == true) {
-        this.setState({registerError: true})
+      if (result.error === true) {
+        this.setState({ registerError: true })
       } else {
-        this.props.register(result)
+        // new_state = Object.assign(state, state_changes);
+        this.setState({ registerSuccess: true })
+        // register(result)
       }
     }, 
     (reject) => {
-      console.error("problem registering");
-      this.setState({registerError: true})
+      this.setState({ registerError: true })
     })
   }
 
@@ -136,6 +129,7 @@ class Register extends Component {
           </form>
         )}
       </Form>
+      <div>Already have an account? <Link to="/login">Click here to login.</Link></div>
     </React.Fragment>
   }
 }
