@@ -9,13 +9,19 @@ import Header from './components/Header';
 import Login from './views/Login';
 import Logout from './views/Logout';
 import Register from './views/Register';
+import Sessions from './utilities/Sessions';
+
 import store from './Store';
 
 import { Provider } from 'react-redux';
 
 import './App.css';
 
-class App extends Component {
+class Blundit extends Component {
+  componentDidMount() {
+    Sessions.verifyUserToken(store)
+  }
+
   render() {
     return (
       <Provider store={store}>
@@ -53,4 +59,4 @@ const NotFound = () => (
 
 
 
-export default App;
+export default Blundit;

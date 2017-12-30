@@ -1,85 +1,89 @@
 import Cookies from './Cookies';
+import API from './API';
 
 class Sessions {
   static setUser (data) {
     if (data && data["access-token"] != null && data["uid"] != null) {
-      Cookies.setCookie('Access-Token', data["access-token"]);
-      Cookies.setCookie('Uid', data["uid"]);
+      Cookies.setCookie('Access-Token', data["access-token"])
+      Cookies.setCookie('Uid', data["uid"])
+      Cookies.setCookie('Client', data["client"])
     } else {
       return { error: "user_data_missing" }
     }
-
-    // return true
   }
 
   static clearUser () {
     Cookies.deleteCookie('Access-Token');
     Cookies.deleteCookie('Uid');
-
-    // TODO: Wipe out user object here
-    
+    Cookies.deleteCookie('Client');
   }
 
 
-  // getURLParameter (name, url) {
-  //   let regex, results;
-  //   if (!url) {
-  //     url = window.location.href;
-  //   }
-  //   name = name.replace(/[\[\]]/g, "\\$&");
-  //   regex = new RegExp("[?&]" + name + "(=([^&#]*)|&|#|$)");
-  //   results = regex.exec(url);
-  //   if (!results) {
-  //     return null;
-  //   }
-  //   if (!results[2]) {
-  //     return '';
-  //   }
-  //   return decodeURIComponent(results[2].replace(/\+/g, " "));
-  // }
+  getURLParameter (name, url) {
+    let regex, results;
+    if (!url) {
+      url = window.location.href;
+    }
+    name = name.replace(/[[\]]/g, "\\$&");
+    regex = new RegExp("[?&]" + name + "(=([^&#]*)|&|#|$)");
+    results = regex.exec(url);
+    if (!results) {
+      return null;
+    }
+    if (!results[2]) {
+      return '';
+    }
+    return decodeURIComponent(results[2].replace(/\+/g, " "));
+  }
 
 
-  // verifyUserToken () {
-  //   // TODO: MAKE THIS A PROMISE
-  //   if (window.global.getCookie('Access-Token')) {
-  //     return this.verifyToken();
-  //   } else {
-  //     return this.setState({
-  //       verificationComplete: true
-  //     });
-  //   }
-  // }
+  static verifyUserToken (store) {
+    if (Cookies.getCookie('Access-Token')) {
+      let params = {
+        path: "verify_token",
+        path_variables: {
+          accessToken: Cookies.getCookie('Access-Token'),
+          uid: encodeURIComponent(Cookies.getCookie('Uid')),
+          client: Cookies.getCookie('Client')
+        }
+      }
 
+      API.do(params).then((result) => {
+        if (result) {
+          const newData = { token: Cookies.getCookie('Access-Token'), client: Cookies.getCookie('Client') };
+          const data = Object.assign(result, newData);
 
-  // verifyToken () {
-  //   let params = {
-  //     path: "verify_token",
-  //     path_variables: {
-  //       accessToken: window.global.getCookie('Access-Token'),
-  //       client: window.global.getCookie('Client'),
-  //       uid: encodeURIComponent(window.global.getCookie('Uid'))
-  //     },
-  //     success: this.verifyTokenSuccess,
-  //     error: this.verifyTokenError
-  //   };
-  //   API.c(params)
-  // }
+          store.dispatch({
+            type: "USER_EDIT",
+            value: data
+          })
 
+          this.getUserAvatar(store);
+        }
+      },
+      (reject) => {
+        Sessions.clearUser();
+        store.dispatch({
+          type: "USER_LOGOUT",
+        })
+      });
+    }
+  }
 
-  // verifyTokenSuccess (data) {
-  //   if (data.data) {
-  //     data.data.token = window.global.getCookie('Access-Token');
-  //     data.data.client = window.global.getCookie('Client');
-  //     data.data.uid = window.global.getCookie('Uid');
-  //     this.setUser(data.data);
-  //     return UserStore.getUserAvatar();
-  //   }
-  // }
-
-
-  // verifyTokenError (error) {
-  //   return this.setUser({});
-  // }
+  static getUserAvatar(store) {
+    let params = { path: "get_avatar" };
+    API.do(params).then((result) => {
+      console.log(result)
+      
+      store.dispatch({
+        type: "USER_EDIT",
+        value: { avatar_file_name: result.avatar }
+      })
+    },
+    (reject) => {
+      
+    })
+  }
 };
 
 export default Sessions;

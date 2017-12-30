@@ -52,11 +52,11 @@ class Register extends Component {
       <Header/>
       <div>
         <div>{this.state.email}</div>
-        {this.state.registerSuccess == false && Cookies.getCookie("auth_token") === null && 
+        {this.state.registerSuccess === false && Cookies.getCookie("auth_token") === null && 
           this.registerForm()
         }
 
-        {this.state.registerSuccess == true &&
+        {this.state.registerSuccess === true &&
           <React.Fragment>
             <div>Thanks for registering! You'll get a confirmation email shortly, which will allow you to properly log-in.</div>
           </React.Fragment>
@@ -77,8 +77,6 @@ class Register extends Component {
       path: "register",
       data: { email: value.email, password: value.password, password_confirmation: value.password_confirmation },
     }
-
-    const { register } = this.props;
 
     API.do(params).then((result) => {
       if (result.error === true) {

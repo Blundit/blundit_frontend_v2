@@ -371,6 +371,10 @@ class API {
       formData.append(prop, params.data[prop]);
     }
 
+    if (this.method(params) === "GET") {
+      formData = null
+    }
+
     let headers = {};
     if (Cookies.getCookie("auth_token")) {
       headers = { "Authorization": "Token " + Cookies.getCookie("auth_token") };
@@ -393,7 +397,8 @@ class API {
         if (response.headers.get('access-token')) {
           Sessions.setUser({
             "access-token": response.headers.get('access-token'),
-            "uid" : response.headers.get('uid')
+            "uid" : response.headers.get('uid'),
+            "client" : response.headers.get('client')
           })
         } 
       } else {

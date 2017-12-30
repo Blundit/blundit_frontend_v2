@@ -13,6 +13,9 @@ export default ( state = null, action) => {
       let new_state = state;
 
       if (typeof(new_state) === "object") {
+        if (!state) {
+          state = {}
+        }
         new_state = Object.assign(state, state_changes);
       } 
       
