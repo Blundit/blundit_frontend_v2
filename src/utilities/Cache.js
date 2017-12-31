@@ -8,6 +8,11 @@ const default_ttl = 120 // seconds
     }
   }
 
+  // usage in component, for displaying purposes
+  let claim_list = Cache.items(claims, {page: current_page, search: current_search, sort: current_sort }
+  claim_list.forEach((claim) => 
+    
+)
   TTL overrides default_ttl, which is the lifespan of the cache key, in seconds
 */
 
@@ -44,6 +49,18 @@ class Cache {
     ))
 
     if (item) return true
+  }
+
+
+  static items(state, params = { search: '', page: 1, sort: ''}, ttl = default_ttl) {
+    let item = state.find((element) => (
+      element.page === params.page 
+      && element.search === params.search
+      && element.sort === params.sort
+      && Math.abs(Date.now() - element.created) <= default_ttl
+    ))
+
+    if (item) return item.items
   }
 
 

@@ -7,9 +7,9 @@ it('Cache: it exists', () => {
 
 it('Cache: Gets object index with only default params (page 1, no search or sort or date)', () => {
   const state = [
-    { page: 1, search: '', sort: '', created: Date.now(), data: [] },
-    { page: 2, search: '', sort: '', created: Date.now(), data: [] },
-    { page: 3, search: '', sort: '', created: Date.now(), data: [] },
+    { page: 1, search: '', sort: '', created: Date.now(), items: [] },
+    { page: 2, search: '', sort: '', created: Date.now(), items: [] },
+    { page: 3, search: '', sort: '', created: Date.now(), items: [] },
   ]
 
   let present = Cache.present(state)
@@ -18,9 +18,9 @@ it('Cache: Gets object index with only default params (page 1, no search or sort
 
 it('Cache: Gets object index with params (page 2, no search or sort or date)', () => {
   const state = [
-    { page: 1, search: '', sort: '', created: Date.now(), data: [] },
-    { page: 2, search: '', sort: '', created: Date.now(), data: [] },
-    { page: 3, search: '', sort: '', created: Date.now(), data: [] },
+    { page: 1, search: '', sort: '', created: Date.now(), items: [] },
+    { page: 2, search: '', sort: '', created: Date.now(), items: [] },
+    { page: 3, search: '', sort: '', created: Date.now(), items: [] },
   ]
 
   let present = Cache.present(state, { page: 2, search: '', sort: '' })
@@ -29,9 +29,9 @@ it('Cache: Gets object index with params (page 2, no search or sort or date)', (
 
 it('Cache: Checks if key is valid, using default params (page 1, no search or sort, but with date)', () => {
   const state = [
-    { page: 1, search: '', sort: '', created: Date.now(), data: [] },
-    { page: 2, search: '', sort: '', created: Date.now(), data: [] },
-    { page: 3, search: '', sort: '', created: Date.now(), data: [] },
+    { page: 1, search: '', sort: '', created: Date.now(), items: [] },
+    { page: 2, search: '', sort: '', created: Date.now(), items: [] },
+    { page: 3, search: '', sort: '', created: Date.now(), items: [] },
   ]
 
   let valid = Cache.valid(state)
@@ -40,9 +40,9 @@ it('Cache: Checks if key is valid, using default params (page 1, no search or so
 
 it('Cache: Checks if key is valid, using params (page 2, no search or sort, but with date)', () => {
   const state = [
-    { page: 1, search: '', sort: '', created: 1514592000000, data: [] },
-    { page: 2, search: '', sort: '', created: Date.now(), data: [] },
-    { page: 3, search: '', sort: '', created: Date.now(), data: [] },
+    { page: 1, search: '', sort: '', created: 1514592000000, items: [] },
+    { page: 2, search: '', sort: '', created: Date.now(), items: [] },
+    { page: 3, search: '', sort: '', created: Date.now(), items: [] },
   ]
 
   let valid = Cache.valid(state, { page: 2, search: '', sort: '', created: Date.now() })
@@ -51,9 +51,9 @@ it('Cache: Checks if key is valid, using params (page 2, no search or sort, but 
 
 it('Cache: Finds invalid/expired keys, with default params (page 1, no search or sort, with Date.now()', () => {
   const state = [
-    { page: 1, search: '', sort: '', created: 1514592000000, data: [] },
-    { page: 2, search: '', sort: '', created: Date.now(), data: [] },
-    { page: 3, search: '', sort: '', created: Date.now(), data: [] },
+    { page: 1, search: '', sort: '', created: 1514592000000, items: [] },
+    { page: 2, search: '', sort: '', created: Date.now(), items: [] },
+    { page: 3, search: '', sort: '', created: Date.now(), items: [] },
   ]
 
   let invalid = Cache.invalid(state)
@@ -62,9 +62,9 @@ it('Cache: Finds invalid/expired keys, with default params (page 1, no search or
 
 it('Cache: Finds invalid/expired keys, with params (page 2, no search or sort, with date of 1 minute ago', () => {
   const state = [
-    { page: 1, search: '', sort: '', created: Date.now() - 121, data: [] },
-    { page: 2, search: '', sort: '', created: Date.now(), data: [] },
-    { page: 3, search: '', sort: '', created: Date.now(), data: [] },
+    { page: 1, search: '', sort: '', created: Date.now() - 121, items: [] },
+    { page: 2, search: '', sort: '', created: Date.now(), items: [] },
+    { page: 3, search: '', sort: '', created: Date.now(), items: [] },
   ]
 
   let invalid = Cache.invalid(state)
@@ -73,16 +73,53 @@ it('Cache: Finds invalid/expired keys, with params (page 2, no search or sort, w
 
 it('Cache: Prunes expired keys', () => {
   const state = [
-    { page: 1, search: '', sort: '', created: Date.now() - 121, data: [] },
-    { page: 2, search: '', sort: '', created: Date.now() - 321, data: [] },
-    { page: 3, search: '', sort: '', created: Date.now(), data: [] },
-    { page: 4, search: '', sort: '', created: Date.now() - 1231, data: [] },
-    { page: 5, search: '', sort: '', created: Date.now() - 20, data: [] },
-    { page: 6, search: '', sort: '', created: Date.now() - 1000, data: [] },
+    { page: 1, search: '', sort: '', created: Date.now() - 121, items: [] },
+    { page: 2, search: '', sort: '', created: Date.now() - 321, items: [] },
+    { page: 3, search: '', sort: '', created: Date.now(), items: [] },
+    { page: 4, search: '', sort: '', created: Date.now() - 1231, items: [] },
+    { page: 5, search: '', sort: '', created: Date.now() - 20, items: [] },
+    { page: 6, search: '', sort: '', created: Date.now() - 1000, items: [] },
   ]
 
   let pruned = Cache.prune(state)
   expect(pruned.length).toBe(2)
   expect(pruned[0].page).toBe(3)
   expect(pruned[1].page).toBe(5)
+})
+
+it('Cache: Return items array, with default params (page 1, no search or sort', () => {
+  const state = [
+    { page: 1, search: '', sort: '', created: Date.now() - 119, items: [0,1,2] },
+    { page: 2, search: '', sort: '', created: Date.now(), items: [] },
+    { page: 3, search: '', sort: '', created: Date.now(), items: [] },
+  ]
+
+  let items = Cache.items(state)
+  expect(items).not.toBe(null)
+  expect(items.length).toBe(3)
+  expect(items[1]).toBe(1)
+})
+
+it('Cache: Return items array, with custom params (page 2, no search or sort', () => {
+  const state = [
+    { page: 1, search: '', sort: '', created: Date.now() - 119, items: [0,1,2] },
+    { page: 2, search: '', sort: '', created: Date.now(), items: [2,"Watermelon"] },
+    { page: 3, search: '', sort: '', created: Date.now(), items: [] },
+  ]
+
+  let items = Cache.items(state, { page: 2, search: '', sort: '' })
+  expect(items).not.toBe(null)
+  expect(items.length).toBe(2)
+  expect(items[1]).toBe("Watermelon")
+})
+
+it('Cache: Shouldnt return items array for expired cache key', () => {
+  const state = [
+    { page: 1, search: '', sort: '', created: Date.now() - 121, items: [0,1,2] },
+    { page: 2, search: '', sort: '', created: Date.now(), items: [2,"Watermelon"] },
+    { page: 3, search: '', sort: '', created: Date.now(), items: [] },
+  ]
+
+  let items = Cache.items(state, { page: 1, search: '', sort: '' })
+  expect(items).toBe(undefined)
 })
