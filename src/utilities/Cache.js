@@ -1,4 +1,4 @@
-const default_ttl = 120 // seconds
+const default_ttl = 120000 // seconds
 
 /*
   Usage: 
@@ -9,7 +9,7 @@ const default_ttl = 120 // seconds
   }
 
   // usage in component, for displaying purposes
-  let claim_list = Cache.items(claims, {page: current_page, search: current_search, sort: current_sort }
+  let claim_list = Cache.items(claims, {page: current_page, search: current_search, sort: current_sort, created: Date.now() }
   claim_list.forEach((claim) => 
     
 )
@@ -58,15 +58,14 @@ class Cache {
 
   static items(state, params = { search: '', page: 1, sort: ''}, ttl = default_ttl) {
     if (!state) return undefined
-    let item = state.find((element) => (
-      element.page === params.page 
+    let item = state.find((element) => {
+      return element.page === params.page 
       && element.search === params.search
       && element.sort === params.sort
       && Math.abs(Date.now() - element.created) <= ttl
-    ))
+    })
 
     if (item) return item.items
-
   }
 
 

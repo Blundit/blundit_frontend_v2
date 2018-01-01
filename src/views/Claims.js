@@ -42,14 +42,14 @@ class Claims extends Component {
 
 
 
-    if (Cache.invalid(claims, { search: search, page: page, sort: sort })) {
+    if (Cache.invalid(claims, { search: search, page: page, sort: sort, created: Date.now() })) {
       const params = {
         path: "claims",
         data: {
           page: page
         }
       }
-      console.log("no cache: loading from server")
+
       API.do(params).then((result) => {
         this.setState({
           number_of_pages: result.number_of_pages,
@@ -58,22 +58,16 @@ class Claims extends Component {
         set_claim_list({ search: search, page: page, sort: sort, items: result.claims, created: Date.now() });
       },
       (reject) => {
-        console.log(reject);
+        console.error(reject);
       });
-    } else {
-      console.log("cache: not loading");
     }
-
   }
 
   render() {
     const { claims, user } = this.props;
     const { search, page, sort } = this.state; 
     const items = Cache.items(claims, { search: search, page: page, sort: sort})
-    console.log(claims);
-    console.log("items|")
-    console.log(items);
-    console.log("|items")
+
     return <div>
       <h1>
         Claims
