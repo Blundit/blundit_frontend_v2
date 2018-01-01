@@ -407,7 +407,11 @@ class API {
 
       if (contentType && contentType.includes("application/json")) {
         return response.json().then(function(data) {
-          return data.data
+          if (data.data) {
+            return data.data
+          } else {
+            return data;
+          }
         })
       } else {
         return { error: true, errorText: "no_json_returned" }

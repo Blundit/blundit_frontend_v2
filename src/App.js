@@ -5,15 +5,16 @@ import {
   Switch
 } from 'react-router-dom'
 
+import Sessions from './utilities/Sessions';
+import store from './Store';
+import { Provider } from 'react-redux';
+
 import Header from './components/Header';
+
 import Login from './views/Login';
 import Logout from './views/Logout';
 import Register from './views/Register';
-import Sessions from './utilities/Sessions';
-
-import store from './Store';
-
-import { Provider } from 'react-redux';
+import Claims from './views/Claims';
 
 import './App.css';
 
@@ -32,6 +33,7 @@ class Blundit extends Component {
               <Route path="/login" component={Login} />
               <Route path="/logout" component={Logout} />
               <Route path="/register" component={Register} />
+              <Route path="/claims" component={Claims} />
               <Route component={NotFound} />
             </Switch>
 

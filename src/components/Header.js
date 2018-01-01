@@ -9,6 +9,7 @@ class Header extends Component {
     return <header className="App-header">
       <h1 className="App-title">Header</h1>
       <Link to="/">Home</Link>
+      <Link to="/claims">Claims</Link>
       <HeaderUserInfo></HeaderUserInfo>
     </header>
 

@@ -29,11 +29,13 @@ class Cache {
 
 
   static valid(state = [], new_item = { search: '', page: 1, created: Date.now(), sort: '' }, ttl = default_ttl) {
+    if (!state) return false
+
     let item = state.find((element) => (
       element.page === new_item.page 
       && element.search === new_item.search
       && element.sort === new_item.sort
-      && Math.abs(new_item.created - element.created) <= default_ttl
+      && Math.abs(new_item.created - element.created) <= ttl
     ))
 
     if (item) return true
@@ -41,11 +43,13 @@ class Cache {
 
 
   static invalid(state = [], new_item = { search: '', page: 1, created: Date.now(), sort: '' }, ttl = default_ttl) {
+    if (!state) return true
+
     let item = state.find((element) => (
       element.page === new_item.page 
       && element.search === new_item.search
       && element.sort === new_item.sort
-      && Math.abs(new_item.created - element.created) > default_ttl
+      && Math.abs(new_item.created - element.created) > ttl
     ))
 
     if (item) return true
@@ -53,20 +57,22 @@ class Cache {
 
 
   static items(state, params = { search: '', page: 1, sort: ''}, ttl = default_ttl) {
+    if (!state) return undefined
     let item = state.find((element) => (
       element.page === params.page 
       && element.search === params.search
       && element.sort === params.sort
-      && Math.abs(Date.now() - element.created) <= default_ttl
+      && Math.abs(Date.now() - element.created) <= ttl
     ))
 
     if (item) return item.items
+
   }
 
 
   static prune(state, ttl = default_ttl) {
     return state.filter((element) => (
-      Math.abs(Date.now() - element.created) <= default_ttl
+      Math.abs(Date.now() - element.created) <= ttl
     ))
   }
 }
