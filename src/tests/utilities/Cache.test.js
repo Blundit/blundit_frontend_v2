@@ -73,12 +73,12 @@ it('Cache: Finds invalid/expired keys, with params (page 2, no search or sort, w
 
 it('Cache: Prunes expired keys', () => {
   const state = [
-    { page: 1, search: '', sort: '', created: Date.now() - 121, items: [] },
-    { page: 2, search: '', sort: '', created: Date.now() - 321, items: [] },
+    { page: 1, search: '', sort: '', created: Date.now() - 121000, items: [] },
+    { page: 2, search: '', sort: '', created: Date.now() - 321000, items: [] },
     { page: 3, search: '', sort: '', created: Date.now(), items: [] },
-    { page: 4, search: '', sort: '', created: Date.now() - 1231, items: [] },
-    { page: 5, search: '', sort: '', created: Date.now() - 20, items: [] },
-    { page: 6, search: '', sort: '', created: Date.now() - 1000, items: [] },
+    { page: 4, search: '', sort: '', created: Date.now() - 1231000, items: [] },
+    { page: 5, search: '', sort: '', created: Date.now() - 20000, items: [] },
+    { page: 6, search: '', sort: '', created: Date.now() - 1000000, items: [] },
   ]
 
   let pruned = Cache.prune(state)
@@ -115,7 +115,7 @@ it('Cache: Return items array, with custom params (page 2, no search or sort', (
 
 it('Cache: Shouldnt return items array for expired cache key', () => {
   const state = [
-    { page: 1, search: '', sort: '', created: Date.now() - 121, items: [0,1,2] },
+    { page: 1, search: '', sort: '', created: Date.now() - 121000, items: [0,1,2] },
     { page: 2, search: '', sort: '', created: Date.now(), items: [2,"Watermelon"] },
     { page: 3, search: '', sort: '', created: Date.now(), items: [] },
   ]
