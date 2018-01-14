@@ -1,0 +1,15 @@
+@import "shared/variables";
+@import "shared/mixins";
+@import "shared/defaults";
+@import "shared/functions";
+@import "shared/cards";
+@import "shared/grids";
+@import "shared/fonts";
+
+@import "components/claims";
+
+body {
+  margin: 0;
+  padding: 0;
+  font-family: sans-serif;
+}

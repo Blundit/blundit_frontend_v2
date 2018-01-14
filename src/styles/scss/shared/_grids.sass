@@ -1,0 +1,19 @@
+%list-grid
+  display: grid
+  grid-auto-rows: 1fr
+
+  @media (min-width: $desktop-breakpoint)
+    grid-template-columns: 328px 328px 328px
+    grid-gap: 10px 20px
+
+  @media (min-width: $mobile-breakpoint) and (max-width: $tablet-breakpoint - 1)
+    grid-template-columns: 100%
+    grid-gap: 10px
+
+  @media (min-width: $tablet-breakpoint) and (max-width: $desktop-breakpoint - 1)
+    grid-template-columns: 300px 300px
+    grid-gap: 10px
+
+  @media (max-width: $mobile-breakpoint)
+    grid-template-columns: 100%
+    grid-gap: 10px

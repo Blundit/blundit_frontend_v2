@@ -1,0 +1,109 @@
+.claims
+  @extend %list-grid
+
+.claim-card
+  @extend %card-base
+  width: 300px
+
+  &__status
+    width: 100%
+    font-size: 20px
+    font-family: $body-font
+    font-weight: bold
+    color: $white-color
+    text-align: center
+    text-transform: uppercase
+    padding: 2px 0px
+
+    &--unknown
+      @extend .claim-card__status
+      background-color: $status-unknown
+
+    &--in-progress
+      @extend .claim-card__status
+      background-color: $status-in-progress
+    
+    &--true
+      @extend .claim-card__status
+      background-color: $status-true
+
+    &--false
+      @extend .claim-card__status
+      background-color: $status-unknown
+      
+
+  &__title
+    width: 100%
+    box-sizing: border-box
+    padding: 8px
+    
+    &-text
+      font-size: 20px
+      font-family: $body-font
+      font-weight: bold
+      color: $black-color
+      text-transform: uppercase
+
+  &__description
+    border-top: 1px solid $card-separator
+    border-bottom: 1px solid $card-separator
+    padding: 8px
+    display: grid
+    grid-template-columns: 1fr 60px
+
+    &-text
+      font-size: 12px
+      font-weight: normal
+      color: $black-color
+
+    &-category
+      width: 40px
+      font-size: 30px
+      color: $card-category-color
+      align-self: center
+      text-align: center
+      justify-self: center
+
+  &__supporting
+    display: grid
+    border-top: 1px solid $card-separator
+    border-bottom: 1px solid $card-separator
+    padding: 8px
+    grid-template-columns: 1fr 1fr
+    font-family: $body-font
+    font-size: 12px
+
+    &__experts
+      display: inline-block
+
+    &__evidence
+      display: inline-block
+      text-align: right
+
+
+
+    &__experts-agree, &__evidence-for
+      margin-right: 5px
+      float: left
+      .icon
+        color: $success-color
+        margin-right: 4px
+
+    &__experts-disagree, &__evidence-against
+      float: left
+      .icon
+        color: $error-color
+        margin-right: 4px
+
+    
+    &__evidence-for, &__evidence-against
+      float: right
+
+
+
+
+
+  &__bottom
+    display: grid
+    padding: 8px
+    grid-template-columns: 1fr 1fr

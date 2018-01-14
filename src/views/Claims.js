@@ -5,6 +5,8 @@ import API from './../utilities/API'
 import { connect } from 'react-redux'
 import { Link } from 'react-router-dom'
 
+import ClaimCard from './../components/ClaimCard'
+
 const mapStateToProps = (state) => {
   return {
     claims: state.claims,
@@ -73,11 +75,11 @@ class Claims extends Component {
         Claims
         </h1>
       <Header/>
-      <div>
+      <div className="claims">
         {items == undefined && <p>No claims</p>}
         {items &&
           items.map((item, index) => (
-            <p key={"claim_"+index}>{item.title}</p>
+            <ClaimCard key={"claim_"+index} {...item} />
           )
         )}
       </div>

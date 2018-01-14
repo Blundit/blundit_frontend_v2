@@ -16,7 +16,6 @@ import Logout from './views/Logout';
 import Register from './views/Register';
 import Claims from './views/Claims';
 
-import './App.css';
 
 class Blundit extends Component {
   componentDidMount() {

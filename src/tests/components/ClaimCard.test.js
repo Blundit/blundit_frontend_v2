@@ -28,7 +28,7 @@ it('ClaimCard: status displays if provided', () => {
 })
 
 it('ClaimCard: description displays properly', () => {
-  const component = shallow(<ClaimCard description="This is the claim description" category="science" />)
+  const component = shallow(<ClaimCard description="This is the claim description" categories={[{id: "testing", name:"science"}]} />)
   const description = component.find('.claim-card__description')
   const descriptionText = component.find('.claim-card__description-text')
   const descriptionCategory = component.find('.claim-card__description-category')
@@ -39,7 +39,7 @@ it('ClaimCard: description displays properly', () => {
   expect(descriptionText.text()).toEqual("This is the claim description")
 
   expect(descriptionCategory.length).toBe(1)
-  expect(descriptionCategory.find('img').at(0).props().src).toBe("/categories/science.png" )
+  expect(descriptionCategory.find('.fa-home').length).toBe(1)
 })
 
 it('ClaimCard: expert info shows', () => {
@@ -122,8 +122,8 @@ it('ClaimCard: votes info fallback to 0 if not provided', () => {
   expect(votes_no.text()).toBe("N/A")
 })
 
-it('ClaimCard: votes info shows', () => {
-  const component = shallow(<ClaimCard number_of_bookmarks={4} number_of_comments={9} />)
+it('ClaimCard: meta info shows', () => {
+  const component = shallow(<ClaimCard bookmarks_count={4} comments_count={9} />)
   const bookmarks = component.find('.claim-card__bottom__meta-bookmarks')
   const comments = component.find('.claim-card__bottom__meta-comments')
 
