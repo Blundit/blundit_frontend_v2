@@ -3,7 +3,6 @@ import Header from './../components/Header'
 import Cache from './../utilities/Cache'
 import API from './../utilities/API'
 import { connect } from 'react-redux'
-import { Link } from 'react-router-dom'
 
 import ClaimCard from './../components/ClaimCard'
 
@@ -66,7 +65,7 @@ class Claims extends Component {
   }
 
   render() {
-    const { claims, user } = this.props;
+    const { claims } = this.props;
     const { search, page, sort } = this.state; 
     const items = Cache.items(claims, { search: search, page: page, sort: sort})
 
@@ -76,10 +75,10 @@ class Claims extends Component {
         </h1>
       <Header/>
       <div className="claims">
-        {items == undefined && <p>No claims</p>}
+        {items === undefined && <p>No claims</p>}
         {items &&
           items.map((item, index) => (
-            <ClaimCard key={"claim_"+index} {...item} />
+            <ClaimCard key={"claim_"+index} {...item} delay={2400} />
           )
         )}
       </div>

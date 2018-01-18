@@ -1,0 +1,117 @@
+@import url(https://fonts.googleapis.com/css?family=Open+Sans:400,800,700);
+@import url(https://fonts.googleapis.com/css?family=Source+Sans+Pro:900);
+@import url("https://fonts.googleapis.com/css?family=Roboto:400,500,700,900");
+.hidden-link {
+  text-decoration: none;
+  color: #666666; }
+
+.claim-card {
+  box-shadow: 0px 3px 6px rgba(0, 0, 0, 0.1);
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  height: 100%; }
+
+.claims {
+  display: grid;
+  grid-auto-rows: 1fr; }
+  @media (min-width: 1024px) {
+    .claims {
+      grid-template-columns: 328px 328px 328px;
+      grid-gap: 10px 20px; } }
+  @media (min-width: 480px) and (max-width: 767px) {
+    .claims {
+      grid-template-columns: 100%;
+      grid-gap: 10px; } }
+  @media (min-width: 768px) and (max-width: 1023px) {
+    .claims {
+      grid-template-columns: 300px 300px;
+      grid-gap: 10px; } }
+  @media (max-width: 480px) {
+    .claims {
+      grid-template-columns: 100%;
+      grid-gap: 10px; } }
+
+.claim-card {
+  width: 300px; }
+  .claim-card__status, .claim-card__status--unknown, .claim-card__status--in-progress, .claim-card__status--true, .claim-card__status--false {
+    width: 100%;
+    font-size: 20px;
+    font-family: "Open Sans", sans-serif;
+    font-weight: bold;
+    color: #ffffff;
+    text-align: center;
+    text-transform: uppercase;
+    padding: 2px 0px; }
+    .claim-card__status--unknown {
+      background-color: #7B7B7B; }
+    .claim-card__status--in-progress {
+      background-color: #486982; }
+    .claim-card__status--true {
+      background-color: #43C021; }
+    .claim-card__status--false {
+      background-color: #7B7B7B; }
+  .claim-card__title {
+    width: 100%;
+    box-sizing: border-box;
+    padding: 8px; }
+    .claim-card__title-text {
+      font-size: 20px;
+      font-family: "Open Sans", sans-serif;
+      font-weight: bold;
+      color: #333333;
+      text-transform: uppercase; }
+  .claim-card__description {
+    border-top: 1px solid #EDEEEF;
+    border-bottom: 1px solid #EDEEEF;
+    padding: 8px;
+    display: grid;
+    grid-template-columns: 1fr 60px; }
+    .claim-card__description-text {
+      font-size: 12px;
+      font-weight: normal;
+      color: #333333; }
+    .claim-card__description-category {
+      width: 40px;
+      font-size: 30px;
+      color: #95989A;
+      align-self: center;
+      text-align: center;
+      justify-self: center; }
+  .claim-card__supporting {
+    display: grid;
+    border-top: 1px solid #EDEEEF;
+    border-bottom: 1px solid #EDEEEF;
+    padding: 8px;
+    grid-template-columns: 1fr 1fr;
+    font-family: "Open Sans", sans-serif;
+    font-size: 12px; }
+    .claim-card__supporting__experts {
+      display: inline-block; }
+    .claim-card__supporting__evidence {
+      display: inline-block;
+      text-align: right; }
+    .claim-card__supporting__experts-agree, .claim-card__supporting__evidence-for {
+      margin-right: 10px;
+      float: left; }
+      .claim-card__supporting__experts-agree .icon, .claim-card__supporting__evidence-for .icon {
+        color: #43C021;
+        margin-right: 4px;
+        font-size: 14px; }
+    .claim-card__supporting__experts-disagree, .claim-card__supporting__evidence-against {
+      float: left; }
+      .claim-card__supporting__experts-disagree .icon, .claim-card__supporting__evidence-against .icon {
+        color: #D51818;
+        margin-right: 4px;
+        font-size: 14px; }
+    .claim-card__supporting__evidence-for, .claim-card__supporting__evidence-against {
+      float: right; }
+  .claim-card__bottom {
+    display: grid;
+    padding: 8px;
+    grid-template-columns: 1fr 1fr; }
+
+body {
+  margin: 0;
+  padding: 0;
+  font-family: sans-serif; }
+
+/*# sourceMappingURL=index.css.map */
