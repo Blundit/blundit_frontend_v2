@@ -37,7 +37,7 @@ class Claims extends Component {
   }
 
   componentDidMount () {
-    // claim cache logic here
+    // TODO: Have delay sent from server as a global variable, or send it calculated in the json.
     const { claims, set_claim_list } = this.props;
     const { search, page, sort } = this.state;
 
@@ -78,7 +78,7 @@ class Claims extends Component {
         {items === undefined && <p>No claims</p>}
         {items &&
           items.map((item, index) => (
-            <ClaimCard key={"claim_"+index} {...item} delay={2400} />
+            <ClaimCard key={"claim_"+index} {...item} delay={24000} />
           )
         )}
       </div>
