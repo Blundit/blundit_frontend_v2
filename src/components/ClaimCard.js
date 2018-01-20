@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import { Link } from 'react-router-dom'
 
 import Icons from './../utilities/Icons'
+import TimeFormatting from './../utilities/TimeFormatting'
 
 
 class ClaimCard extends Component {
@@ -35,29 +36,19 @@ class ClaimCard extends Component {
   }
 
 
-  voteStatus = (created_at = this.props.created_at, delay = this.props.delay, status = this.props.status) => {
-    if (!created_at || !delay) return null;
+  voteStatus = (voteable_at = this.props.voteable_at, status = this.props.status) => {
+    if (!voteable_at) return null
+    const voteable = new Date(voteable_at)
+    const now = new Date()
 
-    const created = new Date(created_at);
-    const current = new Date()
-
-    if (status != 0) return "closed";
-
-    // TODO: Probably leave this as a milliseconds comparison?
-    const diff = (current-created)/1000/60/60/24;
-
-    if (diff > delay) return "open";
-    return "pending";
+    if (status !== 0) return "closed"
+    if (voteable < now) return "open"
+    if (voteable >= now) return "pending"
   }
 
 
-  timeToVote = (created_at = this.props.created_at, delay = this.props.delay) => {
-    const created = new Date(created_at);
-    const current = new Date()
-
-    // TODO: Determine what the vote time will be,
-    // and do a nice days/hours/minutes/seconds thing
-    return "2 days"
+  timeToVote = (voteable_at = this.props.voteable_at) => {
+    return TimeFormatting.prettyTimeRemaining(voteable_at)
   }
 
 
@@ -114,7 +105,7 @@ class ClaimCard extends Component {
         </div>
         <div className="claim-card__bottom">
           <div className="claim-card__bottom__votes">
-            {this.voteStatus(this.props.created_at, this.props.delay, this.props.status) === "open" &&
+            {this.voteStatus(this.props.voteable_at, this.props.status) === "open" &&
               <React.Fragment>
                 <div className="claim-card__bottom__vote-now">
                   Vote Now: 
@@ -124,12 +115,12 @@ class ClaimCard extends Component {
                 </div>
               </React.Fragment>
             }
-            {this.voteStatus(this.props.created_at, this.props.delay, this.props.status) === "pending" &&
+            {this.voteStatus(this.props.voteable_at, this.props.status) === "pending" &&
               <React.Fragment>
-                <div className="claim-card__bottom__vote-in">Vote In {this.timeToVote(this.props.created_at, this.props.delay)}</div>
+                <div className="claim-card__bottom__vote-in">Vote In {this.timeToVote(this.props.voteable_at)}</div>
               </React.Fragment>
             }
-            {this.voteStatus(this.props.created_at, this.props.delay, this.props.status) === "closed" &&
+            {this.voteStatus(this.props.voteable_at, this.props.status) === "closed" &&
               <React.Fragment>
               <div className="claim-card__bottom__votes-yes">
                 <span className="icon fas fa-check" />

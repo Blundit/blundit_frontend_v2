@@ -91,7 +91,7 @@ it('ClaimCard: evidence info fallback to 0 if not provided', () => {
 })
 
 it('ClaimCard: votes info shows', () => {
-  const component = shallow(<ClaimCard votes_yes={3} votes_unsure={9} votes_no={123} />)
+  const component = shallow(<ClaimCard status={1} voteable_at={new Date()} votes_yes={3} votes_unsure={9} votes_no={123} />)
   const votes_yes = component.find('.claim-card__bottom__votes-yes')
   const votes_unsure = component.find('.claim-card__bottom__votes-unsure')
   const votes_no = component.find('.claim-card__bottom__votes-no')
@@ -107,7 +107,7 @@ it('ClaimCard: votes info shows', () => {
 })
 
 it('ClaimCard: votes info fallback to 0 if not provided', () => {
-  const component = shallow(<ClaimCard />)
+  const component = shallow(<ClaimCard status={1} voteable_at={new Date()} />)
   const votes_yes = component.find('.claim-card__bottom__votes-yes')
   const votes_unsure = component.find('.claim-card__bottom__votes-unsure')
   const votes_no = component.find('.claim-card__bottom__votes-no')
@@ -144,4 +144,23 @@ it('ClaimCard: meta info fallback to 0 if not provided', () => {
 
   expect(comments.length).toBe(1)
   expect(comments.text()).toBe("N/A")
+})
+
+it('ClaimCard: voting bottom shows upcoming vote info', () => {
+  const component = shallow(<ClaimCard voteable_at={new Date("2018-02-05")} status={0} />)
+  const vote_in = component.find(".claim-card__bottom__vote-in")
+  expect(vote_in.length).toBe(1)
+
+})
+
+it('ClaimCard: voting bottom shows vote status if closed', () => {
+  const component = shallow(<ClaimCard voteable_at={new Date("2017-01-01")} status={1} />)
+  const vote_yes = component.find(".claim-card__bottom__votes-yes")
+  expect(vote_yes.length).toBe(1)
+})
+
+it('ClaimCard: voting bottom shows vote link if voting is active', () => {
+  const component = shallow(<ClaimCard voteable_at={new Date("2018-01-05")} status={0} />)
+  const vote_now = component.find(".claim-card__bottom__vote-now")
+  expect(vote_now.length).toBe(1)
 })
