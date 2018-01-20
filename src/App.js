@@ -15,6 +15,7 @@ import Login from './views/Login';
 import Logout from './views/Logout';
 import Register from './views/Register';
 import Claims from './views/Claims';
+import Predictions from './views/Predictions';
 
 
 class Blundit extends Component {
@@ -33,6 +34,7 @@ class Blundit extends Component {
               <Route path="/logout" component={Logout} />
               <Route path="/register" component={Register} />
               <Route path="/claims" component={Claims} />
+              <Route path="/predictions" component={Predictions} />
               <Route component={NotFound} />
             </Switch>
 
@@ -52,7 +54,7 @@ const Home = () => (
 
 const NotFound = () => (
   <div>
-    <h1>404'ed</h1>
+    <h1>404'ed!</h1>
     <Header/>
   </div>
 )

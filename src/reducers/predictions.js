@@ -1,11 +1,18 @@
+import Cache from './../utilities/Cache'
+
 export default ( state = 0, action) => {
   switch (action.type) {
-    case 'UPDATE_PREDICTION':
-      return state + 1
-    case 'ADD_PREDICTION': 
-      return state - 1
-    case 'SET_PREDICTIONS':
-      return state;
+    case 'SET_PREDICTION_LIST':
+      let new_state = state;
+      if (!state) new_state = [];
+      const itemPresent = Cache.present(new_state, action.value)
+      if (itemPresent) new_state.splice(itemPresent, 1)
+
+      const new_state_item = Object.assign(action.value, { created: Date.now() })
+      new_state.push(new_state_item)
+      
+      let ss = Cache.prune(new_state)
+      return ss
     default:
       return state;
   }

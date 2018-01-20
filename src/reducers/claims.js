@@ -2,10 +2,6 @@ import Cache from './../utilities/Cache'
 
 export default ( state = 0, action) => {
   switch (action.type) {
-    case 'UPDATE_CLAIM':
-      return state + 1
-    case 'ADD_CLAIM': 
-      return state - 1
     case 'SET_CLAIM_LIST':
       let new_state = state;
       if (!state) new_state = [];
