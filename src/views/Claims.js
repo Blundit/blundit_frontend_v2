@@ -78,7 +78,7 @@ class Claims extends Component {
         {items === undefined && <p>No claims</p>}
         {items &&
           items.map((item, index) => (
-            <ClaimCard key={"claim_"+index} {...item} voteable_at={new Date("2018-02-01")} />
+            <ClaimCard key={"claim_"+index} {...item} voteable_at={new Date("2018-02-01")} status={"in-progress"} />
           )
         )}
       </div>

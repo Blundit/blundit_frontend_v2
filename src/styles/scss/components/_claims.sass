@@ -38,9 +38,12 @@
     padding: 8px
     
     &-text
+      height: 75px
       font-size: 20px
       font-family: $body-font
       font-weight: bold
+      line-height: 1.2em
+      overflow: hidden
       color: $black-color
       text-transform: uppercase
 
@@ -50,6 +53,8 @@
     padding: 8px
     display: grid
     grid-template-columns: 1fr 60px
+    overflow: hidden 
+    height: 40px
 
     &-text
       font-size: 12px
@@ -101,9 +106,53 @@
       float: right
       
 
-
-
   &__bottom
     display: grid
     padding: 8px
     grid-template-columns: 1fr 1fr
+
+    &__votes
+      display: inline-block
+      text-align: left
+
+      &-yes, &-no, &-unsure
+        font-size: 12px
+        float: left
+        margin-right: 4px
+        .icon
+          margin-right: 4px
+          font-size: $icon-size
+
+    &__vote
+      &-in, &-now
+        font-size: 12px
+        font-weight: bold
+        font-family: $body-font
+        text-transform: uppercase
+
+      &-now
+        .icon
+          margin-left: 4px
+          font-size: $icon-size
+
+    &__meta
+      display: inline-block
+      text-align: right
+
+      &-bookmarks
+        margin-right: 3px
+        float: right
+        font-size: 12px
+        .icon
+          margin-right: 4px
+          font-size: $icon-size
+
+      &-comments
+        float: right
+        font-size: 12px
+        margin-left: 4px
+        
+        .icon
+          margin-right: 4px
+          font-size: $icon-size
+

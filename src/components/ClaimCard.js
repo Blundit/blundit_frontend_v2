@@ -109,9 +109,9 @@ class ClaimCard extends Component {
               <React.Fragment>
                 <div className="claim-card__bottom__vote-now">
                   Vote Now: 
-                  <span className="fas fa-check"></span>
-                  <span className="fas fa-question"></span>
-                  <span className="fas fa-times"></span>
+                  <span className="fas fa-check icon"></span>
+                  <span className="fas fa-question icon"></span>
+                  <span className="fas fa-times icon"></span>
                 </div>
               </React.Fragment>
             }
@@ -138,8 +138,14 @@ class ClaimCard extends Component {
             }
           </div>
           <div className="claim-card__bottom__meta">
-            <div className="claim-card__bottom__meta-bookmarks">{bookmarks_count ? bookmarks_count : 'N/A'}</div>
-            <div className="claim-card__bottom__meta-comments">{comments_count ? comments_count : 'N/A'}</div>
+            <div className="claim-card__bottom__meta-comments">
+              <span className="icon far fa-comment" />
+              {comments_count ? comments_count : 'N/A'}
+            </div>
+            <div className="claim-card__bottom__meta-bookmarks">
+              <span className="icon far fa-bookmark" />
+              {bookmarks_count ? bookmarks_count : 'N/A'}
+            </div>
           </div>
         </div>
       </div>
