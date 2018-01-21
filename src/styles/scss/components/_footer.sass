@@ -1,0 +1,28 @@
+.footer
+  width: 100%
+  display: grid
+  grid-template-columns: 1fr 20px 1fr
+  background-color: $footer-bg-color
+  color: $footer-text-color
+  font-family: $body-font
+  padding: 10px 0px
+
+  &__left
+    text-align: right
+    a
+      color: $white-color
+      text-decoration: none
+      font-weight: bold
+
+  &__center
+    width: 1px
+    border-left: 1px solid $white-color
+    margin: 0 10px
+
+
+  &__right
+    text-align: left
+    a
+      color: $white-color
+      font-size: 17px
+      margin-right: 8px

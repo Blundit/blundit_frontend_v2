@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import Header from './../components/Header'
+import Footer from './../components/Footer'
 import API from './../utilities/API'
 import { connect } from 'react-redux'
 import { Link } from 'react-router-dom'
@@ -59,6 +60,7 @@ class Login extends Component {
           </React.Fragment>
         }
       </div>
+      <Footer/>
     </div>
   }
 

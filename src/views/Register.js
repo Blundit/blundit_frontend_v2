@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import Header from './../components/Header'
+import Footer from './../components/Footer'
 import API from './../utilities/API'
 import Cookies from './../utilities/Cookies'
 import { connect } from 'react-redux'
@@ -67,6 +68,7 @@ class Register extends Component {
           </React.Fragment>
         }
       </div>
+      <Footer/>
     </div>
   }
 

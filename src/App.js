@@ -10,6 +10,7 @@ import store from './Store'
 import { Provider } from 'react-redux'
 
 import Header from './components/Header'
+import Footer from './components/Footer'
 
 import Login from './views/Login'
 import Logout from './views/Logout'
@@ -39,7 +40,6 @@ class Blundit extends Component {
               <Route path="/experts" component={Experts} />
               <Route component={NotFound} />
             </Switch>
-
           </div>
         </Router>
       </Provider>
@@ -51,6 +51,8 @@ const Home = () => (
   <div>
     <h1>Home</h1>
     <Header/>
+    Welcome!
+    <Footer/>
   </div>
 )
 
@@ -58,6 +60,9 @@ const NotFound = () => (
   <div>
     <h1>404'ed!</h1>
     <Header/>
+    No content, bruh.
+    <Footer/>
+
   </div>
 )
 

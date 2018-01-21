@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import Header from './../components/Header'
+import Footer from './../components/Footer'
 import API from './../utilities/API'
 import Sessions from './../utilities/Sessions'
 import { connect } from 'react-redux'
@@ -46,6 +47,7 @@ class Logout extends Component {
           </React.Fragment>
         }
       </div>
+      <Footer/>
     </div>
   }
 
