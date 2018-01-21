@@ -59,25 +59,23 @@ class PredictionCard extends Component {
 
 
   votingStatus = (voteable_at = this.props.voteable_at, voting_closes_at = this.props.voting_closes_at) => {
-
     const now = moment()
     const voteable = moment(voteable_at)
     const voting_closes = moment(voting_closes_at)
 
-    if (voteable.diff(now) > 0) return ""
+    if (now.diff(voteable) < 0) return ""
 
-    if (now.diff(voting_closes) < 0) {
-      return <span className="prediction-card__voting-status--open">
-        Voting open for {TimeFormatting.prettyTimeRemaining(voting_closes, voteable, " more")}
+    if (voting_closes.diff(now) > 0) {
+      return <span className="prediction-card__by-status--open">
+        Voting open!
       </span>
     }
 
-    if (now.diff(voting_closes) > 0) {
-      return <span className="prediction-card__voting-status--closed">
+    if (voting_closes.diff(now) <= 0) {
+      return <span className="prediction-card__by-status--closed">
         Voting Closed
       </span>
     }
-
   }
 
 
@@ -109,10 +107,10 @@ class PredictionCard extends Component {
           {title && <div className="prediction-card__title-text">{title}</div>}
         </div>
         <div className="prediction-card__by">
-          <span className=" icon"></span>
+          <span className="far fa-clock icon"></span>
           <span className="prediction-card__by-on">on</span>
           <span className="prediction-card__by-date">{this.predictionByDate(voteable_at)}</span>
-          {this.votingStatus(voteable_at)}
+          {this.votingStatus(voteable_at, voting_closes_at)}
         </div>
         <div className="prediction-card__description">
           {description && <div className="prediction-card__description-text">{description}</div>}
@@ -145,10 +143,7 @@ class PredictionCard extends Component {
             {this.voteStatus(voteable_at, status) === "open" &&
               <React.Fragment>
                 <div className="prediction-card__bottom__vote-now">
-                  Vote Now: 
-                  <span className="fas fa-check icon"></span>
-                  <span className="fas fa-question icon"></span>
-                  <span className="fas fa-times icon"></span>
+                  Vote in next {TimeFormatting.prettyTimeRemaining(voting_closes_at, null)}!
                 </div>
               </React.Fragment>
             }

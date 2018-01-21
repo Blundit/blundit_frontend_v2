@@ -1,6 +1,6 @@
 import moment from 'moment'
 class TimeFormatting {
-  static prettyTimeRemaining(end, start = null) {
+  static prettyTimeRemaining(end, start = null, extra = "") {
     if (end === undefined) return null
     let startTime;
 
@@ -19,11 +19,11 @@ class TimeFormatting {
     let remaining;
 
     if (days > 0) {
-      remaining = days + " days"
+      remaining = days + extra + " days"
     } else if (days <= 0 && hours > 0) {
-      remaining = hours + " hours"
+      remaining = hours + extra + " hours"
     } else if (days <= 0 && hours <= 0 && minutes > 0) {
-      remaining = minutes + " minutes"
+      remaining = minutes + extra +" minutes"
     } else {
       remaining = "0 seconds"
     }

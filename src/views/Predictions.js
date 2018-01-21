@@ -41,7 +41,6 @@ class Predictions extends Component {
     const { search, page, sort } = this.state;
 
 
-
     if (Cache.invalid(predictions, { search: search, page: page, sort: sort, created: Date.now() })) {
       const params = {
         path: "predictions",
@@ -77,7 +76,7 @@ class Predictions extends Component {
         {items === undefined && <p>No predictions</p>}
         {items &&
           items.map((item, index) => (
-            <PredictionCard key={"prediction"+index} {...item} voteable_at={new Date("2018-02-01")} status={"in-progress"} />
+            <PredictionCard key={"prediction"+index} {...item} voteable_at={"2018-01-15"} voting_closes_at={"2018-01-31"} />
           )
         )}
       </div>

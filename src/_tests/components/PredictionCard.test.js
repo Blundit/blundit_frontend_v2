@@ -164,3 +164,25 @@ it('PredictionCard: voting bottom shows vote link if voting is active', () => {
   const vote_now = component.find(".prediction-card__bottom__vote-now")
   expect(vote_now.length).toBe(1)
 })
+
+it('PredictionCard: voting status shows empty if voting isnt yet open', () => {
+  const component = shallow(<PredictionCard voteable_at={new Date("2033-01-07T00:00:00")} status={0} />)
+  const status_open = component.find(".prediction-card__by-status--open")
+  const status_closed = component.find(".prediction-card__by-status--closed")
+  expect(status_open.length).toBe(0)
+  expect(status_closed.length).toBe(0)
+})
+
+it('PredictionCard: voting status shows days left if voting is open', () => {
+  const component = shallow(<PredictionCard voteable_at={new Date("2018-01-07T00:00:00")} status={0} />)
+  const vote_now = component.find(".prediction-card__by-date")
+  expect(vote_now.text()).toBe("January 7th, 2018")
+})
+
+it('PredictionCard: voting shows closed if voting is closed', () => {
+  const component = shallow(<PredictionCard voteable_at={new Date("2017-01-07T00:00:00")} status={0} />)
+  const status_open = component.find(".prediction-card__by-status--open")
+  const status_closed = component.find(".prediction-card__by-status--closed")
+  expect(status_open.length).toBe(0)
+  expect(status_closed.length).toBe(1)
+})

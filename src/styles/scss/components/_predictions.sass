@@ -47,6 +47,36 @@
       color: $black-color
       text-transform: uppercase
 
+  &__by
+    padding: 2px 7px
+    font-family: $body-font
+    font-size: 12px
+
+    .icon
+      font-size: 20px
+      margin-right: 5px
+      color: $card-icon-color
+      padding-bottom: 3px
+      vertical-align: top
+
+    &-on
+
+    &-date
+      font-weight: bold
+      font-style: italic
+      padding-left: 4px
+
+    &-status
+      &:before
+        content: " - "
+      &--closed
+        @extend .prediction-card__by-status
+        color: $error-color
+
+      &--open
+        @extend .prediction-card__by-status
+        color: $success-color
+
   &__description
     border-top: 1px solid $card-separator
     border-bottom: 1px solid $card-separator
