@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom'
 import Icons from './../utilities/Icons'
 import TimeFormatting from './../utilities/TimeFormatting'
 
+import moment from 'moment'
 
 class PredictionCard extends Component {
   getCategoryIcon = category => (category && category.name) ? <span className={Icons.get('category_'+category.id)} /> : <span />
@@ -52,6 +53,34 @@ class PredictionCard extends Component {
   }
 
 
+  predictionByDate = (voteable_at = this.props.voteable_at) => {
+    return moment(voteable_at).format("MMMM Do, YYYY")
+  }
+
+
+  votingStatus = (voteable_at = this.props.voteable_at, voting_closes_at = this.props.voting_closes_at) => {
+
+    const now = moment()
+    const voteable = moment(voteable_at)
+    const voting_closes = moment(voting_closes_at)
+
+    if (voteable.diff(now) > 0) return ""
+
+    if (now.diff(voting_closes) < 0) {
+      return <span className="prediction-card__voting-status--open">
+        Voting open for {TimeFormatting.prettyTimeRemaining(voting_closes, voteable, " more")}
+      </span>
+    }
+
+    if (now.diff(voting_closes) > 0) {
+      return <span className="prediction-card__voting-status--closed">
+        Voting Closed
+      </span>
+    }
+
+  }
+
+
   render() {
     const {
       alias,
@@ -67,7 +96,9 @@ class PredictionCard extends Component {
       votes_unsure,
       votes_no,
       comments_count,
-      bookmarks_count
+      bookmarks_count,
+      voteable_at,
+      voting_closes_at
     } = this.props;
 
     return <Link to={"/predictions/"+alias} className="hidden-link">
@@ -76,6 +107,12 @@ class PredictionCard extends Component {
 
         <div className="prediction-card__title">
           {title && <div className="prediction-card__title-text">{title}</div>}
+        </div>
+        <div className="prediction-card__by">
+          <span className=" icon"></span>
+          <span className="prediction-card__by-on">on</span>
+          <span className="prediction-card__by-date">{this.predictionByDate(voteable_at)}</span>
+          {this.votingStatus(voteable_at)}
         </div>
         <div className="prediction-card__description">
           {description && <div className="prediction-card__description-text">{description}</div>}
@@ -105,7 +142,7 @@ class PredictionCard extends Component {
         </div>
         <div className="prediction-card__bottom">
           <div className="prediction-card__bottom__votes">
-            {this.voteStatus(this.props.voteable_at, this.props.status) === "open" &&
+            {this.voteStatus(voteable_at, status) === "open" &&
               <React.Fragment>
                 <div className="prediction-card__bottom__vote-now">
                   Vote Now: 
@@ -115,12 +152,12 @@ class PredictionCard extends Component {
                 </div>
               </React.Fragment>
             }
-            {this.voteStatus(this.props.voteable_at, this.props.status) === "pending" &&
+            {this.voteStatus(voteable_at, status) === "pending" &&
               <React.Fragment>
-                <div className="prediction-card__bottom__vote-in">Vote In {this.timeToVote(this.props.voteable_at)}</div>
+                <div className="prediction-card__bottom__vote-in">Vote In {this.timeToVote(voteable_at)}</div>
               </React.Fragment>
             }
-            {this.voteStatus(this.props.voteable_at, this.props.status) === "closed" &&
+            {this.voteStatus(voteable_at, status) === "closed" &&
               <React.Fragment>
               <div className="prediction-card__bottom__votes-yes">
                 <span className="icon fas fa-check" />

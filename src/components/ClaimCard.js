@@ -67,7 +67,8 @@ class ClaimCard extends Component {
       votes_unsure,
       votes_no,
       comments_count,
-      bookmarks_count
+      bookmarks_count,
+      voteable_at,
     } = this.props;
 
     return <Link to={"/claims/"+alias} className="hidden-link">
@@ -105,7 +106,7 @@ class ClaimCard extends Component {
         </div>
         <div className="claim-card__bottom">
           <div className="claim-card__bottom__votes">
-            {this.voteStatus(this.props.voteable_at, this.props.status) === "open" &&
+            {this.voteStatus(voteable_at, status) === "open" &&
               <React.Fragment>
                 <div className="claim-card__bottom__vote-now">
                   Vote Now: 
@@ -115,12 +116,12 @@ class ClaimCard extends Component {
                 </div>
               </React.Fragment>
             }
-            {this.voteStatus(this.props.voteable_at, this.props.status) === "pending" &&
+            {this.voteStatus(voteable_at, status) === "pending" &&
               <React.Fragment>
-                <div className="claim-card__bottom__vote-in">Vote In {this.timeToVote(this.props.voteable_at)}</div>
+                <div className="claim-card__bottom__vote-in">Vote In {this.timeToVote(voteable_at)}</div>
               </React.Fragment>
             }
-            {this.voteStatus(this.props.voteable_at, this.props.status) === "closed" &&
+            {this.voteStatus(voteable_at, status) === "closed" &&
               <React.Fragment>
               <div className="claim-card__bottom__votes-yes">
                 <span className="icon fas fa-check" />
