@@ -1,21 +1,22 @@
-import React, { Component } from 'react';
+import React, { Component } from 'react'
 import {
   BrowserRouter as Router,
   Route,
   Switch
 } from 'react-router-dom'
 
-import Sessions from './utilities/Sessions';
-import store from './Store';
-import { Provider } from 'react-redux';
+import Sessions from './utilities/Sessions'
+import store from './Store'
+import { Provider } from 'react-redux'
 
-import Header from './components/Header';
+import Header from './components/Header'
 
-import Login from './views/Login';
-import Logout from './views/Logout';
-import Register from './views/Register';
-import Claims from './views/Claims';
-import Predictions from './views/Predictions';
+import Login from './views/Login'
+import Logout from './views/Logout'
+import Register from './views/Register'
+import Claims from './views/Claims'
+import Predictions from './views/Predictions'
+import Experts from './views/Experts'
 
 
 class Blundit extends Component {
@@ -35,6 +36,7 @@ class Blundit extends Component {
               <Route path="/register" component={Register} />
               <Route path="/claims" component={Claims} />
               <Route path="/predictions" component={Predictions} />
+              <Route path="/experts" component={Experts} />
               <Route component={NotFound} />
             </Switch>
 
@@ -62,4 +64,4 @@ const NotFound = () => (
 
 
 
-export default Blundit;
+export default Blundit
