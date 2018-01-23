@@ -69,17 +69,16 @@ class Predictions extends Component {
     const items = Cache.items(predictions, { search: search, page: page, sort: sort})
 
     return <div>
-      <h1>
-        Predictions
-        </h1>
       <Header/>
-      <div className="predictions">
-        {items === undefined && <p>No predictions</p>}
-        {items &&
-          items.map((item, index) => (
-            <PredictionCard key={"prediction"+index} {...item} voteable_at={"2018-01-15"} voting_closes_at={"2018-01-31"} />
-          )
-        )}
+      <div className="container">
+        <div className="predictions">
+          {items === undefined && <p>No predictions</p>}
+          {items &&
+            items.map((item, index) => (
+              <PredictionCard key={"prediction"+index} {...item} voteable_at={"2018-01-15"} voting_closes_at={"2018-01-31"} />
+            )
+          )}
+        </div>
       </div>
       <Footer/>
     </div>

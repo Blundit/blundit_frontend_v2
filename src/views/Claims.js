@@ -71,18 +71,17 @@ class Claims extends Component {
     const items = Cache.items(claims, { search: search, page: page, sort: sort})
 
     return <div>
-      <h1>
-        Claims
-        </h1>
       <Header/>
-      <div className="claims">
-        {items === undefined && <p>No claims</p>}
-        {items &&
-          items.map((item, index) => (
-            <ClaimCard key={"claim_"+index} {...item} voteable_at={new Date("2018-02-01")} status={"in-progress"} />
-          )
-        )}
-      </div>
+      <div className="container">
+        <div className="claims">
+          {items === undefined && <p>No claims</p>}
+          {items &&
+            items.map((item, index) => (
+              <ClaimCard key={"claim_"+index} {...item} voteable_at={new Date("2018-02-01")} status={"in-progress"} />
+            )
+          )}
+        </div>
+        </div>
       <Footer/>
     </div>
 

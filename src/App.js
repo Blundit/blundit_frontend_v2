@@ -49,7 +49,6 @@ class Blundit extends Component {
 
 const Home = () => (
   <div>
-    <h1>Home</h1>
     <Header/>
     Welcome!
     <Footer/>
@@ -58,8 +57,8 @@ const Home = () => (
 
 const NotFound = () => (
   <div>
-    <h1>404'ed!</h1>
     <Header/>
+    <h1>404'ed!</h1>
     No content, bruh.
     <Footer/>
 

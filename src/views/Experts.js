@@ -70,17 +70,16 @@ class Experts extends Component {
     const items = Cache.items(experts, { search: search, page: page, sort: sort})
 
     return <div>
-      <h1>
-        Experts
-        </h1>
       <Header/>
-      <div className="experts">
-        {items === undefined && <p>No experts</p>}
-        {items &&
-          items.map((item, index) => (
-            <ExpertCard key={"expert"+index} {...item} />
-          )
-        )}
+      <div className="container">
+        <div className="experts">
+          {items === undefined && <p>No experts</p>}
+          {items &&
+            items.map((item, index) => (
+              <ExpertCard key={"expert"+index} {...item} />
+            )
+          )}
+        </div>
       </div>
       <Footer/>
     </div>

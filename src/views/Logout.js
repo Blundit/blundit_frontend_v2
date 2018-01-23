@@ -33,19 +33,18 @@ class Logout extends Component {
     const { user } = this.props
 
     return <div>
-      <h1>
-        Register
-        </h1>
       <Header/>
-      <div>
-        {(!user || !user.id) && 
-          <p>You've been logged out. Something else will go here.</p>
-        }
-        {user && user.id &&
-          <React.Fragment>
-            <div>There was an error logging you out. Refresh this page to try again.</div>
-          </React.Fragment>
-        }
+      <div className="container">
+        <div>
+          {(!user || !user.id) && 
+            <p>You've been logged out. Something else will go here.</p>
+          }
+          {user && user.id &&
+            <React.Fragment>
+              <div>There was an error logging you out. Refresh this page to try again.</div>
+            </React.Fragment>
+          }
+        </div>
       </div>
       <Footer/>
     </div>

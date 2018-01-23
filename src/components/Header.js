@@ -4,15 +4,21 @@ import { Link } from 'react-router-dom';
 import HeaderUserInfo from './HeaderUserInfo';
 
 class Header extends Component {
+  
 
   render() {
-    return <header className="App-header">
-      <h1 className="App-title">Header</h1>
-      <Link to="/">Home</Link>
-      <Link to="/predictions">Predictions</Link>
-      <Link to="/claims">Claims</Link>
-      <Link to="/experts">Experts</Link>
-      <HeaderUserInfo></HeaderUserInfo>
+    menu_items = [
+      { link: "/", title: "Home" },
+      { link: "/experts", title: "Experts"},
+      { link: "/claims", title: "Claims"},
+      { link: "/predictions", title: "Predictions" },
+      { link: "/bookmarks", title: "Bookmarks", logged_in: true },
+      { link: "/me", title: "Profile", logged_in: true },
+    ]     
+    
+    return <header className="header">
+      <DesktopHeader menu_items={menu_items} />
+      <MobileHeader menu_items={menu_items} />
     </header>
 
   }

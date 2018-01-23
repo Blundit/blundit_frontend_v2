@@ -44,21 +44,20 @@ class Login extends Component {
     const { user } = this.props
 
     return <div>
-      <h1>
-        Login
-        </h1>
       <Header/>
-      <div>
-        <div>{this.state.email}</div>
-        {(!user || !user.id) && 
-          this.loginForm()
-        }
-        {user && user.id &&
-          <React.Fragment>
-            <div>You're already logged in.</div>
-            <Link to="/logout">Logout</Link>
-          </React.Fragment>
-        }
+      <div className="container">
+        <div>
+          <div>{this.state.email}</div>
+          {(!user || !user.id) && 
+            this.loginForm()
+          }
+          {user && user.id &&
+            <React.Fragment>
+              <div>You're already logged in.</div>
+              <Link to="/logout">Logout</Link>
+            </React.Fragment>
+          }
+        </div>
       </div>
       <Footer/>
     </div>

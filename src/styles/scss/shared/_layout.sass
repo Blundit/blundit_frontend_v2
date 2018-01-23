@@ -1,0 +1,14 @@
+.container
+  margin: 0 auto
+
+  @media (min-width: $desktop-breakpoint)
+    width: 998px
+
+  @media (min-width: $mobile-breakpoint) and (max-width: $tablet-breakpoint - 1)
+    width: 320px
+
+  @media (min-width: $tablet-breakpoint) and (max-width: $desktop-breakpoint - 1)
+    width: 620px
+
+  @media (max-width: $mobile-breakpoint)
+    width: 300px

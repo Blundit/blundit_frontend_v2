@@ -47,26 +47,25 @@ class Register extends Component {
     const { user } = this.props
 
     return <div>
-      <h1>
-        Register
-        </h1>
       <Header/>
-      <div>
-        <div>{this.state.email}</div>
-        {this.state.registerSuccess === false && Cookies.getCookie("auth_token") === null && 
-          this.registerForm()
-        }
+      <div className="container">
+        <div>
+          <div>{this.state.email}</div>
+          {this.state.registerSuccess === false && Cookies.getCookie("auth_token") === null && 
+            this.registerForm()
+          }
 
-        {this.state.registerSuccess === true &&
-          <React.Fragment>
-            <div>Thanks for registering! You'll get a confirmation email shortly, which will allow you to properly log-in.</div>
-          </React.Fragment>
-        }
-        {(user && user.id && Cookies.getCookie("auth_token") !== null) &&
-          <React.Fragment>
-            <div>You're registered, and logged in. You shouldn't be seeing this.</div>
-          </React.Fragment>
-        }
+          {this.state.registerSuccess === true &&
+            <React.Fragment>
+              <div>Thanks for registering! You'll get a confirmation email shortly, which will allow you to properly log-in.</div>
+            </React.Fragment>
+          }
+          {(user && user.id && Cookies.getCookie("auth_token") !== null) &&
+            <React.Fragment>
+              <div>You're registered, and logged in. You shouldn't be seeing this.</div>
+            </React.Fragment>
+          }
+        </div>
       </div>
       <Footer/>
     </div>
