@@ -1,1 +1,87 @@
 .header
+  with: 100%
+
+
+.header-desktop
+  @media (max-width: $tablet-breakpoint)
+    display: none
+
+  width: 100%
+  display: grid
+  background-color: $white-color
+  height: 65px
+  grid-template-columns: 140px 1fr
+  
+
+  &__logo
+    width: 110px
+
+    img
+      max-width: 100%
+      padding: 17px 15px 15px 15px
+
+  &__links
+    text-align: right
+
+    a
+      line-height: 4.5em
+      font-family: $body-font
+      font-size: 14px
+      font-weight: bold
+      text-decoration: none
+      text-transform: uppercase
+      padding: 15px
+      color: $default-link-color
+
+.header-mobile
+  width: 100%
+  position: absolute
+
+  @media (min-width: $tablet-breakpoint + 1)
+    display: none
+  
+  
+
+  &__strip
+    height: 65px
+    width: 100%
+    display: grid
+    background-color: $white-color
+    grid-template-columns: 40px 1fr 40px
+
+    &-toggle
+      with: 40px
+
+    &-logo
+      text-align: center
+      img
+        width: 110px
+        padding: 17px 15px 15px 15px
+
+    &-avatar
+      width: 40px
+
+  &__links--wrapper
+    width: 100%
+    height: 100%
+    overflow-x: scroll
+    position: fixed
+    left: 0
+    top: 65px
+    
+  &__links
+    width: 100%
+    background-color: $mobile-header-link-bg-color
+
+    a
+      width: 100%
+      display: block
+      line-height: 4.5em
+      font-family: $body-font
+      font-size: 14px
+      font-weight: bold
+      text-decoration: none
+      text-transform: uppercase
+      padding: 15px
+      color: $default-link-color
+      box-sizing: border-box
