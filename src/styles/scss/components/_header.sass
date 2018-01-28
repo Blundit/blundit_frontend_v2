@@ -35,6 +35,7 @@
 
 .header-mobile
   width: 100%
+  top: 0px
   position: absolute
 
   @media (min-width: $tablet-breakpoint + 1)
@@ -50,7 +51,16 @@
     grid-template-columns: 40px 1fr 40px
 
     &-toggle
-      with: 40px
+      width: 40px
+      padding: 15px
+      line-height: 2.4em
+      cursor: pointer
+
+      .icon
+
+      .icon--hidden
+        display: none
+
 
     &-logo
       text-align: center
@@ -62,13 +72,42 @@
       width: 40px
 
   &__links--wrapper
-    width: 100%
+    width: 300px
     height: 100%
     overflow-x: scroll
     position: fixed
-    left: 0
     top: 65px
-    
+    left: -300px
+    -webkit-transition: left 300ms ease
+    transition: left 300ms ease
+    background-color: $mobile-header-link-bg-color
+
+    &--open
+      left: 0px
+      -webkit-transition: left 300ms ease
+      transition: left 300ms ease
+
+  &__links-bg
+    position: fixed
+    left: 0
+    top: 65
+    width: 100%
+    height: 100%
+    // display: none
+    opacity: 0
+    background-color: $modal-bg-color
+    visibility: hidden
+    -webkit-transition: opacity 300ms ease
+    transition: opacity 300ms ease
+
+    &--open
+      // display: block
+      opacity: 1
+      visibility: visible
+      -webkit-transition: opacity 300ms ease
+      transition: opacity 200ms ease
+
+
   &__links
     width: 100%
     background-color: $mobile-header-link-bg-color
@@ -85,3 +124,31 @@
       padding: 15px
       color: $default-link-color
       box-sizing: border-box
+
+
+@keyframes mobile_menu_open
+  to
+    left: 0px
+
+@-moz-keyframes mobile_menu_open
+  to
+    left: 0px
+
+@-webkit-keyframes mobile_menu_open
+  to
+    left: 0px
+
+@keyframes mobile_menu_closed
+  to
+    left: -300px
+
+@-moz-keyframes mobile_menu_closed
+  from
+    left: 0px
+  to
+    left: -300px
+
+@-webkit-keyframes mobile_menu_closed
+
+  to
+    left: -300px
