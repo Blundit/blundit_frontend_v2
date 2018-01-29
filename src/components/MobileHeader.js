@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 
+// TODO: ADD TESTS FOR THIS AND DESKTOPHEADER
 const mapStateToProps = (state) => {
   return {
     user: state.user

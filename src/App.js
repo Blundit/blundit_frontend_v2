@@ -16,8 +16,14 @@ import Login from './views/Login'
 import Logout from './views/Logout'
 import Register from './views/Register'
 import Claims from './views/Claims'
+import Claim from './views/Claim'
+import NewClaim from './views/NewClaim'
 import Predictions from './views/Predictions'
+import Prediction from './views/Prediction'
+import NewPrediction from './views/NewPrediction'
 import Experts from './views/Experts'
+import Expert from './views/Expert'
+import NewExpert from './views/NewExpert'
 
 
 class Blundit extends Component {
@@ -35,9 +41,15 @@ class Blundit extends Component {
               <Route path="/login" component={Login} />
               <Route path="/logout" component={Logout} />
               <Route path="/register" component={Register} />
-              <Route path="/claims" component={Claims} />
-              <Route path="/predictions" component={Predictions} />
-              <Route path="/experts" component={Experts} />
+              <Route exact path="/claims" component={Claims} />
+              <Route exact path="/claims/new" component={NewClaim} />
+              <Route path="/claims/:slug" component={Claim} />
+              <Route exact path="/predictions" component={Predictions} />
+              <Route exact path="/predictions/new" component={NewPrediction} />
+              <Route path="/predictions/:slug" component={Prediction} />
+              <Route expert path="/experts" component={Experts} />
+              <Route expert path="/experts/new" component={NewExpert} />
+              <Route path="/experts/:slug" component={Expert} />
               <Route component={NotFound} />
             </Switch>
           </div>
