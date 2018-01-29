@@ -24,6 +24,15 @@ import NewPrediction from './views/NewPrediction'
 import Experts from './views/Experts'
 import Expert from './views/Expert'
 import NewExpert from './views/NewExpert'
+import About from './views/About'
+import Contact from './views/Contact'
+import Home from './views/Home'
+import Search from './views/Search'
+import Categories from './views/Categories'
+import NotFound from './views/NotFound'
+import Bookmarks from './views/Bookmarks'
+import EditProfile from './views/EditProfile'
+import PrivacyPolicy from './views/PrivacyPolicy'
 
 
 class Blundit extends Component {
@@ -50,6 +59,14 @@ class Blundit extends Component {
               <Route expert path="/experts" component={Experts} />
               <Route expert path="/experts/new" component={NewExpert} />
               <Route path="/experts/:slug" component={Expert} />
+              <Route path="/about" component={About} />
+              <Route path="/contact" component={Contact} />
+              <Route path="/search" component={Search} />
+              <Route exact path="/categories" component={Categories} />
+              <Route path="/categories/:category" component={Categories} />
+              <Route path="/bookmarks" component={Bookmarks} />
+              <Route path="/me" component={EditProfile} />
+              <Route path="/privacy_policy" component={PrivacyPolicy} />
               <Route component={NotFound} />
             </Switch>
           </div>
@@ -58,26 +75,6 @@ class Blundit extends Component {
     );
   }
 }
-
-const Home = () => (
-  <div>
-    <Header/>
-    Welcome!
-    <Footer/>
-  </div>
-)
-
-const NotFound = () => (
-  <div>
-    <Header/>
-    <h1>404'ed!</h1>
-    No content, bruh.
-    <Footer/>
-
-  </div>
-)
-
-
 
 
 export default Blundit

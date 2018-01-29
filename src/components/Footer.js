@@ -11,9 +11,9 @@ class Footer extends Component {
         <br/>
         <Link to="/about">About</Link>
         <br/>
-        <Link to="/about">Contact</Link>
+        <Link to="/contact">Contact</Link>
         <br/>
-        <Link to="/about">Privacy Policy</Link>
+        <Link to="/privacy_policy">Privacy Policy</Link>
         <br/>
 
       </div>
