@@ -22,6 +22,7 @@ class DesktopHeader extends Component {
 
   render() {
     const { user, menu_items } = this.props;
+    console.log(user)
     return <div className="header-desktop">
       <div className="header-desktop__logo">
         <img src="/images/logo_wordmark.png"/>
@@ -29,14 +30,14 @@ class DesktopHeader extends Component {
       <div className="header-desktop__links">
         {menu_items.map((item, index) =>
           <React.Fragment key={`desktop-menu__item-${index}`}>
-            { (item.logged_in === true && user && user.username) &&
+            { (item.logged_in === true && user && user.id) &&
               <Link
                 to={item.link}
                 >
                 {item.title}
               </Link>
             }
-            { (item.logged_in === false && ((user && !user.username) || !user)) && 
+            { (item.logged_in === false && ((user && !user.id) || !user)) && 
               <Link
                 to={item.link}
                 >

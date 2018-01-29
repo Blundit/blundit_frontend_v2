@@ -11,6 +11,7 @@ class Header extends Component {
       { link: "/experts", title: "Experts" },
       { link: "/claims", title: "Claims" },
       { link: "/predictions", title: "Predictions" },
+      { link: "/me", title: "My Profile", logged_in: true },
       { link: "/bookmarks", title: "Bookmarks", logged_in: true },
       { link: "/login", title: "Login", logged_in: false },
       { link: "/logout", title: "Logout", logged_in: true }

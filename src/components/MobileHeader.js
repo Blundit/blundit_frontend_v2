@@ -47,7 +47,7 @@ class MobileHeader extends Component {
         <div className="header-mobile__strip-logo">
           <img src="/images/logo_wordmark.png"/>
         </div>
-        {(user && user.username) &&
+        {(user && user.user) &&
           <div className="header-mobile__strip-avatar">
             User!
           </div>
@@ -61,14 +61,14 @@ class MobileHeader extends Component {
         <div className="header-mobile__links">
           {menu_items.map((item, index) =>
             <React.Fragment key={`mobile-menu__item-${index}`}>
-              { (item.logged_in === true && user && user.username) &&
+              { (item.logged_in === true && user && user.id) &&
                 <Link
                   to={item.link}
                   >
                   {item.title}
                 </Link>
               }
-              { (item.logged_in === false && ((user && !user.username) || !user)) && 
+              { (item.logged_in === false && ((user && !user.id) || !user)) && 
                 <Link
                   to={item.link}
                   >
