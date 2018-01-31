@@ -32,17 +32,20 @@ class Claim extends Component {
 
   claimData() {
     const { match: { params } } = this.props;
-    console.log(this.props.claims)
     if (!this.props.claims) return {}
-    return this.props.claims.find((element) => (element.type === 'claim' && element.key === params.slug))
+    const claim = this.props.claims.find((element) => (element.type === 'claim' && element.key === params.slug))
+    if (claim) return claim.items
+    if (!claim) return {}
   }
 
 
   componentDidMount () {
     const { claim, set_claim, match: { params } } = this.props;
     const slug = params.slug
-
-    if (Cache.invalid(claim, { type: 'claim', key: slug, search: '', page: '', sort: '', created: Date.now() })) {
+    const cacheCheck = Cache.invalid(claim, { type: 'claim', key: slug, search: '', page: '', sort: '', created: Date.now() })
+    console.log("EWHAT THE HELL")
+    console.log(cacheCheck)
+    if (cacheCheck !== true) {
       const params = {
         path: "claim",
         path_variables: {
@@ -75,7 +78,7 @@ class Claim extends Component {
       <div className="container">
         <div>Claim!</div>
         <b>{params.slug}</b>
-        
+        {claim.title}
       </div>
       <Footer/>
     </div>
