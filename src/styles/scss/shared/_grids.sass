@@ -6,12 +6,12 @@
     grid-template-columns: 328px 328px 328px
     grid-gap: 40px 20px
 
-  @media (min-width: $mobile-breakpoint) and (max-width: $tablet-breakpoint - 1)
+  @media (min-width: $mobile-breakpoint) and (max-width: 639px)
     grid-template-columns: 100%
     grid-gap: 20px
 
-  @media (min-width: $tablet-breakpoint) and (max-width: $desktop-breakpoint - 1)
-    grid-template-columns: 300px 300px
+  @media (min-width: 640px) and (max-width: $desktop-breakpoint - 1)
+    grid-template-columns: calc(50% - 10px) calc(50% - 10px)
     grid-gap: 20px
 
   @media (max-width: $mobile-breakpoint)
