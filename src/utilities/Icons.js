@@ -7,11 +7,11 @@ const ids = {
 
 class Icons {
   static get(id) {
-    if (!id) return "";
+    if (!id) return "fas fa-question";
 
     if (ids[id]) return "fas " + ids[id]
 
-    return ""
+    return "fas fa-question"
   }
 }
 

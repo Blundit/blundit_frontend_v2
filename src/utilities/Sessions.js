@@ -73,7 +73,6 @@ class Sessions {
   static getUserAvatar(store) {
     let params = { path: "get_avatar" };
     API.do(params).then((result) => {
-      console.log(result)
       
       store.dispatch({
         type: "USER_EDIT",

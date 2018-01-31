@@ -21,9 +21,8 @@ class DesktopHeader extends Component {
 
 
   render() {
-    const { user, menu_items } = this.props;
-    console.log(user)
-    return <div className="header-desktop">
+    const { user, menu_items, showShadow } = this.props;
+    return <div className={`header-desktop ${showShadow ? 'header-desktop--shadow' : ''} `}>
       <div className="header-desktop__logo">
         <img src="/images/logo_wordmark.png"/>
       </div>

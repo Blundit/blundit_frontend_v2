@@ -33,8 +33,10 @@ class MobileHeader extends Component {
     const { user, menu_items } = this.props
     const { showSideMenu } = this.state
 
+    const { showShadow } = this.props
+
     return <div className="header-mobile">
-      <div className="header-mobile__strip">
+      <div className={`header-mobile__strip ${showShadow ? 'header-mobile__strip--shadow' : ''} `}>
         <div
           className="header-mobile__strip-toggle"
           onClick={this.toggleSideMenu}>

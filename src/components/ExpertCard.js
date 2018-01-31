@@ -7,28 +7,42 @@ import Icons from './../utilities/Icons'
 class ExpertCard extends Component {
   getCategoryIcon = category => (category && category.name) ? <span className={Icons.get('category_'+category.id)} /> : <span />
 
-  getRatingClass = rating => {
-    // TODO: MAKE THIS PULL RATING PROPERLY
-    if (!rating) rating = "unknown"
-    
-    return "expert-card__rating--" + rating
+
+  getLetterGrade = rating => {
+    let grade
+
+    switch (true) {
+      case (rating < 50):
+        grade = "f"
+        break
+      case (rating < 60):
+        grade = "d"
+        break
+      case (rating < 70):
+        grade = "c"
+        break
+      case (rating < 80):
+        grade = "b"
+        break
+      case (rating >= 80):
+        grade = "a"
+        break
+    }
+
+    return grade
   }
 
 
-  formatRatingText = rating => {
-    if (!rating) rating = null
+  getRatingClass = rating => "expert-card__rating--" + (!rating ? "unknown" : this.getLetterGrade(rating))
 
-    // TODO: MAKE THIS PULL IN RATING
-    const statuses = { 
-      "unknown": "unknown",
-      "in-progress": "voting in progress",
-      "true": "true",
-      "false": "false",
+
+  formatRatingText = rating => {
+    if (!rating) {
+      return "UNKNOWN"
     }
 
-
-    // return "Rating: statuses[status].toUpperCase()"
-    return "Rating: A (100%)"
+    return `RATING: ${this.getLetterGrade(rating).toUpperCase()} (${rating}%)`
+    
   }
 
 
@@ -37,6 +51,7 @@ class ExpertCard extends Component {
       name,
       rating,
       job,
+      company,
       number_of_predictions,
       number_of_claims,
       comments_count,
@@ -47,42 +62,49 @@ class ExpertCard extends Component {
       alias,
       status,
       description,
-      categories
+      categories,
+    } = this.props
 
-    } = this.props;
+    let { avatar } = this.props
+
+    if (avatar.indexOf("default.png", 0) > -1 || avatar.indexOf("missing.png", 0) > -1) {
+      avatar = "https://fast-earth-30912.herokuapp.com/images/expert_avatars/default.png"
+    }
 
     return <Link to={"/experts/"+alias} className="hidden-link">
       <div className="expert-card">
-        <div className="expert-card__image" style={{background: "url('"+image+"')" }} >
+        <div className="expert-card__avatar" style={{backgroundImage: "url('"+avatar+"')" }} >
           <div className={this.getRatingClass(rating)}>{this.formatRatingText(rating)}</div>
-          <div className="expert-card__name" s>
-            <div className="expert-card__name-text">
-              {name && name}
-              {!name && "N/A"}
-            </div>
-          </div>
+          <span className="expert-card__name">
+            {name && name}
+            {!name && "N/A"}
+          </span>
         </div>
         <div className="expert-card__description">
-          {description && 
-            <React.Fragment>
-              <div className="expert-card__description-job">{job}</div>
-              <div className="expert-card__description-location">{location}</div>
-              <div className="expert-card__description-url">
-                <span className="far fa-link"></span>
-                <a href={url}>{url}</a>
+          <React.Fragment>
+            <div>
+              <div className="expert-card__description-job">
+                <span className="expert-card__description-job-title">{job ? job : "N/A"}</span>
+                <span className="expert-card__description-job-at"> at </span>
+                <span className="expert-card__description-job-company">{company ? company : "Unknown"}</span>
               </div>
-            </React.Fragment>
-          }
+              <div className="expert-card__description-location">{location ? location : "Location Unknown"}</div>
+              <div className="expert-card__description-url">
+                <span className="icon fas fa-link"></span>
+                {url ? url : "URL Unknown"}
+              </div>
+            </div>
+          </React.Fragment>
           {categories && <div className="expert-card__description-category">{this.getCategoryIcon(categories[0])}</div>}
         </div>
         <div className="expert-card__bottom">
           <div className="expert-card__bottom__positions">
             <div className="expert-card__bottom__positions__number-of-predictions">
-              <span className="icon far fa-comment" />
+              <span className="icon fas fa-bolt" />
               {number_of_predictions ? number_of_predictions : 'N/A'}
             </div>
             <div className="expert-card__bottom__positions__number-of-claims">
-              <span className="icon far fa-bookmark" />
+              <span className="icon far fa-lightbulb" />
               {number_of_claims ? number_of_claims : 'N/A'}
             </div>
           </div>

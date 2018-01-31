@@ -65,8 +65,8 @@ class Experts extends Component {
   }
 
   render() {
-    const { experts } = this.props;
-    const { search, page, sort } = this.state; 
+    const { experts } = this.props
+    const { search, page, sort } = this.state;
     const items = Cache.items(experts, { search: search, page: page, sort: sort})
 
     return <div>
@@ -76,7 +76,7 @@ class Experts extends Component {
           {items === undefined && <p>No experts</p>}
           {items &&
             items.map((item, index) => (
-              <ExpertCard key={"expert"+index} {...item} />
+              <ExpertCard key={"expert"+index} {...item} rating={Math.floor(Math.random()*100)+1} />
             )
           )}
         </div>

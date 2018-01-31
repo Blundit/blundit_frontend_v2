@@ -5,6 +5,32 @@ import DesktopHeader from './DesktopHeader'
 import MobileHeader from './MobileHeader'
 
 class Header extends Component {
+  constructor() {
+    super()
+    this.state = {
+      showShadow: false
+    }
+  }
+
+  componentDidMount() {
+    window.addEventListener('scroll', (e) => this.updateHeaderScroll(e))
+  }
+
+
+  componentWillUnMount() {
+    window.removeEventListener('scroll', (e) => this.updateHeaderScroll(e))
+  }
+
+
+  updateHeaderScroll(e) {
+    if (window.scrollY > 30 && this.state.showShadow == false) {
+      this.setState({showShadow: true})
+    } else if (window.scrollY <= 30 && this.state.showShadow == true) {
+      this.setState({showShadow: false })
+    }
+  }
+
+
   render() {
     const menu_items = [
       { link: "/", title: "Home"},
@@ -19,9 +45,8 @@ class Header extends Component {
     ]
     
     return <header className="header">
-      <DesktopHeader menu_items={menu_items} />
-      <MobileHeader menu_items={menu_items} />
-      
+      <DesktopHeader menu_items={menu_items} showShadow={this.state.showShadow} />
+      <MobileHeader menu_items={menu_items} showShadow={this.state.showShadow} />
     </header>
 
   }
