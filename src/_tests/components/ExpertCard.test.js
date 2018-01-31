@@ -14,9 +14,7 @@ it('ExpertCard: title text displays if provided', () => {
   const name = component.find('.expert-card__name')
 
   expect(name.length).toBe(1)
-
-  const nameText = component.find('.expert-card__name-text')
-  expect(nameText.text()).toEqual("Paul Fidalgo")
+  expect(name.text()).toEqual("Paul Fidalgo")
 })
 
 // it('PredictionCard: status displays if provided', () => {

@@ -67,7 +67,7 @@ class ExpertCard extends Component {
 
     let { avatar } = this.props
 
-    if (avatar.indexOf("default.png", 0) > -1 || avatar.indexOf("missing.png", 0) > -1) {
+    if (!avatar || avatar.indexOf("default.png", 0) > -1 || avatar.indexOf("missing.png", 0) > -1) {
       avatar = "https://fast-earth-30912.herokuapp.com/images/expert_avatars/default.png"
     }
 

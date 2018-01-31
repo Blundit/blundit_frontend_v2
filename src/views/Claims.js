@@ -43,8 +43,7 @@ class Claims extends Component {
     const { search, page, sort } = this.state;
 
 
-
-    if (Cache.invalid(claims, { search: search, page: page, sort: sort, created: Date.now() })) {
+    if (Cache.invalid(claims, { type: 'claim', key: 'claims_list', search: search, page: page, sort: sort, created: Date.now() })) {
       const params = {
         path: "claims",
         data: {
@@ -53,11 +52,13 @@ class Claims extends Component {
       }
 
       API.do(params).then((result) => {
+        console.log("claims!")
+        console.log(result)
         this.setState({
           number_of_pages: result.number_of_pages,
           page: Number(result.page)
         })
-        set_claim_list({ search: search, page: page, sort: sort, items: result.claims, created: Date.now() });
+        set_claim_list({ type: 'claim', key: 'claims_list', search: search, page: page, sort: sort, items: result.claims, created: Date.now() });
       },
       (reject) => {
         console.error(reject);
@@ -68,7 +69,7 @@ class Claims extends Component {
   render() {
     const { claims } = this.props;
     const { search, page, sort } = this.state; 
-    const items = Cache.items(claims, { search: search, page: page, sort: sort})
+    const items = Cache.items(claims, { type: 'claim', key: 'claims_list', search: search, page: page, sort: sort})
 
     return <div>
       <Header/>

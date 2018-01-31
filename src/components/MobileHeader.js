@@ -32,7 +32,6 @@ class MobileHeader extends Component {
   render() {
     const { user, menu_items } = this.props
     const { showSideMenu } = this.state
-
     const { showShadow } = this.props
 
     return <div className="header-mobile">

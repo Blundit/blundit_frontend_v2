@@ -42,7 +42,7 @@ class Predictions extends Component {
     const { search, page, sort } = this.state;
 
 
-    if (Cache.invalid(predictions, { search: search, page: page, sort: sort, created: Date.now() })) {
+    if (Cache.invalid(predictions, { type: 'prediction', key: 'predictions_list', search: search, page: page, sort: sort, created: Date.now() })) {
       const params = {
         path: "predictions",
         data: {
@@ -55,7 +55,7 @@ class Predictions extends Component {
           number_of_pages: result.number_of_pages,
           page: Number(result.page)
         })
-        set_prediction_list({ search: search, page: page, sort: sort, items: result.predictions, created: Date.now() });
+        set_prediction_list({ type: 'prediction', key: 'predictions_list', search: search, page: page, sort: sort, items: result.predictions, created: Date.now() });
       },
       (reject) => {
         console.error(reject);
@@ -66,7 +66,7 @@ class Predictions extends Component {
   render() {
     const { predictions } = this.props;
     const { search, page, sort } = this.state; 
-    const items = Cache.items(predictions, { search: search, page: page, sort: sort})
+    const items = Cache.items(predictions, { type: 'prediction', key: 'predictions_list', search: search, page: page, sort: sort})
 
     return <div>
       <Header/>

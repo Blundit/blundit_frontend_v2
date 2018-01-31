@@ -11,16 +11,16 @@ it('Icons: return class if valid', () => {
   expect(icon).toBe("fas fa-home")
 })
 
-it('Icons: empty string if empty string passed', () => {
+it('Icons: default class if empty string passed', () => {
   const icon_string = "";
   const icon = Icons.get(icon_string)
 
-  expect(icon).toBe("")
+  expect(icon).toBe("fas fa-question")
 })
 
-it('Icons: empty string if null passed', () => {
+it('Icons: default class if null passed', () => {
   const icon = Icons.get()
 
-  expect(icon).toBe("")
+  expect(icon).toBe("fas fa-question")
 })
 

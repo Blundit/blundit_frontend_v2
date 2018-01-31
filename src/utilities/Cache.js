@@ -17,7 +17,7 @@ const default_ttl = 120000 // seconds
 */
 
 class Cache {
-  static present(state = [], new_item = { search: '', page: 1, created: Date.now(), sort: '' }, ttl = default_ttl) {
+  static present(state = [], new_item = { type: '', key: '', search: '', page: 1, created: Date.now(), sort: '' }, ttl = default_ttl) {
     let index = state.findIndex((element) => (
       element.page === new_item.page 
       && element.sort === new_item.sort
@@ -28,13 +28,15 @@ class Cache {
   }
 
 
-  static valid(state = [], new_item = { search: '', page: 1, created: Date.now(), sort: '' }, ttl = default_ttl) {
+  static valid(state = [], new_item = { type: '', key: '', search: '', page: 1, created: Date.now(), sort: '' }, ttl = default_ttl) {
     if (!state) return false
 
     let item = state.find((element) => (
       element.page === new_item.page 
       && element.search === new_item.search
       && element.sort === new_item.sort
+      && element.type === new_item.type
+      && element.key === new_item.key
       && Math.abs(new_item.created - element.created) <= ttl
     ))
 
@@ -42,13 +44,15 @@ class Cache {
   }
 
 
-  static invalid(state = [], new_item = { search: '', page: 1, created: Date.now(), sort: '' }, ttl = default_ttl) {
+  static invalid(state = [], new_item = { type: '', key: '', search: '', page: 1, created: Date.now(), sort: '' }, ttl = default_ttl) {
     if (!state) return true
 
     let item = state.find((element) => (
       element.page === new_item.page 
       && element.search === new_item.search
       && element.sort === new_item.sort
+      && element.type === new_item.type
+      && element.key === new_item.key
       && Math.abs(new_item.created - element.created) > ttl
     ))
 
@@ -56,12 +60,14 @@ class Cache {
   }
 
 
-  static items(state, params = { search: '', page: 1, sort: ''}, ttl = default_ttl) {
+  static items(state, params = { key: '', type: '', search: '', page: 1, sort: ''}, ttl = default_ttl) {
     if (!state) return undefined
     let item = state.find((element) => {
       return element.page === params.page 
       && element.search === params.search
       && element.sort === params.sort
+      && element.type === params.type
+      && element.key === params.key
       && Math.abs(Date.now() - element.created) <= ttl
     })
 

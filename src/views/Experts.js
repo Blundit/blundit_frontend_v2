@@ -43,7 +43,7 @@ class Experts extends Component {
 
 
 
-    if (Cache.invalid(experts, { search: search, page: page, sort: sort, created: Date.now() })) {
+    if (Cache.invalid(experts, { type: 'expert', key: 'experts_list', search: search, page: page, sort: sort, created: Date.now() })) {
       const params = {
         path: "experts",
         data: {
@@ -56,7 +56,7 @@ class Experts extends Component {
           number_of_pages: result.number_of_pages,
           page: Number(result.page)
         })
-        set_expert_list({ search: search, page: page, sort: sort, items: result.experts, created: Date.now() });
+        set_expert_list({ type: 'expert', key: 'experts_list', search: search, page: page, sort: sort, items: result.experts, created: Date.now() });
       },
       (reject) => {
         console.error(reject);
@@ -67,7 +67,7 @@ class Experts extends Component {
   render() {
     const { experts } = this.props
     const { search, page, sort } = this.state;
-    const items = Cache.items(experts, { search: search, page: page, sort: sort})
+    const items = Cache.items(experts, { type: 'expert', key: 'experts_list', search: search, page: page, sort: sort})
 
     return <div>
       <Header/>
