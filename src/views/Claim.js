@@ -33,9 +33,9 @@ class Claim extends Component {
   claimData() {
     const { match: { params } } = this.props;
     if (!this.props.claims) return {}
+
     const claim = this.props.claims.find((element) => (element.type === 'claim' && element.key === params.slug))
-    if (claim) return claim.items
-    if (!claim) return {}
+    return (claim ? claim.items : {})
   }
 
 
@@ -43,8 +43,6 @@ class Claim extends Component {
     const { claim, set_claim, match: { params } } = this.props;
     const slug = params.slug
     const cacheCheck = Cache.invalid(claim, { type: 'claim', key: slug, search: '', page: '', sort: '', created: Date.now() })
-    console.log("EWHAT THE HELL")
-    console.log(cacheCheck)
     if (cacheCheck !== true) {
       const params = {
         path: "claim",
@@ -54,14 +52,11 @@ class Claim extends Component {
       }
 
       API.do(params).then((result) => {
-        console.log(result)
         set_claim({ type: 'claim', key: slug, search: '', page: '', sort: '', items: result.claim, created: Date.now() });
       },
       (reject) => {
         console.error(reject);
       });
-    } else {
-      console.log("still valid")
     }
   }
 
@@ -70,9 +65,6 @@ class Claim extends Component {
     const { match: { params } } = this.props;
     const claim = this.claimData()
     
-    console.log("!!!!")
-    console.log(claim)
-    console.log(this.props)
     return <div>
       <Header/>
       <div className="container">
