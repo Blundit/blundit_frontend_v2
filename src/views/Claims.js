@@ -52,8 +52,6 @@ class Claims extends Component {
       }
 
       API.do(params).then((result) => {
-        console.log("claims!")
-        console.log(result)
         this.setState({
           number_of_pages: result.number_of_pages,
           page: Number(result.page)

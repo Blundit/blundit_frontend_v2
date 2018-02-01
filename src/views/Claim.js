@@ -1,8 +1,19 @@
 import React, { Component } from 'react'
 import Header from './../components/Header'
 import Footer from './../components/Footer'
+
+import ClaimHeader from './../components/ClaimHeader'
+import CategoriesList from './../components/CategoriesList'
+import EvidenceList from './../components/EvidenceList'
+import ExpertsList from './../components/ExpertsList'
+import AddExpertToItem from './../components/AddExpertToItem'
+import VoteForItem from './../components/VoteForItem'
+import ItemComments from './../components/ItemComments'
+import ShareItem from './../components/ShareItem'
+
 import Cache from './../utilities/Cache'
 import API from './../utilities/API'
+
 import { connect } from 'react-redux'
 
 const mapStateToProps = (state) => {
@@ -27,6 +38,10 @@ const mapDispatchToProps = (dispatch, ownProps) => {
 class Claim extends Component {
   constructor(props) {
     super()
+
+    this.state = {
+      claimLoaded: false
+    }
   }
 
 
@@ -52,12 +67,28 @@ class Claim extends Component {
       }
 
       API.do(params).then((result) => {
+        this.setState({ claimLoaded: true })
         set_claim({ type: 'claim', key: slug, search: '', page: '', sort: '', items: result.claim, created: Date.now() });
       },
       (reject) => {
         console.error(reject);
       });
     }
+  }
+
+
+  addEvidence (new_evidence) {
+    console.log("add evidence")
+  }
+
+
+  addExpert (new_expert) {
+    console.log()
+  }
+
+
+  toggleBookmark () {
+
   }
 
 
@@ -68,9 +99,23 @@ class Claim extends Component {
     return <div>
       <Header/>
       <div className="container">
-        <div>Claim!</div>
-        <b>{params.slug}</b>
-        {claim.title}
+        {this.state.claimLoaded != true &&
+          <div>Loading...</div>
+        }
+        {this.state.claimLoaded == true &&
+          <React.Fragment>
+            <ClaimHeader claim={claim} toggleBookmark={this.toggleBookmark} />
+            <CategoriesList type="claim" categories={claim.categories} />
+            <EvidenceList type="claim" addEvidence={this.addEvidence} evidence={claim.evidence} />
+            <ExpertsList type="agree" experts={claim.experts.find((element) => (element.type === "agree"))} />
+            <ExpertsList type="disagree" experts={claim.experts.find((element) => (element.type === "disagree"))} />
+            <AddExpertToItem type="claim" addExpert={this.addExpert} />
+            <VoteForItem type="claim" processVote={this.processVote} claim={claim} />
+            <ItemComments type="claim" id={claim.id} />
+            <ShareItem type="claim" object={claim} />
+          </React.Fragment>
+        }
+        
       </div>
       <Footer/>
     </div>

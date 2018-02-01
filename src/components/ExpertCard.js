@@ -7,7 +7,7 @@ import Icons from './../utilities/Icons'
 class ExpertCard extends Component {
   getCategoryIcon = category => (category && category.name) ? <span className={Icons.get('category_'+category.id)} /> : <span />
 
-
+  
   getLetterGrade = rating => {
     let grade
 
