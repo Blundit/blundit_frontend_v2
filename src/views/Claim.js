@@ -67,7 +67,9 @@ class Claim extends Component {
       }
 
       API.do(params).then((result) => {
-        set_claim({ type: 'claim', key: slug, search: '', page: '', sort: '', items: result.claim, created: Date.now() });
+        let claim = result.claim
+        claim.experts = result.experts
+        set_claim({ type: 'claim', key: slug, search: '', page: '', sort: '', items: claim, created: Date.now() });
         this.setState({ claimLoaded: true })
       },
       (reject) => {
@@ -78,12 +80,10 @@ class Claim extends Component {
 
 
   addEvidence (new_evidence) {
-    console.log("add evidence")
   }
 
 
   addExpert (new_expert) {
-    console.log()
   }
 
 
@@ -106,14 +106,15 @@ class Claim extends Component {
         {this.state.claimLoaded === true &&
           <React.Fragment>
             <ClaimHeader claim={claim} toggleBookmark={this.toggleBookmark} />
+            <ShareItem type="claim" object={claim} />
             <CategoriesList type="claim" categories={claim.categories} />
-            <EvidenceList type="claim" addEvidence={this.addEvidence} evidences={claim.evidences} />
+            <EvidenceList type="for" addEvidence={this.addEvidence} evidences={claim.evidences} />
+            <EvidenceList type="against" addEvidence={this.addEvidence} evidences={claim.evidences} />
             <ExpertsList type="agree" experts={experts} />
             <ExpertsList type="disagree" experts={experts} />
             <AddExpertToItem type="claim" addExpert={this.addExpert} />
             <VoteForItem type="claim" processVote={this.processVote} claim={claim} />
             <ItemComments type="claim" id={claim.id} />
-            <ShareItem type="claim" object={claim} />
           </React.Fragment>
         }
         

@@ -7,22 +7,23 @@ import ExpertsListItem from './ExpertsListItem'
 
 class ExpertsList extends Component {
   render() {
-    const { type } = this.props
+    const { type, experts } = this.props
+    let icon
 
-    // TODO: REMOVE DUMMY EXPERTS
-    let experts = [
-      { alias: "random-guy", name: "Random Guy", position: "agree", job: "Guy", company: "Corp", rating: Math.random()*100, avatar: "https://fast-earth-30912.herokuapp.com/images/expert_avatars/default.png" },
-      { alias: "random-gal", name: "Random Gal", position: "agree", job: "Gal", company: "Corp", rating: Math.random()*100, avatar: "https://fast-earth-30912.herokuapp.com/images/expert_avatars/default.png" },
-      { alias: "bob-dean", name: "Bob Dean", position: "disagree", job: "Dude, Host", company: "", rating: Math.random()*100, avatar: "https://fast-earth-30912.herokuapp.com/images/expert_avatars/default.png" },
-      { alias: "cranky-joe", name: "Cranky Joe", position: "disagree", job: "Dude, Host", company: "", rating: Math.random()*100, avatar: "https://fast-earth-30912.herokuapp.com/images/expert_avatars/default.png" },
-    ]
+    // TODO: Remove this once the expert agrees/disagrees bit is in place
+    let filtered_experts = experts.filter((element) => element.position === type || !element.position)
+    // let filtered_experts = this.props.experts
 
-    let filtered_experts = experts.filter((element) => element.position === type)
+    if (type == "agree") {
+      icon = <span className="icon--success fa fa-user-circle" />
+    } else {
+      icon = <span className="icon--error fa fa-user-circle" />
+    }
 
-    return <Card title={`experts who ${type} (${filtered_experts.length})`}>
+    return <Card icon={icon} title={`experts who ${type} (${filtered_experts.length})`}>
       <div className="experts-list">
         <div className="experts-list__items">
-          {experts.length === 0 && 
+          {filtered_experts.length === 0 && 
             <div className="experts-list__items--empty">{`No experts ${type} with this.`}</div>
           }
           {filtered_experts.map((item, index) => {

@@ -31,7 +31,7 @@ class ExpertsListItem extends Component {
         grade = "a"
         break
       default:
-        grade = "f"
+        grade = "?"
         break
     }
 

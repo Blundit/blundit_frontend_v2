@@ -6,10 +6,11 @@ import Card from './Card'
 class AddExpertToItem extends Component {
   render() {
     const { type, addExpert } = this.props
-
-    return <Card title="add expert">
+    const icon = <span className="fas fa-user-plus" />
+    
+    return <Card title="add expert" icon={icon}>
       <div className="add-expert-to-item">
-        Add expert to Item.
+        Add expert to Item!
       </div>
     </Card>
   }

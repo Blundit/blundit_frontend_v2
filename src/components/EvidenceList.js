@@ -6,16 +6,31 @@ import EvidenceListItem from './EvidenceListItem'
 
 class EvidenceList extends Component {
   render() {
-    const { type, evidences, addEvidence } = this.props
+    const { type, addEvidence } = this.props
+    let icon
 
-    return <Card title={`evidence (${evidences.length})`}>
-      <div className={`${type}-evidence`}>
-        <div className={`${type}-evidence__list`}>
-          {evidences.map((item, index) => {
-            return <EvidenceListItem key={`${type}-evidence-${index}`} type={type} item={item} />
+    let evidences = [
+      { position: "for" },
+      { position: "for" },
+      { position: "against" }
+    ]
+
+    let filtered_evidences = evidences.filter((element) => element.position === type)
+
+    if (type == "for") {
+      icon = <span className="icon--success fa fa-file-alt" />
+    } else {
+      icon = <span className="icon--error fa fa-file-alt" />
+    }
+
+    return <Card icon={icon} title={`evidence ${type} (${filtered_evidences.length})`}>
+      <div className="evidences">
+        <div className="evidences__list">
+          {filtered_evidences.map((item, index) => {
+            return <EvidenceListItem key={`evidence-${index}`} type={type} item={item} />
           })}
         </div>
-        <div className={`${type}-evidence__add`}>
+        <div className="evidence__add">
           Add Evidence Goes Here.
         </div>
       </div>

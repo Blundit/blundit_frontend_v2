@@ -16,8 +16,9 @@ class ItemComments extends Component {
 
   render() {
     const { type, id } = this.props
+    const icon = <span className="fas fa-comment" />
 
-    return <Card title="comments">
+    return <Card title="comments" icon={icon} >
       <div className={`${type}-comments`}>
         Comments cluster will go here.
       </div>

@@ -30,7 +30,6 @@ class Card extends Component {
       categories, 
       bg } = this.props
 
-    console.log(bg)
     return <div className="card-header" >
       <div className="card-header__strip">
         <div className="card-header__strip-title">{title}</div>
