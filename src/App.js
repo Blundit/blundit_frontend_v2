@@ -53,8 +53,8 @@ class Blundit extends Component {
               <Route exact path="/predictions" component={Predictions} />
               <Route exact path="/predictions/new" component={NewPrediction} />
               <Route path="/predictions/:slug" component={Prediction} />
-              <Route expert path="/experts" component={Experts} />
-              <Route expert path="/experts/new" component={NewExpert} />
+              <Route exact path="/experts" component={Experts} />
+              <Route exact path="/experts/new" component={NewExpert} />
               <Route path="/experts/:slug" component={Expert} />
               <Route path="/about" component={About} />
               <Route path="/contact" component={Contact} />
@@ -72,6 +72,5 @@ class Blundit extends Component {
     );
   }
 }
-
 
 export default Blundit

@@ -7,7 +7,7 @@ import Icons from './../utilities/Icons'
 class ExpertCard extends Component {
   getCategoryIcon = category => (category && category.name) ? <span className={Icons.get(category.id)} /> : <span />
 
-  
+  // TODO: Abstract into util
   getLetterGrade = rating => {
     let grade
 
@@ -28,7 +28,7 @@ class ExpertCard extends Component {
         grade = "a"
         break
       default:
-        grade = "f"
+        grade = "?"
         break
     }
 

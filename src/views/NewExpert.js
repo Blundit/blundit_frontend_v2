@@ -31,7 +31,7 @@ class NewExpert extends Component {
 
   
   render () {
-    return <div>Expert!</div>
+    return <div>New Expert!</div>
   }
 }
 
