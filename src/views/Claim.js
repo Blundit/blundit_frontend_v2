@@ -67,8 +67,8 @@ class Claim extends Component {
       }
 
       API.do(params).then((result) => {
-        this.setState({ claimLoaded: true })
         set_claim({ type: 'claim', key: slug, search: '', page: '', sort: '', items: result.claim, created: Date.now() });
+        this.setState({ claimLoaded: true })
       },
       (reject) => {
         console.error(reject);
@@ -95,6 +95,7 @@ class Claim extends Component {
   render () {
     const { match: { params } } = this.props;
     const claim = this.claimData()
+    const experts = claim.experts ? claim.experts : []
     
     return <div>
       <Header/>
@@ -106,9 +107,9 @@ class Claim extends Component {
           <React.Fragment>
             <ClaimHeader claim={claim} toggleBookmark={this.toggleBookmark} />
             <CategoriesList type="claim" categories={claim.categories} />
-            <EvidenceList type="claim" addEvidence={this.addEvidence} evidence={claim.evidence} />
-            <ExpertsList type="agree" experts={claim.experts.find((element) => (element.type === "agree"))} />
-            <ExpertsList type="disagree" experts={claim.experts.find((element) => (element.type === "disagree"))} />
+            <EvidenceList type="claim" addEvidence={this.addEvidence} evidences={claim.evidences} />
+            <ExpertsList type="agree" experts={experts} />
+            <ExpertsList type="disagree" experts={experts} />
             <AddExpertToItem type="claim" addExpert={this.addExpert} />
             <VoteForItem type="claim" processVote={this.processVote} claim={claim} />
             <ItemComments type="claim" id={claim.id} />

@@ -2,3 +2,50 @@
   box-shadow: 0px 3px 6px $drop-shadow-color
   border: 1px solid $card-border-color
   height: 100%
+
+.card
+  @extend %card-base
+  width: 100%
+  overflow: hidden
+  margin-bottom: 20px
+
+  &--closed
+    @extend .card
+    height: 30px
+
+  &__strip
+    width: 100%
+    display: grid
+    padding: 5px 
+    box-sizing: border-box
+    grid-template-columns: 1fr 22px
+
+    &-title
+      text-transform: uppercase
+      font-weight: bold
+      font-size: 16px
+      font-family: $body-font
+
+    &-chevron
+      font-size: 20px
+      width: 22px
+      cursor: pointer
+
+  &__content
+    font-family: $body-font
+    font-size: 14px
+    padding: 5px
+    box-sizing: border-box
+
+.card-header
+  @extend %card-base
+  width: 100%
+  overflow: hidden
+  margin-bottom: 20px
+
+  &__strip
+    width: 100%
+    display: grid
+    padding: 5px 
+    box-sizing: border-box
+    grid-template-columns: 1fr 22px

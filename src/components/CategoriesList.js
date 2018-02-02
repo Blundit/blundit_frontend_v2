@@ -1,21 +1,24 @@
 import React, { Component } from 'react'
 import { Link } from 'react-router-dom'
 
+import Card from './Card'
+
 class CategoriesList extends Component {
   render() {
-    const { claim, type } = this.props
+    const { categories, type } = this.props
 
-    return <div className="categories-list">
-      <div classname="categories-list__title">Categories</div>
-      <div className="categories-list__description">{type}</div>
-      <div className="categories-list__items">
-        {claim.categories.map((item) => {
-          <Link to={`/categories/`}>
-          <span className="categories-list__item">{item.name}</span>
-          </Link>
-        })}
+    return <Card title="Categories">
+      <div className="categories-list">
+        <div className="categories-list__description">{type}</div>
+        <div className="categories-list__items">
+          {categories.map((item) => {
+            <Link to={`/categories/`}>
+            <span className="categories-list__item">{item.name}</span>
+            </Link>
+          })}
+        </div>
       </div>
-    </div>
+    </Card>
   }
 }
 

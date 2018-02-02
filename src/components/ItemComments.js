@@ -1,6 +1,8 @@
 import React, { Component } from 'react'
 import { Link } from 'react-router-dom'
 
+import Card from './Card'
+
 class ItemComments extends Component {
   constructor() {
     super()
@@ -15,9 +17,11 @@ class ItemComments extends Component {
   render() {
     const { type, id } = this.props
 
-    return <div className={`${type}-comments`}>
-      Comments cluster will go here.
-    </div>
+    return <Card title="commemnts">
+      <div className={`${type}-comments`}>
+        Comments cluster will go here.
+      </div>
+    </Card>
   }
 }
 
