@@ -7,7 +7,7 @@ import TimeFormatting from './../utilities/TimeFormatting'
 import moment from 'moment'
 
 class PredictionCard extends Component {
-  getCategoryIcon = category => (category && category.name) ? <span className={Icons.get('category_'+category.id)} /> : <span />
+  getCategoryIcon = category => (category && category.name) ? <span className={Icons.get(category.id)} /> : <span />
 
   getStatusClass = status => {
     if (!status) status = "unknown"

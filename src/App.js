@@ -9,9 +9,6 @@ import Sessions from './utilities/Sessions'
 import store from './Store'
 import { Provider } from 'react-redux'
 
-import Header from './components/Header'
-import Footer from './components/Footer'
-
 import Login from './views/Login'
 import Logout from './views/Logout'
 import Register from './views/Register'

@@ -5,7 +5,7 @@ import Icons from './../utilities/Icons'
 
 
 class ExpertCard extends Component {
-  getCategoryIcon = category => (category && category.name) ? <span className={Icons.get('category_'+category.id)} /> : <span />
+  getCategoryIcon = category => (category && category.name) ? <span className={Icons.get(category.id)} /> : <span />
 
   
   getLetterGrade = rating => {
@@ -26,6 +26,9 @@ class ExpertCard extends Component {
         break
       case (rating >= 80):
         grade = "a"
+        break
+      default:
+        grade = "f"
         break
     }
 
@@ -85,8 +88,12 @@ class ExpertCard extends Component {
             <div>
               <div className="expert-card__description-job">
                 <span className="expert-card__description-job-title">{job ? job : "N/A"}</span>
-                <span className="expert-card__description-job-at"> at </span>
-                <span className="expert-card__description-job-company">{company ? company : "Unknown"}</span>
+                { company && 
+                  <React.Fragment>
+                    <span className="expert-card__description-job-at"> at </span>
+                    <span className="expert-card__description-job-company">{company ? company : "Unknown"}</span>
+                  </React.Fragment>
+                }
               </div>
               <div className="expert-card__description-location">{location ? location : "Location Unknown"}</div>
               <div className="expert-card__description-url">

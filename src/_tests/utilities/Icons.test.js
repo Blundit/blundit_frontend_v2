@@ -5,7 +5,7 @@ it('Icons: it exists', () => {
 })
 
 it('Icons: return class if valid', () => {
-  const icon_string = "category_testing";
+  const icon_string = "testing";
   const icon = Icons.get(icon_string)
 
   expect(icon).toBe("fas fa-home")

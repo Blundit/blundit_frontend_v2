@@ -1,5 +1,6 @@
 %card-base
   box-shadow: 0px 3px 6px $drop-shadow-color
+  background-color: $white-color
   border: 1px solid $card-border-color
   height: 100%
 
@@ -11,14 +12,14 @@
 
   &--closed
     @extend .card
-    height: 30px
+    height: 40px
 
   &__strip
     width: 100%
     display: grid
-    padding: 5px 
+    padding: 10px 
     box-sizing: border-box
-    grid-template-columns: 1fr 22px 22px
+    grid-template-columns: 1fr 22px
 
     &-title
       text-transform: uppercase
@@ -34,7 +35,7 @@
   &__content
     font-family: $body-font
     font-size: 14px
-    padding: 5px
+    padding: 10px
     box-sizing: border-box
 
 .card-header
@@ -47,6 +48,131 @@
   &__strip
     width: 100%
     display: grid
-    padding: 5px 
+    padding: 10px 10px 0px 10px 
     box-sizing: border-box
-    grid-template-columns: 1fr 22px
+    grid-template-columns: 1fr 22px 22px
+    min-height: 40px
+
+    &-title
+      font-size: 22px
+      font-weight: bold
+      font-family: $body-font
+      text-transform: uppercase
+    
+    &-status
+      margin-top: 4px
+
+  &__image
+    width: 100%
+    position: relative
+    height: 215px
+    background-color: $header-card-image-background
+    +cover
+
+  &__category
+    position: absolute
+    right: 8px
+    bottom: 8px
+    color: $white-color
+    font-size: 30px
+
+  &__status
+    padding: 2px 4px
+    color: $white-color
+    text-align: center
+    text-transform: uppercase
+    font-family: $body-font
+    font-size: 12px
+    
+    &--unknown
+      @extend .card-header__status
+      background-color: $status-unknown
+    
+    &--in-progress
+      @extend .card-header__status
+      background-color: $status-in-progress
+
+    &--true
+      @extend .card-header__status
+      background-color: $status-true
+
+    &--false
+      @extend .card-header__status
+      background-color: $status-false
+
+    &--f
+      @extend .card-header__status
+      background-color: $rating-f
+
+    &--d
+      @extend .card-header__status
+      background-color: $rating-d
+
+    &--c
+      @extend .card-header__status
+      background-color: $rating-c
+
+    &--b
+      @extend .card-header__status
+      background-color: $rating-b
+
+    &--a
+      @extend .card-header__status
+      background-color: $rating-a
+
+  &__status-bar
+    padding: 4px
+    color: $white-color
+    text-align: center
+    text-transform: uppercase
+    font-family: $body-font
+    font-size: 20px
+    width: calc(100% + 4px)
+    margin: -2px 0px 0px -2px
+    box-sizing: border-box
+    font-weight: bold
+
+    @media (max-width: $mobile-breakpoint)
+      font-size: 14px
+
+    &--unknown
+      @extend .card-header__status-bar
+      background-color: $status-unknown
+    
+    &--in-progress
+      @extend .card-header__status-bar
+      background-color: $status-in-progress
+
+    &--true
+      @extend .card-header__status-bar
+      background-color: $status-true
+
+    &--false
+      @extend .card-header__status-bar
+      background-color: $status-false
+
+    &--f
+      @extend .card-header__status-bar
+      background-color: $rating-f
+
+    &--d
+      @extend .card-header__status-bar
+      background-color: $rating-d
+
+    &--c
+      @extend .card-header__status-bar
+      background-color: $rating-c
+
+    &--b
+      @extend .card-header__status-bar
+      background-color: $rating-b
+
+    &--a
+      @extend .card-header__status-bar
+      background-color: $rating-a
+
+  &__content
+    padding: 10px 10px 14px 10px
+    font-family: $body-font
+    color: $header-card-content-color
+    font-size: 14px

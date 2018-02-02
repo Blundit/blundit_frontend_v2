@@ -23,9 +23,9 @@ class Header extends Component {
 
 
   updateHeaderScroll(e) {
-    if (window.scrollY > 30 && this.state.showShadow == false) {
+    if (window.scrollY > 30 && this.state.showShadow === false) {
       this.setState({showShadow: true})
-    } else if (window.scrollY <= 30 && this.state.showShadow == true) {
+    } else if (window.scrollY <= 30 && this.state.showShadow === true) {
       this.setState({showShadow: false })
     }
   }

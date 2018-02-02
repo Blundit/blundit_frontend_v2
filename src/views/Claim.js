@@ -103,7 +103,7 @@ class Claim extends Component {
         {this.state.claimLoaded != true &&
           <div>Loading...</div>
         }
-        {this.state.claimLoaded == true &&
+        {this.state.claimLoaded === true &&
           <React.Fragment>
             <ClaimHeader claim={claim} toggleBookmark={this.toggleBookmark} />
             <CategoriesList type="claim" categories={claim.categories} />

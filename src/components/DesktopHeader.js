@@ -15,16 +15,11 @@ const mapDispatchToProps = (dispatch) => {
 
 
 class DesktopHeader extends Component {
-  constructor() {
-    super()
-  }
-
-
   render() {
     const { user, menu_items, showShadow } = this.props;
     return <div className={`header-desktop ${showShadow ? 'header-desktop--shadow' : ''} `}>
       <div className="header-desktop__logo">
-        <img src="/images/logo_wordmark.png"/>
+        <img src="/images/logo_wordmark.png" alt="Blundit"/>
       </div>
       <div className="header-desktop__links">
         {menu_items.map((item, index) =>

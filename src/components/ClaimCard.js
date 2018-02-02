@@ -6,7 +6,8 @@ import TimeFormatting from './../utilities/TimeFormatting'
 
 
 class ClaimCard extends Component {
-  getCategoryIcon = category => (category && category.name) ? <span className={Icons.get('category_'+category.id)} /> : <span />
+  // TODO: Make the Icons class output the span in addition to just the class
+  getCategoryIcon = category => (category && category.name) ? <span className={Icons.get(category.id)} /> : <span />
 
   getStatusClass = status => {
     if (!status) status = "unknown"

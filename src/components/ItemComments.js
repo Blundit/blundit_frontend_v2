@@ -17,7 +17,7 @@ class ItemComments extends Component {
   render() {
     const { type, id } = this.props
 
-    return <Card title="commemnts">
+    return <Card title="comments">
       <div className={`${type}-comments`}>
         Comments cluster will go here.
       </div>

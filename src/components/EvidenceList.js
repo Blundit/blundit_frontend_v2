@@ -12,7 +12,7 @@ class EvidenceList extends Component {
       <div className={`${type}-evidence`}>
         <div className={`${type}-evidence__list`}>
           {evidences.map((item, index) => {
-            <EvidenceListItem key={`${type}-evidence-${index}`} type={type} item={item} />
+            return <EvidenceListItem key={`${type}-evidence-${index}`} type={type} item={item} />
           })}
         </div>
         <div className={`${type}-evidence__add`}>

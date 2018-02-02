@@ -158,3 +158,71 @@
           margin-right: 4px
           font-size: $icon-size
 
+
+.experts-list
+  width: 100%
+  
+  &__items
+
+  &__item
+    width: 100%
+    display: grid
+    grid-template-columns: 40px calc(100% - 100px) 40px
+    grid-gap: 10px
+    margin-bottom: 5px
+
+    &-avatar
+      border-radius: 40px
+      width: 40px
+      height: 40px
+      border: 2px solid $expert-border-color
+      +cover
+
+    &-rating
+      font-size: 24px
+      font-family: $body-font
+      font-weight: bold
+      color: $white-color
+      text-align: center
+      padding: 5px 0px 0px 0px
+
+      &--unknown
+        @extend .experts-list__item-rating
+        background-color: $rating-unknown
+      
+      &--f
+        @extend .experts-list__item-rating
+        background-color: $rating-f
+      
+      &--d
+        @extend .experts-list__item-rating
+        background-color: $rating-d
+      
+      &--c
+        @extend .experts-list__item-rating
+        background-color: $rating-c
+      
+      &--b
+        @extend .experts-list__item-rating
+        background-color: $rating-b
+      
+      &--a
+        @extend .experts-list__item-rating
+        background-color: $rating-a
+    &-text
+      font-family: $body-font
+      padding-top: 2px
+
+      a
+        color: $text-color
+        text-decoration: none
+
+
+      &__name
+        font-weight: bold
+      
+      &__occupation
+        white-space: nowrap
+        text-overflow: ellipsis
+        overflow: hidden
+

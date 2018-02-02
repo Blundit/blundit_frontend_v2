@@ -21,10 +21,10 @@ class Card extends Component {
         <div className="card__strip-title">{title}</div>
         <div className="card__strip-chevron" onClick={this.toggleOpen}>
           <span style={{display: (this.state.open === false ? "none" : "inline") }}>
-            <span class="fas fa-chevron-up" />
+            <span className="fas fa-chevron-up" />
           </span>
           <span style={{display: (this.state.open === true ? "none" : "inline") }}>
-            <span class="fas fa-chevron-down" />
+            <span className="fas fa-chevron-down" />
           </span>
         </div>
       </div>

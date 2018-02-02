@@ -1,0 +1,32 @@
+.categories-list
+  &__description
+    font-family: $body-font
+    font-size: 12px
+    color: $text-color
+
+  &__items
+    line-height: 3em
+
+    a
+      text-decoration: none
+      color: $white-color
+
+  &__item
+    background-color: $category-link-color
+    color: $white-color
+    font-family: $body-font
+    font-weight: bold
+    font-size: 14px
+    border-radius: 30px
+    text-transform: uppercase
+    padding: 4px 12px
+    margin-right: 10px
+    +fast_transition(all)
+    border: 1px solid $category-link-color
+
+    &:hover
+      background-color: $white-color
+      color: $category-link-color
+      +fast_transition(all)
+
+

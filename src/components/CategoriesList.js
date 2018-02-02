@@ -9,10 +9,10 @@ class CategoriesList extends Component {
 
     return <Card title="Categories">
       <div className="categories-list">
-        <div className="categories-list__description">{type}</div>
+        <div className="categories-list__description">{`This ${type} is in the following categories:`}</div>
         <div className="categories-list__items">
-          {categories.map((item) => {
-            <Link to={`/categories/`}>
+          {categories.map((item, index) => {
+            return <Link to={`/categories/${item.id}`} key={`category_list_${index}`}>
             <span className="categories-list__item">{item.name}</span>
             </Link>
           })}
