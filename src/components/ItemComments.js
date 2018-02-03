@@ -70,7 +70,7 @@ class ItemComments extends Component {
   }
 
 
-  submitForm = (value) => {
+  submitForm = (values, event, formApi) => {
     const { id, type } = this.props
 
     this.setState({ commentError: false })
@@ -81,7 +81,7 @@ class ItemComments extends Component {
         prediction_id: id,
         expert_id: id,
       },
-      data: { content: value.content },
+      data: { content: values.content },
     }
 
     API.do(params).then((result) => {
@@ -91,18 +91,18 @@ class ItemComments extends Component {
       } else if (result.error === true) {
         this.setState({ commentError: true })
       } else {
+        formApi.setValue('content', null)
         this.loadComments()
       }
     }, 
     (reject) => {
-      console.error("problem adding comment");
       this.setState({ commentError: true })
     })
   }
 
   commentForm() {
     return <Form
-      onSubmit={submittedValues => this.submitForm(submittedValues) }
+      onSubmit={(submittedValues, event, formApi) => this.submitForm(submittedValues, event, formApi) }
       validateError={errorValidator}
       validateOnSubmit={"yes"}
       dontValidateOnMount={"yes"}>

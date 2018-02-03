@@ -45,24 +45,31 @@ class TimeFormatting {
     const minutes = endTime.diff(startTime, 'minutes')
     const seconds = endTime.diff(startTime, 'seconds')
     
-    console.log(years, months, weeks)
     let remaining;
 
     if (days > 0) {
-      remaining = days + " days"
+      remaining = days + " day"
+      if (days > 1) remaining += "s"
+      
       if (weeks > 0 && months == 0 && years == 0) {
-        remaining = weeks + " weeks"
+        remaining = weeks + " week"
+        if (weeks > 1) remaining += "s"
       } else if (weeks > 0 && months > 0 && years == 0) {
-        remaining = months + " months"
+        remaining = months + " month"
+        if (months > 1) remaining += "s"
       } else if (weeks > 0 && months > 0 && years > 0) {
-        remaining = years + " years"
+        remaining = years + " year"
+        if (years > 1) remaining += "s"
       }
     } else if (days <= 0 && hours > 0) {
-      remaining = hours + " hours"
+      remaining = hours + " hour"
+      if (hours > 1) remaining += "s"
     } else if (days <= 0 && hours <= 0 && minutes > 0) {
-      remaining = minutes + " minutes"
+      remaining = minutes + " minute"
+      if (minutes > 1) remaining += "s"
     } else if (days <= 0 && hours <= 0 && minutes <= 0) {
-      remaining = seconds + " seconds"
+      remaining = seconds + " second" + seconds
+      if (seconds > 1) remaining += "s"
     }
 
     return remaining + " ago"

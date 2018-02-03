@@ -44,7 +44,7 @@ class ExpertHeader extends Component {
   }
 
 
-  getRatingClass = rating => "expert-card__rating--" + (!rating ? "unknown" : this.getLetterGrade(rating))
+  getRatingClass = rating => "card-header__status--" + (!rating ? "unknown" : this.getLetterGrade(rating))
 
 
   formatRatingText = rating => {
