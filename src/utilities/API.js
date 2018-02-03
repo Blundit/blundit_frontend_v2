@@ -378,9 +378,11 @@ class API {
     let headers = {};
     if (Cookies.getCookie("Access-Token")) {
       headers = {
-        "Authorization": "Token " + Cookies.getCookie("Access-Token"),
-        "Uid" : Cookies.getCookie('Uid'),
-        "Client" : Cookies.getCookie('Client'),
+        "Access-Token": "Token " + Cookies.getCookie("Access-Token"),
+        "Uid": Cookies.getCookie('Uid'),
+        "Client": Cookies.getCookie('Client'),
+        "credentials": 'same-origin',
+        "Accept": "application/json"
       }
     }
 
