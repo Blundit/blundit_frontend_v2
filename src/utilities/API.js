@@ -376,8 +376,12 @@ class API {
     }
 
     let headers = {};
-    if (Cookies.getCookie("auth_token")) {
-      headers = { "Authorization": "Token " + Cookies.getCookie("auth_token") };
+    if (Cookies.getCookie("Access-Token")) {
+      headers = {
+        "Authorization": "Token " + Cookies.getCookie("Access-Token"),
+        "Uid" : Cookies.getCookie('Uid'),
+        "Client" : Cookies.getCookie('Client'),
+      }
     }
 
     return fetch(this.path(params), {
@@ -427,7 +431,7 @@ class API {
   }
 
   static clearUser () {
-    Cookies.deleteCookie("auth_token");
+    Cookies.deleteCookie("Access-Token");
   }
 }
 

@@ -51,7 +51,7 @@ class Register extends Component {
       <div className="container">
         <div>
           <div>{this.state.email}</div>
-          {this.state.registerSuccess === false && Cookies.getCookie("auth_token") === null && 
+          {this.state.registerSuccess === false && Cookies.getCookie("Access-Token") === null && 
             this.registerForm()
           }
 
@@ -60,7 +60,7 @@ class Register extends Component {
               <div>Thanks for registering! You'll get a confirmation email shortly, which will allow you to properly log-in.</div>
             </React.Fragment>
           }
-          {(user && user.id && Cookies.getCookie("auth_token") !== null) &&
+          {(user && user.id && Cookies.getCookie("Access-Token") !== null) &&
             <React.Fragment>
               <div>You're registered, and logged in. You shouldn't be seeing this.</div>
             </React.Fragment>

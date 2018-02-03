@@ -1,0 +1,81 @@
+.prediction-comments, .expert-comments, .claim-comments
+  font-family: $body-font
+  &--no-comments
+    font-size: 12px
+    font-style: italic
+    color: $empty-text-color
+
+  &__add-comment
+    margin-top: 20px
+    padding-top: 10px
+
+    textarea
+      width: 100%
+      border: 1px solid $default-textarea-border
+      font-family: $body-font
+      font-size: 14px
+      padding: 10px
+      box-sizing: border-box
+
+    button
+      width: 100%
+      border: none
+      color: $white-color
+      font-family: $body-font
+      font-size: 12px
+      background-color: $default-button-color
+      border: 1px solid $default-button-color
+      border-radius: 2px
+      padding: 5px 0px
+      margin-top: 5px
+      text-transform: uppercase
+      cursor: pointer
+      +fast_transition(all)
+
+      &:hover
+        background-color: $white-color
+        color: $default-button-color
+
+    .error
+      font-size: 12px
+      font-style: italic
+      color: $error-color
+
+    &--not-logged-in
+      font-size: 12px
+      font-style: italic
+      color: $empty-text-color
+
+.comments__comment
+  width: 100%
+  display: grid
+  grid-template-columns: 40px 1fr
+  grid-gap: 10px
+  margin-bottom: 5px
+
+  &-user-avatar
+    border-radius: 40px
+    width: 40px
+    height: 40px
+    border: 2px solid $comment-user-border-color
+    +cover
+  
+  &-content
+    font-family: $body-font
+    
+    &-user-name
+      font-size: 13px
+      color: $comment-name-color
+      line-height: 1em
+      padding-bottom: 3px
+
+    &-created-at
+      font-size: 10px
+      color: $comment-date-color
+      line-height: 1em
+      padding-bottom: 2px
+
+    &-text
+      font-size: 12px
+      color: $comment-text-color
+      line-height: 1em
