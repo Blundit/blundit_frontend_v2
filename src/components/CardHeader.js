@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import BookmarkDisplay from './BookmarkDisplay';
 import Icons from './../utilities/Icons'
 
-class Card extends Component {
+class CardHeader extends Component {
   constructor() {
     super()
     this.state = {
@@ -45,4 +45,4 @@ class Card extends Component {
   }
 }
 
-export default Card
+export default CardHeader
