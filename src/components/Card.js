@@ -20,7 +20,7 @@ class Card extends Component {
     return <div className={(this.state.open === true ? "card" : "card--closed")} >
       <div className="card__strip">
         <div className="card__strip-title">{icon ? icon : ""} {title}</div>
-        {(dropDown === null || dropDown === true) &&
+        {(dropDown !== false) &&
           <div className="card__strip-chevron" onClick={this.toggleOpen}>
             <span style={{display: (this.state.open === false ? "none" : "inline") }}>
               <span className="fas fa-chevron-up" />

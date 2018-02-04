@@ -129,7 +129,7 @@ class ItemComments extends Component {
     const { comments } = this.state
     const icon = <span className="fas fa-comment" />
 
-    return <Card title={`comments (${comments.length})`} icon={icon} >
+    return <Card title={`comments (${((comments && comments.length) ? comments.length: "N/A")})`} icon={icon} >
       <div className={`${type}-comments`}>
         {comments.length == 0 &&
           <div className={`${type}-comments--no-comments`}>

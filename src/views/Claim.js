@@ -59,33 +59,43 @@ class Claim extends Component {
     const slug = params.slug
     const cacheCheck = Cache.invalid(claim, { type: 'claim', key: slug, search: '', page: '', sort: '', created: Date.now() })
     if (cacheCheck !== true) {
-      const params = {
-        path: "claim",
-        path_variables: {
-          claim_id: slug
-        },
-      }
-
-      API.do(params).then((result) => {
-        let claim = result.claim
-        claim.experts = result.experts
-        set_claim({ type: 'claim', key: slug, search: '', page: '', sort: '', items: claim, created: Date.now() });
-        this.setState({ claimLoaded: true })
-      },
-      (reject) => {
-        console.error(reject);
-      });
+      this.loadClaim()
     }
   }
 
 
-  addEvidence (new_evidence) {
+  loadClaim = () => {
+    const { set_claim, match: { params } } = this.props;
+    const slug = params.slug
+
+    const api_params = {
+      path: "claim",
+      path_variables: {
+        claim_id: slug
+      },
+    }
+
+    API.do(api_params).then((result) => {
+      let claim = result.claim
+      claim.experts = result.experts
+      set_claim({ type: 'claim', key: slug, search: '', page: '', sort: '', items: claim, created: Date.now() });
+      this.setState({ claimLoaded: true })
+    },
+    (reject) => {
+      console.error(reject);
+    });
   }
 
 
-  addExpert (new_expert) {
+  expertAdded = () => {
+    this.loadClaim()
   }
 
+
+  evidenceAdded () {
+    this.loadClaim()
+  }
+  
 
   toggleBookmark () {
 
@@ -108,11 +118,11 @@ class Claim extends Component {
             <ClaimHeader claim={claim} toggleBookmark={this.toggleBookmark} />
             <ShareItem type="claim" object={claim} />
             <CategoriesList type="claim" categories={claim.categories} />
-            <EvidenceList type="for" addEvidence={this.addEvidence} evidences={claim.evidences} />
-            <EvidenceList type="against" addEvidence={this.addEvidence} evidences={claim.evidences} />
+            <EvidenceList type="for" evidenceAdded={this.evidenceAdded} evidences={claim.evidences} />
+            <EvidenceList type="against" evidenceAdded={this.evidenceAdded} evidences={claim.evidences} />
             <ExpertsList type="agree" experts={experts} />
             <ExpertsList type="disagree" experts={experts} />
-            <AddExpertToItem type="claim" addExpert={this.addExpert} />
+            <AddExpertToItem type="claim" itemAdded={this.expertAdded} id={claim.id} />
             <VoteForItem type="claim" processVote={this.processVote} claim={claim} />
             <ItemComments type="claim" id={claim.id} />
           </React.Fragment>

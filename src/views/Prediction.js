@@ -59,32 +59,41 @@ class Prediction extends Component {
     const slug = params.slug
     const cacheCheck = Cache.invalid(prediction, { type: 'prediction', key: slug, search: '', page: '', sort: '', created: Date.now() })
     if (cacheCheck !== true) {
-      const params = {
-        path: "prediction",
-        path_variables: {
-          prediction_id: slug
-        },
-      }
-
-      API.do(params).then((result) => {
-        let prediction = result.prediction
-        prediction.experts = result.experts
-        set_prediction({ type: 'prediction', key: slug, search: '', page: '', sort: '', items: prediction, created: Date.now() });
-        this.setState({ predictionLoaded: true })
-      },
-      (reject) => {
-        console.error(reject);
-      });
+      this.loadPrediction()
     }
   }
 
 
-  addEvidence (new_evidence) {
-    console.log("add evidence")
+  loadPrediction = () => {
+    const { set_prediction, match: { params } } = this.props;
+    const slug = params.slug
+
+    const api_params = {
+      path: "prediction",
+      path_variables: {
+        prediction_id: slug
+      },
+    }
+
+    API.do(api_params).then((result) => {
+      let prediction = result.prediction
+      prediction.experts = result.experts
+      set_prediction({ type: 'prediction', key: slug, search: '', page: '', sort: '', items: prediction, created: Date.now() });
+      this.setState({ predictionLoaded: true })
+    },
+    (reject) => {
+      console.error(reject);
+    });
   }
 
 
-  addExpert (new_expert) {
+  expertAdded = () => {
+    this.loadPrediction()
+  }
+
+
+  evidenceAdded = () => {
+    this.loadPrediction()
   }
 
 
@@ -109,11 +118,11 @@ class Prediction extends Component {
             <PredictionHeader prediction={prediction} toggleBookmark={this.toggleBookmark} />
             <ShareItem type="prediction" object={prediction} />
             <CategoriesList type="prediction" categories={prediction.categories} />
-            <EvidenceList type="for" addEvidence={this.addEvidence} evidences={prediction.evidences} />
-            <EvidenceList type="against" addEvidence={this.addEvidence} evidences={prediction.evidences} />
+            <EvidenceList type="for" evidenceAdded={this.evidenceAdded} evidences={prediction.evidences} />
+            <EvidenceList type="against" evidenceAdded={this.evidenceAdded} evidences={prediction.evidences} />
             <ExpertsList type="agree" experts={experts} />
             <ExpertsList type="disagree" experts={experts} />
-            <AddExpertToItem type="prediction" addExpert={this.addExpert} />
+            <AddExpertToItem type="prediction" itemAdded={this.expertAdded} id={prediction.id} />
             <VoteForItem type="prediction" processVote={this.processVote} prediction={prediction} />
             <ItemComments type="prediction" id={prediction.id} />
           </React.Fragment>

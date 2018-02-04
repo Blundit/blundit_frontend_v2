@@ -19,10 +19,6 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch, ownProps) => {
   // TODO: Do I need to call some other dispatch?
   return {
-    set_claim_list: (ownProps) => dispatch({ 
-      type: "SET_CLAIM_LIST",
-      value: ownProps
-    })
   }
 }
 
@@ -39,15 +35,13 @@ const errorValidator = (values) => {
 
 const expertErrorValidator = (values) => { 
   return {
-    title: !values.title || values.title.trim() === '' ? 'Please enter a title' : null,
-    description: !values.description || values.description.trim() === '' ? 'Please enter a description' : null,
-    url: !values.url || values.url.trim() === '' ? 'Please enter a URL' : null,
-    category: !values.category ? 'Select a Category' : null
+    expert: !values.expert ? 'Select an Expert' : null
   };
 };
 
 
 class NewClaim extends Component {
+  // TODO: Reuse this code better between this and AddExpertToItem
   constructor(props) {
     super()
 
@@ -60,6 +54,17 @@ class NewClaim extends Component {
       experts: [{ label: "Loading Experts...", value:"" }]
     }
   }
+
+
+  resetNewClaim = () => {
+    this.setState({
+      claimAdded: false,
+      createdClaim: null,
+      claimError: false,
+      addExpertError: false
+    })
+  }
+
 
   componentDidMount() {
     this.loadCategories()
@@ -75,12 +80,15 @@ class NewClaim extends Component {
 
     API.do(params).then((result) => {
       // TODO: Differentiate login errors
+      if (result.error) {
+        this.setState({ categories: [{ label: "Unable to Load Categories", value: "" }] })
+      } else {
+        const categories = result.map((item) => {
+          return { label: item.name, value: item.id }
+        })
 
-      const categories = result.map((item) => {
-        return { label: item.name, value: item.id }
-      })
-
-      this.setState({ categories: categories })
+        this.setState({ categories: categories })
+      }
     }, 
     (reject) => {
       this.setState({ categories: [{ label: "Unable to Load Categories", value: "" }] })
@@ -96,11 +104,15 @@ class NewClaim extends Component {
 
     API.do(params).then((result) => {
       // TODO: Differentiate login errors
-      const experts = result.map((item) => {
-        return { label: item.title, value: item.id }
-      })
+      if (result.error) {
+        this.setState({ experts: [{ label: "Unable to Load Experts", value: "" }] })
+      } else {
+        const experts = result.map((item) => {
+          return { label: item.title, value: item.id }
+        })
 
-      this.setState({ experts: experts })
+        this.setState({ experts: experts })
+      }
     }, 
     (reject) => {
       this.setState({ experts: [{ label: "Unable to Load Experts", value: "" }] })
@@ -150,12 +162,12 @@ class NewClaim extends Component {
     this.setState({ addExpertError: false })
 
     let params = {
-      path: "create_claim",
+      path: "add_expert_to_claim",
+      path_variables: {
+        claim_id: this.state.createdClaim.id
+      },
       data: { 
-        title: values.title,
-        description: values.description,
-        url: values.url,
-        category: values.category
+        id: values.expert,
       },
     }
 
@@ -167,7 +179,6 @@ class NewClaim extends Component {
         this.setState({ addExpertError: true })
       } else {
         formApi.setValue('expert', null)
-      
         this.setState({ expertAddedToClaim: true })
       }
     }, 
@@ -221,25 +232,28 @@ class NewClaim extends Component {
 
 
   expertForm() {
-    return <Form
-      onSubmit={(submittedValues, event, formApi) => this.submitAddExpertToClaim(submittedValues, event, formApi) }
-      validateError={expertErrorValidator}
-      validateOnSubmit={"yes"}
-      dontValidateOnMount={"yes"}>
-      { formApi => (
-        <form onSubmit={formApi.submitForm} id="form3">
-          <div className="input-field">
-            <Select field="expert" id="expert" options={this.state.experts} />
-            <br/>
-            {formApi.errors.experts && <span className="input-error">{formApi.errors.experts}</span>}
-          </div>
-          <button type="submit">attach expert</button>
-          {this.state.addExpertError &&
-            <span className="input-error">Unable to connect expert to claim: please try again later.</span>
-          }
-        </form>
-      )}
-    </Form>
+    return <React.Fragment>
+      <Form
+        onSubmit={(submittedValues, event, formApi) => this.submitAddExpertToClaim(submittedValues, event, formApi) }
+        validateError={expertErrorValidator}
+        validateOnSubmit={"yes"}
+        dontValidateOnMount={"yes"}>
+        { formApi => (
+          <form onSubmit={formApi.submitForm} id="form3">
+            <div className="input-field">
+              <Select field="expert" id="expert" options={this.state.experts} />
+              <br/>
+              {formApi.errors.experts && <span className="input-error">{formApi.errors.experts}</span>}
+            </div>
+            <button type="submit">attach expert</button>
+            {this.state.addExpertError &&
+              <span className="input-error">Unable to connect expert to claim: please try again later.</span>
+            }
+            </form>
+          )}
+      </Form>
+      <button onClick={this.resetNewClaim}>add new claim</button>
+    </React.Fragment>
   }
 
   
@@ -254,10 +268,18 @@ class NewClaim extends Component {
         }
         {this.state.claimAdded === true &&
           <Card title="select expert" dropDown={false}>
-            <React.Fragment>
-              <div>No someone who's making the claim '{this.state.createdClaim.title}'? Select an Expert below!</div>
-              {this.expertForm()}
-            </React.Fragment>
+            {this.state.expertAddedToClaim === false &&
+              <React.Fragment>
+                <div>No someone who's making the claim '{this.state.createdClaim.title}'? Select an Expert below!</div>
+                {this.expertForm()}
+              </React.Fragment>
+            }
+            {this.state.expertAddedToClaim === true &&
+              <React.Fragment>
+                <div>Success! You've added this expert to your claim. Click below to add another claim.</div>
+                <button onClick={this.resetNewClaim}>add new claim</button>
+              </React.Fragment>
+            }
           </Card>
         }
       </div>
