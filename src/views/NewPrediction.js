@@ -281,7 +281,7 @@ class NewPrediction extends Component {
             {this.state.expertAddedToPrediction}
             {this.state.expertAddedToPrediction === false &&
               <React.Fragment>
-                <div>No someone who's making the prediction '{this.state.createdPrediction.title}'? Select an Expert below!</div>
+                <div>Know someone who's making the prediction '{this.state.createdPrediction.title}'? Select an Expert below!</div>
                 {this.expertForm()}
               </React.Fragment>
             }

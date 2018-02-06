@@ -30,15 +30,13 @@ const errorValidator = (values) => {
     description: !values.description || values.description.trim() === '' ? 'Please enter a description' : null,
     occupation: !values.occupation || values.occupation.trim() === '' ? 'Please enter an occupation' : null,
     website: !values.website || values.website.trim() === '' ? 'Please enter a website' : null,
-    email: !values.email || values.email.trim() === '' ? 'Please enter an email' : null,
-    city: !values.city || values.city.trim() === '' ? 'Please enter a city' : null,
   };
 };
 
 
 const expertErrorValidator = (values) => { 
   return {
-    expert: !values.expert ? 'Select an Expert' : null
+    prediction: !values.prediction ? 'Select a Prediction' : null
   };
 };
 
@@ -179,6 +177,7 @@ class NewExpert extends Component {
 
     API.do(params).then((result) => {
       // TODO: Differentiate login errors
+      console.log(result)
       if (!result) {
         this.setState({ expertError: true })
       } else if (result.error === true) {
@@ -200,22 +199,25 @@ class NewExpert extends Component {
 
   submitAddClaimOrPredictionToExpert = (values, event, formApi) => {
     const { id, type } = this.props
+    console.log("submitting claims'")
+
 
     this.setState({ addPredictioError: false })
     // TODO FIX THIS
-    return
     let params = {
-      path: "add_claim_to_expert",
+      path: "add_prediction_to_expert",
       path_variables: {
         expert_id: this.state.createdExpert.id
       },
       data: { 
-        id: values.expert,
+        id: values.prediction,
       },
     }
 
     API.do(params).then((result) => {
       // TODO: Differentiate login errors
+      console.log("result1")
+      console.log(result)
       if (!result) {
         this.setState({ addPredictionError: true })
       } else if (result.error === true) {
@@ -336,18 +338,13 @@ class NewExpert extends Component {
         dontValidateOnMount={"yes"}>
         { formApi => (
           <form onSubmit={formApi.submitForm} id="form3">
-            <div>Select a prediction or claim to add to this expert.</div>
+            <div>Select a prediction to add to this expert.</div>
             <div className="input-field">
               <Select field="prediction" id="prediction" options={this.state.predictions} />
               <br/>
-              {formApi.errors.predictions && <span className="input-error">{formApi.errors.predictions}</span>}
+              {formApi.errors.prediction && <span className="input-error">{formApi.errors.prediction}</span>}
             </div>
-            <div className="input-field">
-              <Select field="claim" id="claim" options={this.state.claims} />
-              <br/>
-              {formApi.errors.claims && <span className="input-error">{formApi.errors.claims}</span>}
-            </div>
-            <button type="submit">attach prediction/claim</button>
+            <button type="submit">attach prediction</button>
             {this.state.addExpertError &&
               <span className="input-error">Unable to connect expert to expert: please try again later.</span>
             }
@@ -372,7 +369,7 @@ class NewExpert extends Component {
           <Card title="select expert" dropDown={false}>
             {this.state.predictionAddedToExpert === false &&
               <React.Fragment>
-                <div>No someone who's making the expert '{this.state.createdExpert.title}'? Select an Expert below!</div>
+                <div>Know a claim that '{this.state.createdExpert.name}' is making? Select a claim or prediction below!</div>
                 {this.claimOrPredictionForm()}
               </React.Fragment>
             }

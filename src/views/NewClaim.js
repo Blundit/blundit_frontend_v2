@@ -270,7 +270,7 @@ class NewClaim extends Component {
           <Card title="select expert" dropDown={false}>
             {this.state.expertAddedToClaim === false &&
               <React.Fragment>
-                <div>No someone who's making the claim '{this.state.createdClaim.title}'? Select an Expert below!</div>
+                <div>Know someone who's making the claim '{this.state.createdClaim.title}'? Select an Expert below!</div>
                 {this.expertForm()}
               </React.Fragment>
             }
