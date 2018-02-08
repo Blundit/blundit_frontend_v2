@@ -58,25 +58,33 @@ class Expert extends Component {
     const slug = params.slug
     const cacheCheck = Cache.invalid(expert, { type: 'expert', key: slug, search: '', page: '', sort: '', created: Date.now() })
     if (cacheCheck !== true) {
-      const params = {
-        path: "expert",
-        path_variables: {
-          expert_id: slug
-        },
-      }
-
-      API.do(params).then((result) => {
-        let expert = result.expert
-        expert.claims = result.claims
-        expert.predictions = result.predictions
-        console.log(expert)
-        set_expert({ type: 'expert', key: slug, search: '', page: '', sort: '', items: expert, created: Date.now() });
-        this.setState({ expertLoaded: true })
-      },
-      (reject) => {
-        console.error(reject);
-      });
+      this.loadExpert()
     }
+  }
+
+
+  loadExpert = () => {
+    const { expert, set_expert, match: { params } } = this.props;
+    const slug = params.slug
+
+    const api_params = {
+      path: "expert",
+      path_variables: {
+        expert_id: slug
+      },
+    }
+
+    API.do(api_params).then((result) => {
+      let expert = result.expert
+      expert.claims = result.claims
+      expert.predictions = result.predictions
+      console.log(expert)
+      set_expert({ type: 'expert', key: slug, search: '', page: '', sort: '', items: expert, created: Date.now() });
+      this.setState({ expertLoaded: true })
+    },
+    (reject) => {
+      console.error(reject);
+    });
   }
 
 
