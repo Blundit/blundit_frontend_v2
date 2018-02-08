@@ -131,24 +131,28 @@ class ItemComments extends Component {
 
     return <Card title={`comments (${((comments && comments.length) ? comments.length: "N/A")})`} icon={icon} >
       <div className={`${type}-comments`}>
-        {comments.length == 0 &&
-          <div className={`${type}-comments--no-comments`}>
-            This {type} has no comments.
-          </div>
+        {comments &&
+          <React.Fragment>
+            {comments.length == 0 &&
+              <div className={`${type}-comments--no-comments`}>
+                This {type} has no comments.
+              </div>
+            }
+            {comments.map((item, index) => {
+              return <ItemComment comment={item} key={`${type}-comment-${index}`} />
+            })}
+            <div className={`${type}-comments__add-comment`}>
+              {!user &&
+                <div className={`${type}-comments__add-comment--not-logged-in`}>
+                  You must be logged in to comment.
+                </div>            
+              }
+              {user && 
+                this.commentForm()
+              }
+            </div>
+          </React.Fragment>
         }
-        {comments.map((item, index) => {
-          return <ItemComment comment={item} key={`${type}-comment-${index}`} />
-        })}
-        <div className={`${type}-comments__add-comment`}>
-          {!user &&
-            <div className={`${type}-comments__add-comment--not-logged-in`}>
-              You must be logged in to comment.
-            </div>            
-          }
-          {user && 
-            this.commentForm()
-          }
-        </div>
       </div>
     </Card>
   }

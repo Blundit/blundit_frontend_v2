@@ -95,7 +95,9 @@ class Login extends Component {
     return <React.Fragment>
       <Form
         onSubmit={submittedValues => this.submitForm(submittedValues) }
-        validateError={errorValidator}>
+        validateError={errorValidator}
+        validateOnSubmit={"yes"}
+        dontValidateOnMount={"yes"}>
         { formApi => (
           <form onSubmit={formApi.submitForm} id="form2">
             <div>

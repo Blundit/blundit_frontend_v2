@@ -93,6 +93,10 @@ class Expert extends Component {
 
   }
 
+  claimOrPredictionAdded = () => {
+    this.loadExpert()
+  }
+
 
   render () {
     const { match: { params } } = this.props;
@@ -113,7 +117,7 @@ class Expert extends Component {
             <CategoriesList type="expert" categories={expert.categories} />
             <PredictionsList addPrediction={this.addPrediction} predictions={predictions} />
             <ClaimsList  addClaim={this.addClaim} claims={claims} />
-            <AddItemToExpert addItemToExpert={this.addItemToExpert} />
+            <AddItemToExpert itemAdded={this.claimOrPredictionAdded} id={expert.id} />
             <ItemComments type="expert" id={expert.id} />
           </React.Fragment>
         }

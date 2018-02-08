@@ -41,6 +41,9 @@ class Experts extends Component {
     const { experts, set_expert_list } = this.props;
     const { search, page, sort } = this.state;
 
+    const CacheCheck = Cache.invalid(experts, { type: 'expert', key: 'experts_list', search: search, page: page, sort: sort, created: Date.now() })
+
+    console.log("CacheCheck = ", CacheCheck)
 
 
     if (Cache.invalid(experts, { type: 'expert', key: 'experts_list', search: search, page: page, sort: sort, created: Date.now() })) {

@@ -26,6 +26,7 @@ class AddExpertToItem extends Component {
 
 
   componentDidMount() {
+    // TODO: Only load experts when user wants to actually add expert to item?
     this.loadExperts()
   }
 
