@@ -360,7 +360,7 @@ class NewExpert extends Component {
     return <div>
       <Header/>
       <div className="container">
-        {this.state.expertAdded == false &&
+        {this.state.expertAdded === false &&
           <Card title="enter info" dropDown={false}>
             {this.expertForm()}
           </Card>

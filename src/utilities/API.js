@@ -1,5 +1,7 @@
 import Cookies from './Cookies';
 import Sessions from './Sessions';
+import { connect } from 'react-redux'
+
 
 /*
 API Class.
@@ -89,6 +91,10 @@ class API {
         path: "claims/%claim_id%/vote",
         method: "POST"
       },
+      claim_override_vote: {
+        path: "claims/%claim_id%/override_vote",
+        method: "POST"
+      },
       predictions: {
         path: "predictions",
         method: "GET"
@@ -119,6 +125,10 @@ class API {
       },
       vote_for_prediction: {
         path: "predictions/%prediction_id%/vote",
+        method: "POST"
+      },
+      prediction_override_vote: {
+        path: "claims/%prediction_id%/override_vote",
         method: "POST"
       },
       experts: {
@@ -201,7 +211,7 @@ class API {
         method: "GET"
       },
       verify_token: {
-        path: "auth/validate_token?access-token=%accessToken%&client=%client%&uid=%uid%&",
+        path: "auth/validate_token?access-token=%accessToken%&client=%client%&uid=%uid%",
         method: "GET",
         non_api: true
       },
@@ -284,12 +294,12 @@ class API {
 
 
   static serverBase () {
-    // this.s = "http://localhost:5000/";
-    // if (window.location.href.indexOf("localhost", 0) === -1) {
-      // this.s = "https://fast-earth-30912.herokuapp.com/";
-    // }
+    this.s = "http://localhost:5000/";
+    if (window.location.href.indexOf("localhost", 0) === -1) {
+      this.s = "https://fast-earth-30912.herokuapp.com/";
+    }
 
-    this.s = "https://fast-earth-30912.herokuapp.com/";
+    // this.s = "https://fast-earth-30912.herokuapp.com/";
 
     return this.s;
   }
@@ -313,7 +323,7 @@ class API {
       p = p.replace('%' + key + '%', value);
     }
 
-    if (this.paths(params.path).method === "GET") {
+    if (this.paths(params.path).method === "GET" && this.paths(params.path).non_api !== true) {
       p = p + this.dataAsGet(params.data);
     }
     
@@ -322,6 +332,7 @@ class API {
 
 
   static dataAsGet (data) {
+
     let d = "?";
 
     for (let key in data) {
@@ -336,7 +347,7 @@ class API {
   static data (params) {
     let data;
 
-    if (params.data != null) {
+    if (params.data !== null) {
       data = params.data;
     } else {
       data = {};
@@ -376,7 +387,7 @@ class API {
     }
 
     let headers = {};
-    if (Cookies.getCookie("Access-Token")) {
+    if (Cookies.getCookie("Access-Token") && params.user !== null) {
       headers = {
         "Access-Token": "Token " + Cookies.getCookie("Access-Token"),
         "Uid": Cookies.getCookie('Uid'),

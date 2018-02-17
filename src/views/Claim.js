@@ -8,6 +8,7 @@ import EvidenceList from './../components/EvidenceList'
 import ExpertsList from './../components/ExpertsList'
 import AddExpertToItem from './../components/AddExpertToItem'
 import VoteForItem from './../components/VoteForItem'
+import ClaimAdmin from './../components/ClaimAdmin'
 import ItemComments from './../components/ItemComments'
 import ShareItem from './../components/ShareItem'
 
@@ -92,7 +93,11 @@ class Claim extends Component {
   }
 
 
-  evidenceAdded () {
+  evidenceAdded = () => {
+    this.loadClaim()
+  }
+
+  updatedClaim = () => {
     this.loadClaim()
   }
   
@@ -103,14 +108,15 @@ class Claim extends Component {
 
 
   render () {
-    const { match: { params } } = this.props;
+    const { match: { params }, user } = this.props
     const claim = this.claimData()
     const experts = claim.experts ? claim.experts : []
+    
     
     return <div>
       <Header/>
       <div className="container">
-        {this.state.claimLoaded != true &&
+        {this.state.claimLoaded !== true &&
           <div>Loading...</div>
         }
         {this.state.claimLoaded === true &&
@@ -124,6 +130,9 @@ class Claim extends Component {
             <ExpertsList type="disagree" experts={experts} />
             <AddExpertToItem type="claim" itemAdded={this.expertAdded} id={claim.id} />
             <VoteForItem type="claim" processVote={this.processVote} claim={claim} />
+            {(user && user.permissions > 0) &&
+              <ClaimAdmin id={claim.id} updatedClaim={this.updatedClaim} />
+            }
             <ItemComments type="claim" id={claim.id} />
           </React.Fragment>
         }

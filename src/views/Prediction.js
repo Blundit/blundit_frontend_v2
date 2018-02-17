@@ -8,6 +8,7 @@ import EvidenceList from './../components/EvidenceList'
 import ExpertsList from './../components/ExpertsList'
 import AddExpertToItem from './../components/AddExpertToItem'
 import VoteForItem from './../components/VoteForItem'
+import PredictionAdmin from './../components/PredictionAdmin'
 import ItemComments from './../components/ItemComments'
 import ShareItem from './../components/ShareItem'
 
@@ -97,20 +98,25 @@ class Prediction extends Component {
   }
 
 
+  updatedPrediction = () => {
+    this.loadPrediction()
+  }
+
+
   toggleBookmark () {
 
   }
 
 
   render () {
-    const { match: { params } } = this.props;
+    const { match: { params }, user } = this.props;
     const prediction = this.predictionData()
     const experts = prediction.experts ? prediction.experts : []
     
     return <div>
       <Header/>
       <div className="container">
-        {this.state.predictionLoaded != true &&
+        {this.state.predictionLoaded !== true &&
           <div>Loading...</div>
         }
         {this.state.predictionLoaded === true &&
@@ -124,6 +130,9 @@ class Prediction extends Component {
             <ExpertsList type="disagree" experts={experts} />
             <AddExpertToItem type="prediction" itemAdded={this.expertAdded} id={prediction.id} />
             <VoteForItem type="prediction" processVote={this.processVote} prediction={prediction} />
+            {user && user.permissions > 0 &&
+              <PredictionAdmin updatedPrediction={this.updatedPrediction} />
+            }
             <ItemComments type="prediction" id={prediction.id} />
           </React.Fragment>
         }

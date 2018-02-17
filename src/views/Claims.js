@@ -43,8 +43,6 @@ class Claims extends Component {
     const { search, page, sort } = this.state;
 
     const CacheCheck = Cache.invalid(claims, { type: 'claim', key: 'claims_list', search: search, page: page, sort: sort, created: Date.now() })
-    console.log("what")
-    console.log(CacheCheck)
     if (Cache.invalid(claims, { type: 'claim', key: 'claims_list', search: search, page: page, sort: sort, created: Date.now() })) {
       const params = {
         path: "claims",
@@ -78,7 +76,7 @@ class Claims extends Component {
           {items === undefined && <p>No claims</p>}
           {items &&
             items.map((item, index) => (
-              <ClaimCard key={"claim_"+index} {...item} voteable_at={new Date("2018-02-01")} status={"in-progress"} />
+              <ClaimCard key={"claim_"+index} {...item} voteable_at={new Date("2018-02-01")} />
             )
           )}
         </div>

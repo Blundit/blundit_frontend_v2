@@ -51,10 +51,10 @@ class TimeFormatting {
       remaining = days + " day"
       if (days > 1) remaining += "s"
       
-      if (weeks > 0 && months == 0 && years == 0) {
+      if (weeks > 0 && months === 0 && years === 0) {
         remaining = weeks + " week"
         if (weeks > 1) remaining += "s"
-      } else if (weeks > 0 && months > 0 && years == 0) {
+      } else if (weeks > 0 && months > 0 && years === 0) {
         remaining = months + " month"
         if (months > 1) remaining += "s"
       } else if (weeks > 0 && months > 0 && years > 0) {

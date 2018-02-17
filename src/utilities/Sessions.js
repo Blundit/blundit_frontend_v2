@@ -3,7 +3,7 @@ import API from './API';
 
 class Sessions {
   static setUser (data) {
-    if (data && data["access-token"] != null && data["uid"] != null) {
+    if (data && data["access-token"] !== null && data["uid"] !== null) {
       Cookies.setCookie('Access-Token', data["access-token"])
       Cookies.setCookie('Uid', data["uid"])
       Cookies.setCookie('Client', data["client"])
@@ -45,13 +45,15 @@ class Sessions {
           accessToken: Cookies.getCookie('Access-Token'),
           uid: encodeURIComponent(Cookies.getCookie('Uid')),
           client: Cookies.getCookie('Client')
-        }
+        },
+        user: store.getState().user
       }
 
       API.do(params).then((result) => {
         if (result) {
           const newData = { token: Cookies.getCookie('Access-Token'), client: Cookies.getCookie('Client') };
           const data = Object.assign(result, newData);
+          console.log(data)
 
           store.dispatch({
             type: "USER_EDIT",

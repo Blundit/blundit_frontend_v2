@@ -35,7 +35,7 @@ class AddItemToExpert extends Component {
 
   componentDidMount() {
     // TODO: Only load when user wants to load?
-    console.log('loading')
+    
     this.loadClaims()
     this.loadPredictions()
 
@@ -106,7 +106,6 @@ class AddItemToExpert extends Component {
     }
 
     API.do(params).then((result) => {
-      console.log(result)
       if (!result) {
         this.setState({ addClaimError: true })
       } else if (result.error === true) {

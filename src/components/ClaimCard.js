@@ -18,11 +18,12 @@ class ClaimCard extends Component {
 
   formatStatusText = status => {
     if (!status) status = "unknown"
+
     const statuses = { 
       "unknown": "unknown",
       "in-progress": "voting in progress",
       "true": "true",
-      "false": "false",
+      "false": "false"
     }
 
     return statuses[status].toUpperCase()
@@ -71,6 +72,9 @@ class ClaimCard extends Component {
       bookmarks_count,
       voteable_at,
     } = this.props;
+
+    console.log("status for ", title)
+    console.log(status)
 
     return <Link to={"/claims/"+alias} className="hidden-link">
       <div className="claim-card">

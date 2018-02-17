@@ -115,7 +115,7 @@ class Expert extends Component {
     return <div>
       <Header/>
       <div className="container">
-        {this.state.expertLoaded != true &&
+        {this.state.expertLoaded !== true &&
           <div>Loading...</div>
         }
         {this.state.expertLoaded === true &&

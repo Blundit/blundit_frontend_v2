@@ -14,7 +14,7 @@ class ExpertsList extends Component {
     let filtered_experts = experts.filter((element) => element.position === type || !element.position)
     // let filtered_experts = this.props.experts
 
-    if (type == "agree") {
+    if (type === "agree") {
       icon = <span className="icon--success fa fa-user-circle" />
     } else {
       icon = <span className="icon--error fa fa-user-circle" />

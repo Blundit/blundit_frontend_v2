@@ -17,7 +17,7 @@ class EvidenceList extends Component {
 
     let filtered_evidences = evidences.filter((element) => element.position === type)
 
-    if (type == "for") {
+    if (type === "for") {
       icon = <span className="icon--success fa fa-file-alt" />
     } else {
       icon = <span className="icon--error fa fa-file-alt" />

@@ -133,7 +133,7 @@ class ItemComments extends Component {
       <div className={`${type}-comments`}>
         {comments &&
           <React.Fragment>
-            {comments.length == 0 &&
+            {comments.length === 0 &&
               <div className={`${type}-comments--no-comments`}>
                 This {type} has no comments.
               </div>

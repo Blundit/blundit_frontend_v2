@@ -271,7 +271,7 @@ class NewPrediction extends Component {
     return <div>
       <Header/>
       <div className="container">
-        {this.state.predictionAdded == false &&
+        {this.state.predictionAdded === false &&
           <Card title="enter info" dropDown={false}>
             {this.predictionForm()}
           </Card>

@@ -261,7 +261,7 @@ class NewClaim extends Component {
     return <div>
       <Header/>
       <div className="container">
-        {this.state.claimAdded == false &&
+        {this.state.claimAdded === false &&
           <Card title="enter info" dropDown={false}>
             {this.claimForm()}
           </Card>
