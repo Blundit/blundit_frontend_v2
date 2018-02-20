@@ -1,0 +1,43 @@
+.recents
+  width: 100%
+  background-color: $white-color
+  box-shadow: 0px 3px 6px $drop-shadow-color
+  margin-bottom: 20px
+
+  &__header
+    display: grid
+    grid-template-columns: 1fr 1fr
+    margin: 0px 10px 10px 10px
+    border-bottom: 1px solid $card-separator
+
+    &-title
+      text-align: left
+      font-family: $body-font
+      font-weight: bold
+      font-size: 14px
+      padding: 10px 0px 10px 0px
+      text-transform: uppercase
+
+    &-filter
+      text-align: right
+      font-family: $body-font
+      font-weight: bold
+      font-size: 13px
+
+  &__items
+    padding: 5px 20px
+
+  &__see-all
+    font-family: $body-font
+    text-align: right
+    font-weight: bold
+    font-size: 13px
+    padding: 5px 0px 10px 0px
+    margin: 10px 10px 0px 10px
+    border-top: 1px solid $card-separator
+
+    a, a:visited, a:active
+      color: $brand-primary
+      text-decoration: none
+      text-transform: uppercase
+

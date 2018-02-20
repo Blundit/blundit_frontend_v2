@@ -1,6 +1,13 @@
 import React, { Component } from 'react'
 import Header from './../components/Header'
 import Footer from './../components/Footer'
+import RecentClaims from './../components/RecentClaims'
+import RecentPredictions from './../components/RecentPredictions'
+import RecentExperts from './../components/RecentExperts'
+import PopularItems from './../components/PopularItems'
+import HomeSearch from './../components/HomeSearch'
+import NewItemLinks from './../components/NewItemLinks'
+
 import { connect } from 'react-redux'
 
 const mapStateToProps = (state) => {
@@ -29,12 +36,21 @@ class Home extends Component {
 
   render () {
     const { match: { params } } = this.props;
+    const { user } = this.props;
 
     return <div>
       <Header/>
       <div className="container">
-        <div>Home!</div>
-        <b>Welcome, brosef.</b>
+        <div>Announcment bar goes here.</div>
+        <HomeSearch />
+        {user && 
+          <NewItemLinks />
+        }
+
+        <RecentPredictions />
+        <RecentClaims />
+        <RecentExperts />
+        <PopularItems />
       </div>
       <Footer/>
     </div>
