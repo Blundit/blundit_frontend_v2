@@ -93,13 +93,13 @@ class ShareItem extends Component {
     let embed_width, embed_height
 
     if (type == 'claim') {
-      embed_width = 480;
-      embed_height = 480;
+      embed_width = 302;
+      embed_height = 245;
     } else if (type == 'prediction' ) {
-      embed_width = 480;
-      embed_height = 480;
+      embed_width = 302;
+      embed_height = 245;
     } else if (type == 'expert') {
-      embed_width = 320;
+      embed_width = 302;
       embed_height = 480;
     }
 

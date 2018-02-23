@@ -73,9 +73,6 @@ class ClaimCard extends Component {
       voteable_at,
     } = this.props;
 
-    console.log("status for ", title)
-    console.log(status)
-
     return <Link to={"/claims/"+alias} className="hidden-link">
       <div className="claim-card">
         {this.validStatusType(status) && <div className={this.getStatusClass(status)}>{this.formatStatusText(status)}</div>}
