@@ -1,8 +1,27 @@
-.share-cluster
+.share
   width: 100%
-  text-align: center
   font-size: 20px
+  font-family: $body-font
 
-  span
-    padding: 0px 20px
-    cursor: pointer
+  &__links, &__embed
+    display: grid
+    grid-template-columns: 60px 1fr
+
+    &-title
+      font-weight: bold
+
+    span
+      padding: 0px 20px
+      cursor: pointer
+
+  &__embed
+    &-content
+      &__link
+        font-weight: bold
+        color: $brand-primary
+        cursor: pointer
+
+      &__textarea
+        width: 100%
+        padding: 10px
+        font-size: 14px

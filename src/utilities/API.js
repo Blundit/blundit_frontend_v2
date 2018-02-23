@@ -258,6 +258,18 @@ class API {
       },
       missing_method: {
         path: "!!!"
+      },
+      add_prediction_embed: {
+        path: "predictions/%item_id%/add_embed",
+        method: "POST"
+      },
+      add_expert_embed: {
+        path: "experts/%item_id%/add_embed",
+        method: "POST"
+      },
+      add_claim_embed: {
+        path: "claims/%item_id%/add_embed",
+        method: "POST"
       }
     };
 

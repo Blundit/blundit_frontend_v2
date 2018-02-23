@@ -40,7 +40,7 @@ class Blundit extends Component {
   render() {
     return (
       <Provider store={store}>
-        <Router>
+        <Router >
           <div className="App">
             <Switch>
               <Route exact path="/" component={Home} />
