@@ -59,7 +59,7 @@ class PredictionHeader extends Component {
       toggleBookmark={toggleBookmark}
       bookmark={prediction.bookmark}
       categories={prediction.categories}
-      bg={CategoryImages.get(prediction.categories[0].id)}
+      bg={CategoryImages.get(prediction.categories[0] ? prediction.categories[0].id : "")}
       statusBar={this.validStatusType(prediction.status) && <div className={this.getStatusClass(prediction.status)}>{this.formatStatusText(prediction.status)}</div>}
       >
       {prediction.description ? prediction.description : "Lorem ipsum dolor sit amet"}

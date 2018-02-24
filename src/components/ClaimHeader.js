@@ -60,7 +60,7 @@ class ClaimHeader extends Component {
       toggleBookmark={toggleBookmark}
       bookmark={claim.bookmark}
       categories={claim.categories}
-      bg={CategoryImages.get(claim.categories[0].id)}
+      bg={CategoryImages.get(claim.categories[0] ? claim.categories[0].id : "")}
       statusBar={this.validStatusType(claim.status) && <div className={this.getStatusClass(claim.status)}>{this.formatStatusText(claim.status)}</div>}
       >
       {claim.description ? claim.description : "Lorem ipsum dolor sit amet"}
