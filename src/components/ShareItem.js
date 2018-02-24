@@ -13,7 +13,8 @@ class ShareItem extends Component {
       embed: null,
       embed_host: null,
       loadedEmbed: false,
-      embedError: false
+      embedError: false,
+      embedStatusText: "Copy this code into your website."
     }
   }
 
@@ -62,7 +63,6 @@ class ShareItem extends Component {
     }
 
     API.do(params).then((result) => {
-      console.log(result)
       // TODO: Differentiate login errors
       if (result.error === true) {
         this.setState({ 
@@ -100,22 +100,40 @@ class ShareItem extends Component {
       embed_height = 245;
     } else if (type == 'expert') {
       embed_width = 302;
-      embed_height = 480;
+      embed_height = 363;
     }
 
     return `<iframe frameborder="0" framepadding="0" src="${embed_host}${embed.embed_key}" width="${embed_width}" height="${embed_height}"></iframe>`
   }
 
 
+  selectAll = () => {
+    const shareText = document.getElementById("item_share_text")
+    shareText.select()
+  }
+
+
+  copyText = () => {
+    const shareText = document.getElementById("item_share_text")
+    shareText.select()
+
+    document.execCommand('Copy')
+
+    this.setState({embedStatusText: "Copied to Clipboard!"})
+  }
+
+
   render() {
     const { type, object } = this.props
-    const { embed, embedError, loadedEmbed } = this.state
+    const { embed, embedError, loadedEmbed, embedStatusText } = this.state
 
     const icon = <span className="fas fa-bullhorn" />
 
     return <Card title="share" icon={icon}>
       <div className="share__links">
-        <div className="share__links-title">Links:</div>
+        <div className="share__links-title">
+          <span className="fas fa-link"></span>
+        </div>
         <div className="share__links-links">
           <span onClick={this.shareToFacebook} >
             <span className="icon--facebook fab fa-facebook" />
@@ -135,16 +153,26 @@ class ShareItem extends Component {
         </div>
       </div>
       <div className="share__embed">
-        <div className="share__embed-title">Embed:</div>
+        <div className="share__embed-title">
+          <span className="fas fa-code"/>
+        </div>
         <div className="share__embed-content">
           {loadedEmbed &&
             <React.Fragment>
-              <p>{`Here's the embed code for your ${type}! Just copy and paste this into your web page and start providing context!`}</p>
-              <textarea className="share__embed-content__textarea">{this.embedText()}</textarea>
+              <div className="share__embed-content__wrapper">
+                <input type="text" readOnly={true} onClick={this.selectAll} id="item_share_text" className="share__embed-content__textarea" value={this.embedText()} />
+                <div 
+                  className="share__embed-content__copy"
+                  onClick={this.copyText}
+                >
+                  <span className="far fa-clipboard" />
+                </div>
+              </div>
+              <div className="share__embed-content__status-text">{embedStatusText}</div>
             </React.Fragment>
           }
           {!loadedEmbed &&
-            <div className="share__embed-content__link" onClick={this.createEmbed}>Click to create an embed!</div>
+            <div className="share__embed-content__link" onClick={this.createEmbed}>Click to embed</div>
           }
 
           {embedError && 
