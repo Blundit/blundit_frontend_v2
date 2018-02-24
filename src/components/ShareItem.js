@@ -100,10 +100,10 @@ class ShareItem extends Component {
       embed_height = 245;
     } else if (type == 'expert') {
       embed_width = 302;
-      embed_height = 363;
+      embed_height = 478;
     }
 
-    return `<iframe frameborder="0" framepadding="0" src="${embed_host}${embed.embed_key}" width="${embed_width}" height="${embed_height}"></iframe>`
+    return `<iframe frameborder="0" scrolling="no" framepadding="0" src="${embed_host}${embed.embed_key}" width="${embed_width}" height="${embed_height}"></iframe>`
   }
 
 
