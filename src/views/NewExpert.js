@@ -177,7 +177,6 @@ class NewExpert extends Component {
 
     API.do(params).then((result) => {
       // TODO: Differentiate login errors
-      console.log(result)
       if (!result) {
         this.setState({ expertError: true })
       } else if (result.error === true) {
@@ -199,8 +198,6 @@ class NewExpert extends Component {
 
   submitAddClaimOrPredictionToExpert = (values, event, formApi) => {
     const { id, type } = this.props
-    console.log("submitting claims'")
-
 
     this.setState({ addPredictioError: false })
     // TODO FIX THIS
@@ -216,8 +213,6 @@ class NewExpert extends Component {
 
     API.do(params).then((result) => {
       // TODO: Differentiate login errors
-      console.log("result1")
-      console.log(result)
       if (!result) {
         this.setState({ addPredictionError: true })
       } else if (result.error === true) {

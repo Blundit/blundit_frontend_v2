@@ -78,7 +78,6 @@ class Expert extends Component {
       let expert = result.expert
       expert.claims = result.claims
       expert.predictions = result.predictions
-      console.log(expert)
       set_expert({ type: 'expert', key: slug, search: '', page: '', sort: '', items: expert, created: Date.now() });
       this.setState({ expertLoaded: true })
     },

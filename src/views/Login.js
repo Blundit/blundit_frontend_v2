@@ -75,7 +75,6 @@ class Login extends Component {
 
     API.do(params).then((result) => {
       // TODO: Differentiate login errors
-      console.log(result)
       if (!result) {
         this.setState({ loginError: true })
       } else if (result.error === true) {

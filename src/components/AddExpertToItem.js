@@ -39,7 +39,6 @@ class AddExpertToItem extends Component {
 
     API.do(params).then((result) => {
       // TODO: Differentiate login errors
-      console.log(result)
       if (result.error === true) {
         this.setState({ experts: [{ label: "Unable to Load Experts", value: "" }] })
       } else {
@@ -58,7 +57,6 @@ class AddExpertToItem extends Component {
 
   submitAddExpertToItem = (values, event, formApi) => {
     const { id, type, itemAdded } = this.props
-    console.log(this.props)
 
     this.setState({ addExpertError: false })
 

@@ -53,7 +53,6 @@ class Sessions {
         if (result) {
           const newData = { token: Cookies.getCookie('Access-Token'), client: Cookies.getCookie('Client') };
           const data = Object.assign(result, newData);
-          console.log(data)
 
           store.dispatch({
             type: "USER_EDIT",

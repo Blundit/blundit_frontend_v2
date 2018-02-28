@@ -8,8 +8,6 @@ class ItemComment extends Component {
   render() {
     const { comment } = this.props
 
-    console.log(comment)
-
     return <div className="comments__comment">
       <div className="comments__comment-user-avatar" style={{backgroundImage: `url(${comment.user.avatar})`}}></div>
       <div className="comments__comment-content">

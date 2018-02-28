@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import Header from './../components/Header'
 import Footer from './../components/Footer'
+import AnnouncementBar from './../components/AnnouncementBar'
 import RecentClaims from './../components/RecentClaims'
 import RecentPredictions from './../components/RecentPredictions'
 import RecentExperts from './../components/RecentExperts'
@@ -41,7 +42,7 @@ class Home extends Component {
     return <div>
       <Header/>
       <div className="container">
-        <div>Announcment bar goes here.</div>
+        <AnnouncementBar slug="home" />
         <HomeSearch />
         {user && 
           <NewItemLinks />

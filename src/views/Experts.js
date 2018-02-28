@@ -43,9 +43,6 @@ class Experts extends Component {
 
     const CacheCheck = Cache.invalid(experts, { type: 'expert', key: 'experts_list', search: search, page: page, sort: sort, created: Date.now() })
 
-    console.log("CacheCheck = ", CacheCheck)
-
-
     if (Cache.invalid(experts, { type: 'expert', key: 'experts_list', search: search, page: page, sort: sort, created: Date.now() })) {
       const params = {
         path: "experts",

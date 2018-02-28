@@ -270,6 +270,10 @@ class API {
       add_claim_embed: {
         path: "claims/%item_id%/add_embed",
         method: "POST"
+      },
+      announcements: {
+        path: "announcements/get",
+        method: "GET"
       }
     };
 
@@ -311,7 +315,7 @@ class API {
       this.s = "https://fast-earth-30912.herokuapp.com/";
     }
 
-    // this.s = "https://fast-earth-30912.herokuapp.com/";
+    this.s = "https://fast-earth-30912.herokuapp.com/";
 
     return this.s;
   }
