@@ -86,7 +86,9 @@ class AnnouncementBar extends Component {
           <div className="announcements__item-meta">
             <div className="announcements__item-meta__title">{item.title}</div>
             {item.dismissable && 
-              <div className="announcements__item-meta__close" onClick={this.dismissAnnouncement.bind(this, item.announcement_key)}>X</div>
+              <div className="announcements__item-meta__close" onClick={this.dismissAnnouncement.bind(this, item.announcement_key)}>
+                <span className="fas fa-times" />
+              </div>
             }
           </div>
           <div className="announcements__item-content">

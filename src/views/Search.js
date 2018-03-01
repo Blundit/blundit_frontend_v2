@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import Header from './../components/Header'
 import Footer from './../components/Footer'
 import { connect } from 'react-redux'
+import InsideSearch from './../components/InsideSearch';
 
 const mapStateToProps = (state) => {
   return {
@@ -33,6 +34,7 @@ class Search extends Component {
     return <div>
       <Header/>
       <div className="container">
+        <InsideSearch />
         <div>Search</div>
         <b>What do you need, brozinski?</b>
       </div>

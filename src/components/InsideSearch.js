@@ -3,7 +3,7 @@ import API from './../utilities/API'
 import { Link, Redirect } from 'react-router-dom'
 
 
-class HomeSearch extends Component {
+class InsideSearch extends Component {
   keyPressHandler = (event) => {
     if (event.key === "Enter") {
       this.submitSearch()
@@ -12,7 +12,7 @@ class HomeSearch extends Component {
 
 
   submitSearch () {
-    const query = document.getElementById('home-search-input').value
+    const query = document.getElementById('inside-search-input').value
     window.location = "/search?query=" + encodeURIComponent(query)
   }
 
@@ -20,19 +20,18 @@ class HomeSearch extends Component {
   render() {
     const { claims } = this.props;
 
-    return <div className="home-search--wrapper">
-      <div className="home-search">
+    return <div className="inside-search--wrapper">
+      <div className="inside-search">
         <input 
           type="text"
-          className="home-search__text"
-          id="home-search-input"
+          className="inside-search__text"
+          id="inside-search-input"
           placeholder="Search for an expert, claim or prediction!" 
           onKeyPress={this.keyPressHandler} />
-        <div className="home-search__button" onClick={this.submitSearch}><span className="fas fa-search" /></div>
+        <div className="inside-search__button" onClick={this.submitSearch}><span className="fas fa-search" /></div>
       </div>
     </div>
-
   }
 }
 
-export default HomeSearch;
+export default InsideSearch;

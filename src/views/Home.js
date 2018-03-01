@@ -42,8 +42,8 @@ class Home extends Component {
     return <div>
       <Header/>
       <div className="container">
-        <AnnouncementBar slug="home" />
         <HomeSearch />
+        <AnnouncementBar slug="home" />
         {user && 
           <NewItemLinks />
         }

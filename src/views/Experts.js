@@ -6,6 +6,7 @@ import API from './../utilities/API'
 import { connect } from 'react-redux'
 
 import ExpertCard from './../components/ExpertCard'
+import InsideSearch from './../components/InsideSearch';
 
 const mapStateToProps = (state) => {
   return {
@@ -37,6 +38,7 @@ class Experts extends Component {
     }
   }
 
+
   componentDidMount () {
     const { experts, set_expert_list } = this.props;
     const { search, page, sort } = this.state;
@@ -64,6 +66,7 @@ class Experts extends Component {
     }
   }
 
+
   render() {
     const { experts } = this.props
     const { search, page, sort } = this.state;
@@ -72,6 +75,7 @@ class Experts extends Component {
     return <div>
       <Header/>
       <div className="container">
+        <InsideSearch />
         <div className="experts">
           {items === undefined && <p>No experts</p>}
           {items &&

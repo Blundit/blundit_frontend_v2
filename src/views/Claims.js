@@ -6,6 +6,7 @@ import API from './../utilities/API'
 import { connect } from 'react-redux'
 
 import ClaimCard from './../components/ClaimCard'
+import InsideSearch from './../components/InsideSearch'
 
 const mapStateToProps = (state) => {
   return {
@@ -72,6 +73,7 @@ class Claims extends Component {
     return <div>
       <Header/>
       <div className="container">
+        <InsideSearch type={"claim"} />
         <div className="claims">
           {items === undefined && <p>No claims</p>}
           {items &&
