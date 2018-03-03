@@ -31,7 +31,7 @@ class RecentExperts extends Component {
     this.state = {
       search: '',
       page: 1,
-      sort: '',
+      sort: 2,
       number_of_pages: null
     }
   }
@@ -46,12 +46,15 @@ class RecentExperts extends Component {
     const { experts, set_expert_list } = this.props;
     const { search, page, sort } = this.state;
 
+    console.log(this.state)
+
     const CacheCheck = Cache.invalid(experts, { type: 'expert', key: 'experts_list', search: search, page: page, sort: sort, created: Date.now() })
-    if (Cache.invalid(experts, { type: 'expert', key: 'experts_list', search: search, page: page, sort: sort, created: Date.now() })) {
+    if (CacheCheck) {
       const params = {
         path: "experts",
         data: {
-          page: page
+          page: page,
+          sort: sort
         }
       }
 
@@ -72,7 +75,7 @@ class RecentExperts extends Component {
   headerTypeClass = (t) => {
     let c = "recents__header-filter__item"
 
-    if (t == this.state.view_type) {
+    if (t == this.state.sort) {
       c += "--active"
     }
     
@@ -81,7 +84,10 @@ class RecentExperts extends Component {
 
 
   changeType = (t) => {
-    this.setState({ sort: t })
+    if (t !== this.state.sort) {
+      console.log(t)
+      this.setState({ sort: t }, () => { this.loadExperts() })
+    }
   }
 
 
@@ -95,9 +101,9 @@ class RecentExperts extends Component {
         <div className="recents__header">
           <div className="recents__header-title">Recent Experts</div>
           <div className="recents__header-filter recents__header-filter__items">
-            <span className={this.headerTypeClass('newest')} onClick={this.changeType.bind(this, 'newest')}>Newest</span>
-            <span className={this.headerTypeClass('best')} onClick={this.changeType.bind(this, 'best')}>Best</span>
-            <span className={this.headerTypeClass('worst')} onClick={this.changeType.bind(this, 'worst')}>Worst</span>
+            <span className={this.headerTypeClass(2)} onClick={this.changeType.bind(this, 2)}>Newest</span>
+            <span className={this.headerTypeClass(4)} onClick={this.changeType.bind(this, 4)}>Best</span>
+            <span className={this.headerTypeClass(5)} onClick={this.changeType.bind(this, 5)}>Worst</span>
           </div>
         </div>
         <div className="recents__items experts">

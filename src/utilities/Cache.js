@@ -44,7 +44,7 @@ class Cache {
   }
 
 
-  static invalid(state = [], new_item = { type: '', key: '', search: '', page: 1, created: Date.now(), sort: '' }, ttl = default_ttl) {
+  static invalid(state = [], new_item = { type: '', key: '', search: '', page: 1, created: Date.now(), sort: '', status: 0 }, ttl = default_ttl) {
     if (!state) return true
 
     let item = state.find((element) => (
@@ -53,6 +53,18 @@ class Cache {
       && element.sort === new_item.sort
       && element.type === new_item.type
       && element.key === new_item.key
+      && element.status === new_item.status
+    ))
+
+    if (!item) return true
+
+    item = state.find((element) => (
+      element.page === new_item.page 
+      && element.search === new_item.search
+      && element.sort === new_item.sort
+      && element.type === new_item.type
+      && element.key === new_item.key
+      && element.status === new_item.status
       && Math.abs(new_item.created - element.created) > ttl
     ))
 
@@ -60,7 +72,7 @@ class Cache {
   }
 
 
-  static items(state, params = { key: '', type: '', search: '', page: 1, sort: ''}, ttl = default_ttl) {
+  static items(state, params = { key: '', type: '', search: '', page: 1, status: 0, sort: ''}, ttl = default_ttl) {
     if (!state) return undefined
     let item = state.find((element) => {
       return element.page === params.page 
@@ -68,6 +80,7 @@ class Cache {
       && element.sort === params.sort
       && element.type === params.type
       && element.key === params.key
+      && element.status === params.status
       && Math.abs(Date.now() - element.created) <= ttl
     })
 

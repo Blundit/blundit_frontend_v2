@@ -31,7 +31,8 @@ class RecentPredictions extends Component {
     this.state = {
       search: '',
       page: 1,
-      sort: '',
+      sort: 2,
+      status: 0,
       number_of_pages: null
     }
   }
@@ -44,14 +45,15 @@ class RecentPredictions extends Component {
   loadPredictions () {
     // TODO: Have delay sent from server as a global variable, or send it calculated in the json.
     const { predictions, set_prediction_list } = this.props;
-    const { search, page, sort } = this.state;
+    const { search, page, sort, status } = this.state;
 
-    const CacheCheck = Cache.invalid(predictions, { type: 'prediction', key: 'predictions_list', search: search, page: page, sort: sort, created: Date.now() })
-    if (Cache.invalid(predictions, { type: 'prediction', key: 'predictions_list', search: search, page: page, sort: sort, created: Date.now() })) {
+    const CacheCheck = Cache.invalid(predictions, { type: 'prediction', key: 'predictions_list', search: search, status: status, page: page, sort: sort, created: Date.now() })
+    if (CacheCheck) {
       const params = {
         path: "predictions",
         data: {
-          page: page
+          page: page,
+          status: status
         }
       }
 
@@ -60,11 +62,11 @@ class RecentPredictions extends Component {
           number_of_pages: result.number_of_pages,
           page: Number(result.page)
         })
-        set_prediction_list({ type: 'prediction', key: 'predictions_list', search: search, page: page, sort: sort, items: result.predictions, created: Date.now() });
+        set_prediction_list({ type: 'prediction', key: 'predictions_list', search: search, page: page, sort: sort, status: status, items: result.predictions, created: Date.now() });
       },
       (reject) => {
         console.error(reject);
-        set_prediction_list({ type: 'prediction', key: 'predictions_list', search: search, page: page, sort: sort, items: null, created: Date.now() });
+        set_prediction_list({ type: 'prediction', key: 'predictions_list', search: search, page: page, sort: sort, status: status, items: null, created: Date.now() });
       });
     }
   }
@@ -73,7 +75,7 @@ class RecentPredictions extends Component {
   headerTypeClass = (t) => {
     let c = "recents__header-filter__item"
 
-    if (t == this.state.view_type) {
+    if (t == this.state.status) {
       c += "--active"
     }
     
@@ -82,22 +84,24 @@ class RecentPredictions extends Component {
 
 
   changeType = (t) => {
-    this.setState({ sort: t })
+    if (t !== this.state.status) {
+      this.setState({ status: t }, () => { this.loadPredictions() })
+    }
   }
 
 
   render() {
     const { predictions } = this.props;
-    const { search, page, sort } = this.state; 
-    const items = Cache.items(predictions, { type: 'prediction', key: 'predictions_list', search: search, page: page, sort: sort})
+    const { search, page, sort, status } = this.state; 
+    const items = Cache.items(predictions, { type: 'prediction', key: 'predictions_list', search: search, page: page, status: status, sort: sort})
 
     return <div>
       <div className="recents">
         <div className="recents__header">
           <div className="recents__header-title">Recent Predictions</div>
           <div className="recents__header-filter recents__header-filter__items">
-            <span className={this.headerTypeClass('open')} onClick={this.changeType.bind(this, 'open')}>Open</span>
-            <span className={this.headerTypeClass('settled')} onClick={this.changeType.bind(this, 'settled')}>Settled</span>
+            <span className={this.headerTypeClass(0)} onClick={this.changeType.bind(this, 0)}>Open</span>
+            <span className={this.headerTypeClass(1)} onClick={this.changeType.bind(this, 1)}>Settled</span>
           </div>
         </div>
         <div className="recents__items predictions">

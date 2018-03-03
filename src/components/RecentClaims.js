@@ -31,7 +31,8 @@ class RecentClaims extends Component {
     this.state = {
       search: '',
       page: 1,
-      sort: '',
+      sort: 2,
+      status: 0,
       number_of_pages: null
     }
   }
@@ -43,15 +44,16 @@ class RecentClaims extends Component {
 
   loadClaims () {
     // TODO: Have delay sent from server as a global variable, or send it calculated in the json.
-    const { claims, set_claim_list } = this.props;
-    const { search, page, sort } = this.state;
+    const { claims, set_claim_list } = this.props
+    const { search, page, sort, status } = this.state
 
-    const CacheCheck = Cache.invalid(claims, { type: 'claim', key: 'claims_list', search: search, page: page, sort: sort, created: Date.now() })
-    if (Cache.invalid(claims, { type: 'claim', key: 'claims_list', search: search, page: page, sort: sort, created: Date.now() })) {
+    const CacheCheck = Cache.invalid(claims, { type: 'claim', key: 'claims_list', search: search, page: page, sort: sort, status: status, created: Date.now() })
+    if (CacheCheck === true) {
       const params = {
         path: "claims",
         data: {
-          page: page
+          page: page,
+          status: status
         }
       }
 
@@ -60,12 +62,14 @@ class RecentClaims extends Component {
           number_of_pages: result.number_of_pages,
           page: Number(result.page)
         })
-        set_claim_list({ type: 'claim', key: 'claims_list', search: search, page: page, sort: sort, items: result.claims, created: Date.now() });
+        set_claim_list({ type: 'claim', key: 'claims_list', search: search, page: page, sort: sort, status: status, items: result.claims, created: Date.now() });
       },
       (reject) => {
         console.error(reject);
-        set_claim_list({ type: 'claim', key: 'claims_list', search: search, page: page, sort: sort, items: null, created: Date.now() });
+        set_claim_list({ type: 'claim', key: 'claims_list', search: search, page: page, sort: sort, status: status, items: null, created: Date.now() });
       });
+    } else {
+      console.log("no need to load")
     }
   }
 
@@ -73,7 +77,7 @@ class RecentClaims extends Component {
   headerTypeClass = (t) => {
     let c = "recents__header-filter__item"
 
-    if (t == this.state.view_type) {
+    if (t == this.state.status) {
       c += "--active"
     }
     
@@ -82,22 +86,24 @@ class RecentClaims extends Component {
 
 
   changeType = (t) => {
-    this.setState({ sort: t })
+    if (t !== this.state.status) {
+      this.setState({ status: t }, () => { this.loadClaims() })
+    }
   }
-  
+
 
   render() {
     const { claims } = this.props;
-    const { search, page, sort } = this.state; 
-    const items = Cache.items(claims, { type: 'claim', key: 'claims_list', search: search, page: page, sort: sort})
+    const { search, page, sort, status } = this.state; 
+    const items = Cache.items(claims, { type: 'claim', key: 'claims_list', search: search, page: page, sort: sort, status: status })
 
     return <div>
       <div className="recents">
         <div className="recents__header">
           <div className="recents__header-title">Recent Claims</div>
           <div className="recents__header-filter recents__header-filter__items">
-            <span className={this.headerTypeClass('open')} onClick={this.changeType.bind(this, 'open')}>Open</span>
-            <span className={this.headerTypeClass('settled')} onClick={this.changeType.bind(this, 'settled')}>Settled</span>
+            <span className={this.headerTypeClass(0)} onClick={this.changeType.bind(this, 0)}>Open</span>
+            <span className={this.headerTypeClass(1)} onClick={this.changeType.bind(this, 1)}>Settled</span>
           </div>
         </div>
         <div className="recents__items claims">
