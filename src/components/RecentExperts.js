@@ -5,6 +5,7 @@ import Cache from './../utilities/Cache'
 import { Link } from 'react-router-dom'
 
 import ExpertCard from './../components/ExpertCard'
+import LoadingIndicator from './../components/LoadingIndicator'
 
 const mapStateToProps = (state) => {
   return {
@@ -45,8 +46,6 @@ class RecentExperts extends Component {
     // TODO: Have delay sent from server as a global variable, or send it calculated in the json.
     const { experts, set_expert_list } = this.props;
     const { search, page, sort } = this.state;
-
-    console.log(this.state)
 
     const CacheCheck = Cache.invalid(experts, { type: 'expert', key: 'experts_list', search: search, page: page, sort: sort, created: Date.now() })
     if (CacheCheck) {
@@ -107,12 +106,17 @@ class RecentExperts extends Component {
           </div>
         </div>
         <div className="recents__items experts">
-          {items === undefined && <p>Loading Experts...</p>}
+          {items === undefined && 
+            <LoadingIndicator />
+          }
           {items &&
             items.slice(0,3).map((item, index) => (
               <ExpertCard key={"expert_"+index} {...item} voteable_at={new Date("2018-02-01")} />
             )
           )}
+          {(items && items.length === 0) &&
+            <div className="none-found">No Experts found.</div>
+          }
         </div>
         <div className="recents__see-all">
           <Link to="/experts">See All</Link>

@@ -7,6 +7,7 @@ import { connect } from 'react-redux'
 
 import ClaimCard from './../components/ClaimCard'
 import InsideSearch from './../components/InsideSearch'
+import LoadingIndicator from './../components/LoadingIndicator'
 
 const mapStateToProps = (state) => {
   return {
@@ -75,12 +76,15 @@ class Claims extends Component {
       <div className="container">
         <InsideSearch type={"claim"} />
         <div className="claims">
-          {items === undefined && <p>No claims</p>}
+          {items === undefined && <LoadingIndicator />}
           {items &&
             items.map((item, index) => (
               <ClaimCard key={"claim_"+index} {...item} voteable_at={new Date("2018-02-01")} />
             )
           )}
+          {(items && items.length) === 0 &&
+            <div className="none-found">No Claims Found</div>
+          }
         </div>
       </div>
       <Footer/>

@@ -44,7 +44,11 @@ class Cache {
   }
 
 
-  static invalid(state = [], new_item = { type: '', key: '', search: '', page: 1, created: Date.now(), sort: '', status: 0 }, ttl = default_ttl) {
+  static invalid(state = [], comp_item = { }, ttl = default_ttl) {
+    let new_item = { type: '', key: '', search: '', page: 1, created: Date.now(), sort: '', status: 0 }
+
+    new_item = Object.assign(new_item, comp_item)
+
     if (!state) return true
 
     let item = state.find((element) => (

@@ -6,7 +6,8 @@ import API from './../utilities/API'
 import { connect } from 'react-redux'
 
 import ExpertCard from './../components/ExpertCard'
-import InsideSearch from './../components/InsideSearch';
+import InsideSearch from './../components/InsideSearch'
+import LoadingIndicator from './../components/LoadingIndicator'
 
 const mapStateToProps = (state) => {
   return {
@@ -77,12 +78,15 @@ class Experts extends Component {
       <div className="container">
         <InsideSearch />
         <div className="experts">
-          {items === undefined && <p>No experts</p>}
+          {items === undefined && <LoadingIndicator />}
           {items &&
             items.map((item, index) => (
               <ExpertCard key={"expert"+index} {...item} rating={Math.floor(Math.random()*100)+1} />
             )
           )}
+          {(items && items.length === 0) &&
+            <div className="none-found">No Experts Found</div>
+          }
         </div>
       </div>
       <Footer/>

@@ -41,6 +41,7 @@ class Home extends Component {
     return <div>
       <Header/>
       <div className="container">
+        
         <HomeSearch />
         <AnnouncementBar slug="home" />
         <RecentPredictions />

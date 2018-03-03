@@ -6,7 +6,8 @@ import API from './../utilities/API'
 import { connect } from 'react-redux'
 
 import PredictionCard from './../components/PredictionCard'
-import InsideSearch from './../components/InsideSearch';
+import InsideSearch from './../components/InsideSearch'
+import LoadingIndicator from './../components/LoadingIndicator'
 
 const mapStateToProps = (state) => {
   return {
@@ -74,12 +75,15 @@ class Predictions extends Component {
       <div className="container">
         <InsideSearch />
         <div className="predictions">
-          {items === undefined && <p>No predictions</p>}
+          {items === undefined && <LoadingIndicator />}
           {items &&
             items.map((item, index) => (
               <PredictionCard key={"prediction"+index} {...item} voteable_at={"2018-01-15"} voting_closes_at={"2018-01-31"} />
             )
           )}
+          {(items && items.length === 0) &&
+            <div className="none-found">No Predictions Found</div>
+          }
         </div>
       </div>
       <Footer/>

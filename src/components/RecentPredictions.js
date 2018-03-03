@@ -5,6 +5,7 @@ import Cache from './../utilities/Cache'
 import { Link } from 'react-router-dom'
 
 import PredictionCard from './../components/PredictionCard'
+import LoadingIndicator from './../components/LoadingIndicator'
 
 const mapStateToProps = (state) => {
   return {
@@ -105,12 +106,17 @@ class RecentPredictions extends Component {
           </div>
         </div>
         <div className="recents__items predictions">
-          {items === undefined && <p>Loading Predictions...</p>}
+          {items === undefined && 
+            <LoadingIndicator />
+          }
           {items &&
             items.slice(0,3).map((item, index) => (
               <PredictionCard key={"prediction_"+index} {...item} voteable_at={new Date("2018-02-01")} />
             )
           )}
+          {(items && items.length === 0) &&
+            <div className="none-found">No Predictions found.</div>
+          }
         </div>
         <div className="recents__see-all">
           <Link to="/predictions">See All</Link>

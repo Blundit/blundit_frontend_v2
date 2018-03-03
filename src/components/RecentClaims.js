@@ -5,6 +5,7 @@ import Cache from './../utilities/Cache'
 import { Link } from 'react-router-dom'
 
 import ClaimCard from './../components/ClaimCard'
+import LoadingIndicator from './../components/LoadingIndicator'
 
 const mapStateToProps = (state) => {
   return {
@@ -68,8 +69,6 @@ class RecentClaims extends Component {
         console.error(reject);
         set_claim_list({ type: 'claim', key: 'claims_list', search: search, page: page, sort: sort, status: status, items: null, created: Date.now() });
       });
-    } else {
-      console.log("no need to load")
     }
   }
 
@@ -96,7 +95,6 @@ class RecentClaims extends Component {
     const { claims } = this.props;
     const { search, page, sort, status } = this.state; 
     const items = Cache.items(claims, { type: 'claim', key: 'claims_list', search: search, page: page, sort: sort, status: status })
-
     return <div>
       <div className="recents">
         <div className="recents__header">
@@ -107,12 +105,17 @@ class RecentClaims extends Component {
           </div>
         </div>
         <div className="recents__items claims">
-          {items === undefined && <p>Loading Claims...</p>}
+          {items === undefined && 
+            <LoadingIndicator />
+          }
           {items &&
             items.slice(0,3).map((item, index) => (
               <ClaimCard key={"claim_"+index} {...item} voteable_at={new Date("2018-02-01")} />
             )
           )}
+          {(items && items.length === 0) &&
+            <div className="none-found">No Claims found.</div>
+          }
         </div>
         <div className="recents__see-all">
           <Link to="/claims">See All</Link>

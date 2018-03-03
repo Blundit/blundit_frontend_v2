@@ -11,6 +11,7 @@ import VoteForItem from './../components/VoteForItem'
 import PredictionAdmin from './../components/PredictionAdmin'
 import ItemComments from './../components/ItemComments'
 import ShareItem from './../components/ShareItem'
+import LoadingIndicator from './../components/LoadingIndicator'
 
 import Cache from './../utilities/Cache'
 import API from './../utilities/API'
@@ -59,7 +60,7 @@ class Prediction extends Component {
     const { prediction, set_prediction, match: { params } } = this.props;
     const slug = params.slug
     const cacheCheck = Cache.invalid(prediction, { type: 'prediction', key: slug, search: '', page: '', sort: '', created: Date.now() })
-    if (cacheCheck !== true) {
+    if (cacheCheck) {
       this.loadPrediction()
     }
   }
@@ -117,7 +118,7 @@ class Prediction extends Component {
       <Header/>
       <div className="container">
         {this.state.predictionLoaded !== true &&
-          <div>Loading...</div>
+          <LoadingIndicator />
         }
         {this.state.predictionLoaded === true &&
           <React.Fragment>

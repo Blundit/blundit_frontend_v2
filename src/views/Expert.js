@@ -9,6 +9,7 @@ import PredictionsList from './../components/PredictionsList'
 import AddItemToExpert from './../components/AddItemToExpert'
 import ItemComments from './../components/ItemComments'
 import ShareItem from './../components/ShareItem'
+import LoadingIndicator from './../components/LoadingIndicator'
 
 import Cache from './../utilities/Cache'
 import API from './../utilities/API'
@@ -57,7 +58,7 @@ class Expert extends Component {
     const { expert, set_expert, match: { params } } = this.props;
     const slug = params.slug
     const cacheCheck = Cache.invalid(expert, { type: 'expert', key: slug, search: '', page: '', sort: '', created: Date.now() })
-    if (cacheCheck !== true) {
+    if (cacheCheck) {
       this.loadExpert()
     }
   }
@@ -75,6 +76,7 @@ class Expert extends Component {
     }
 
     API.do(api_params).then((result) => {
+      
       let expert = result.expert
       expert.claims = result.claims
       expert.predictions = result.predictions
@@ -115,7 +117,7 @@ class Expert extends Component {
       <Header/>
       <div className="container">
         {this.state.expertLoaded !== true &&
-          <div>Loading...</div>
+          <LoadingIndicator />
         }
         {this.state.expertLoaded === true &&
           <React.Fragment>

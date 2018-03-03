@@ -11,6 +11,7 @@ import VoteForItem from './../components/VoteForItem'
 import ClaimAdmin from './../components/ClaimAdmin'
 import ItemComments from './../components/ItemComments'
 import ShareItem from './../components/ShareItem'
+import LoadingIndicator from './../components/LoadingIndicator'
 
 import Cache from './../utilities/Cache'
 import API from './../utilities/API'
@@ -59,7 +60,7 @@ class Claim extends Component {
     const { claim, set_claim, match: { params } } = this.props;
     const slug = params.slug
     const cacheCheck = Cache.invalid(claim, { type: 'claim', key: slug, search: '', page: '', sort: '', created: Date.now() })
-    if (cacheCheck !== true) {
+    if (cacheCheck) {
       this.loadClaim()
     }
   }
@@ -117,7 +118,7 @@ class Claim extends Component {
       <Header/>
       <div className="container">
         {this.state.claimLoaded !== true &&
-          <div>Loading...</div>
+          <LoadingIndicator />
         }
         {this.state.claimLoaded === true &&
           <React.Fragment>
