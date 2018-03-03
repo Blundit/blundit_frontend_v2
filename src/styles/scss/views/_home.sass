@@ -24,6 +24,28 @@
       font-weight: bold
       font-size: 13px
 
+      &__items
+        padding-top: 10px
+
+      &__item
+        color: $card-category-color
+        text-transform: uppercase
+        font-size: 14px
+        padding-left: 10px
+        cursor: pointer
+        font-weight: bold
+        +fast_transition(color)
+        
+
+        &:hover
+          +fast_transition(color)
+          color: $brand-primary
+
+        &--active
+          @extend .recents__header-filter__item
+          color: $brand-primary
+
+
   &__items
     padding: 5px 20px
 
@@ -40,3 +62,64 @@
       color: $brand-primary
       text-decoration: none
       text-transform: uppercase
+
+
+.popular
+  min-height: 344px
+  
+
+.small-card
+  margin-bottom: 8px
+  &:last-of-type
+    margin-bottom: 12px
+  a
+    text-decoration: none
+    color: $expert-card-black-color
+
+  &--wrapper
+    display: grid
+    grid-template-columns: 1fr 50px 50px
+
+  &__comments, &__bookmarks
+    font-size: 12px
+    line-height: 1.7em
+    
+    .icon
+      padding-right: 6px
+
+  &__title
+    font-size: 12px
+    white-space: nowrap
+    overflow: hidden
+    text-overflow: ellipsis
+    padding-right: 15px
+    line-height: 1.7em
+
+    &-image
+      width: 16px
+      height: 16px
+      border-radius: 20px
+      border: 2px solid $white-color
+      float: left
+      margin-right: 5px
+      background-position: center
+      background-size: cover
+      background-repeat: no-repeat
+    
+    &-icon
+      width: 16px
+      height: 16px
+      border-radius: 20px
+      border: 2px solid $white-color
+      color: $card-category-color
+      background-color: $white-color
+      float: left
+      margin-right: 5px
+      background-position: center
+      background-size: cover
+      background-repeat: no-repeat
+      text-align: center
+      font-size: 12px
+      line-height: 1.5em
+
+

@@ -7,7 +7,6 @@ import RecentPredictions from './../components/RecentPredictions'
 import RecentExperts from './../components/RecentExperts'
 import PopularItems from './../components/PopularItems'
 import HomeSearch from './../components/HomeSearch'
-import NewItemLinks from './../components/NewItemLinks'
 
 import { connect } from 'react-redux'
 
@@ -44,10 +43,6 @@ class Home extends Component {
       <div className="container">
         <HomeSearch />
         <AnnouncementBar slug="home" />
-        {user && 
-          <NewItemLinks />
-        }
-
         <RecentPredictions />
         <RecentClaims />
         <RecentExperts />

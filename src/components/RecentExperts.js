@@ -69,6 +69,22 @@ class RecentExperts extends Component {
     }
   }
 
+  headerTypeClass = (t) => {
+    let c = "recents__header-filter__item"
+
+    if (t == this.state.view_type) {
+      c += "--active"
+    }
+    
+    return c
+  }
+
+
+  changeType = (t) => {
+    this.setState({ sort: t })
+  }
+
+
   render() {
     const { experts } = this.props;
     const { search, page, sort } = this.state; 
@@ -78,7 +94,11 @@ class RecentExperts extends Component {
       <div className="recents">
         <div className="recents__header">
           <div className="recents__header-title">Recent Experts</div>
-          <div className="recents__header-filter"></div>
+          <div className="recents__header-filter recents__header-filter__items">
+            <span className={this.headerTypeClass('newest')} onClick={this.changeType.bind(this, 'newest')}>Newest</span>
+            <span className={this.headerTypeClass('best')} onClick={this.changeType.bind(this, 'best')}>Best</span>
+            <span className={this.headerTypeClass('worst')} onClick={this.changeType.bind(this, 'worst')}>Worst</span>
+          </div>
         </div>
         <div className="recents__items experts">
           {items === undefined && <p>Loading Experts...</p>}

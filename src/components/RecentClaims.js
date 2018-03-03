@@ -69,6 +69,23 @@ class RecentClaims extends Component {
     }
   }
 
+
+  headerTypeClass = (t) => {
+    let c = "recents__header-filter__item"
+
+    if (t == this.state.view_type) {
+      c += "--active"
+    }
+    
+    return c
+  }
+
+
+  changeType = (t) => {
+    this.setState({ sort: t })
+  }
+  
+
   render() {
     const { claims } = this.props;
     const { search, page, sort } = this.state; 
@@ -78,7 +95,10 @@ class RecentClaims extends Component {
       <div className="recents">
         <div className="recents__header">
           <div className="recents__header-title">Recent Claims</div>
-          <div className="recents__header-filter"></div>
+          <div className="recents__header-filter recents__header-filter__items">
+            <span className={this.headerTypeClass('open')} onClick={this.changeType.bind(this, 'open')}>Open</span>
+            <span className={this.headerTypeClass('settled')} onClick={this.changeType.bind(this, 'settled')}>Settled</span>
+          </div>
         </div>
         <div className="recents__items claims">
           {items === undefined && <p>Loading Claims...</p>}

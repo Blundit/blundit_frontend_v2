@@ -4,13 +4,14 @@ import { connect } from 'react-redux'
 import Cache from './../utilities/Cache'
 import { Link } from 'react-router-dom'
 
+import SmallExpertCard from './SmallExpertCard'
+import SmallClaimCard from './SmallClaimCard'
+import SmallPredictionCard from './SmallPredictionCard'
+
 
 const mapStateToProps = (state) => {
   return {
-    claims: state.claims,
-    predictions: state.predictions,
-    experts: state.experts,
-    user: state.user
+    popular: state.home_popular,
   }
 }
 
@@ -18,18 +19,10 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch, ownProps) => {
   // TODO: Do I need to call some other dispatch?
   return {
-    set_claim_list: (ownProps) => dispatch({ 
-      type: "SET_CLAIM_LIST",
+    set_popular: (ownProps) => dispatch({ 
+      type: "SET_HOME_POPULAR",
       value: ownProps
     }),
-    set_prediction_list: (ownProps) => dispatch({ 
-      type: "SET_PREDICTION_LIST",
-      value: ownProps
-    }),
-    set_expert_list: (ownProps) => dispatch({ 
-      type: "SET_EXPERT_LIST",
-      value: ownProps
-    })
   }
 }
 
@@ -38,67 +31,97 @@ class PopularItems extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      search: '',
-      page: 1,
-      sort: '',
-      number_of_pages: null
+      view_type: 'experts',
     }
   }
 
   componentDidMount () {
-    this.loadClaims()
-    this.loadExperts()
-    this.loadPredictions()
+    this.loadPopular()
   }
 
 
-  loadClaims () {
+  loadPopular () {
     // TODO: Have delay sent from server as a global variable, or send it calculated in the json.
-    const { claims, set_claim_list } = this.props;
-    const { search, page, sort } = this.state;
+    const { popular, set_popular } = this.props;
 
-    const CacheCheck = Cache.invalid(claims, { type: 'claim', key: 'claims_list', search: search, page: page, sort: sort, created: Date.now() })
-    if (Cache.invalid(claims, { type: 'claim', key: 'claims_list', search: search, page: page, sort: sort, created: Date.now() })) {
+    const CacheCheck = Cache.invalid(popular, { type: 'home_popular', key: 'popular_list', search: '', page: '', sort: '', created: Date.now() })
+    if (CacheCheck) {
       const params = {
-        path: "claims",
-        data: {
-          page: page
-        }
+        path: "home_popular"
       }
 
       API.do(params).then((result) => {
-        this.setState({
-          number_of_pages: result.number_of_pages,
-          page: Number(result.page)
-        })
-        set_claim_list({ type: 'claim', key: 'claims_list', search: search, page: page, sort: sort, items: result.claims, created: Date.now() });
+        set_popular({ type: 'home_popular', key: 'popular_list', search: '', page: '', sort: '', items: result, created: Date.now() });
       },
       (reject) => {
         console.error(reject);
-        set_claim_list({ type: 'claim', key: 'claims_list', search: search, page: page, sort: sort, items: null, created: Date.now() });
+        set_popular({ type: 'home_popular', key: 'popular_list', search: '', page: '', sort: '', items: null, created: Date.now() });
       });
     }
   }
 
-  loadPredictions () {
 
+  filterPopular (popular, type) {
+    if (!popular) return []
+
+    const filtered = popular
+      .find((element) => element.key === 'popular_list').items
+
+    return filtered[type]
   }
 
-  loadExperts () {
-
+  changeType = (t) => {
+    console.log("change type to ", t)
+    this.setState({ view_type: t })
   }
+
+
+  headerTypeClass = (t) => {
+    let c = "recents__header-filter__item"
+
+    if (t == this.state.view_type) {
+      c += "--active"
+    }
+    
+    return c
+  }
+
 
   render() {
-    const { claims } = this.props;
+    const { popular } = this.props;
+    const { view_type } = this.state;
+
+    const data = this.filterPopular(popular, view_type)
 
     return <div>
-      <div className="recents">
+      <div className="recents popular">
         <div className="recents__header">
           <div className="recents__header-title">Popular</div>
-          <div className="recents__header-filter"></div>
+          <div className="recents__header-filter recents__header-filter__items">
+            <span className={this.headerTypeClass('experts')} onClick={this.changeType.bind(this, 'experts')}>Experts</span>
+            <span className={this.headerTypeClass('predictions')} onClick={this.changeType.bind(this, 'predictions')}>Predictions</span>
+            <span className={this.headerTypeClass('claims')} onClick={this.changeType.bind(this, 'claims')}>Claims</span>
+
+          </div>
         </div>
         <div className="recents__items">
-          Popular Items Go Here.
+          {(data && data.length > 0) &&
+            data.map((item, index) => {
+              if (view_type === 'experts') {
+                return <SmallExpertCard key={`home_popular_${index}`} item={item} />
+              } else if (view_type === 'claims') {
+                return <SmallClaimCard key={`home_popular_${index}`} item={item} />
+              } else if (view_type === 'predictions') {
+                return <SmallPredictionCard key={`home_popular_${index}`} item={item} />
+              }
+            })
+          }
+          {!popular && 
+            <span>Loading...</span>
+          }
+          {(popular && data  && data.length === 0) &&
+            <span>No data.</span>
+          }
         </div>
       </div>
     </div>

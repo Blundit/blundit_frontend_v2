@@ -274,6 +274,10 @@ class API {
       announcements: {
         path: "announcements/get",
         method: "GET"
+      },
+      home_popular: {
+        path: "home/most_popular",
+        method: "GET"
       }
     };
 
