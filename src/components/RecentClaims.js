@@ -86,7 +86,7 @@ class RecentClaims extends Component {
 
   changeType = (t) => {
     if (t !== this.state.status) {
-      this.setState({ status: t }, () => { this.loadClaims() })
+      this.setState({ status: t }, () => this.loadClaims() )
     }
   }
 

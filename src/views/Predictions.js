@@ -8,6 +8,7 @@ import { connect } from 'react-redux'
 import PredictionCard from './../components/PredictionCard'
 import InsideSearch from './../components/InsideSearch'
 import LoadingIndicator from './../components/LoadingIndicator'
+import Pagination from './../components/Pagination'
 
 const mapStateToProps = (state) => {
   return {
@@ -40,6 +41,11 @@ class Predictions extends Component {
   }
 
   componentDidMount () {
+    this.loadPredictions()
+  }
+
+
+  loadPredictions() {
     const { predictions, set_prediction_list } = this.props;
     const { search, page, sort } = this.state;
 
@@ -48,7 +54,9 @@ class Predictions extends Component {
       const params = {
         path: "predictions",
         data: {
-          page: page
+          page: page,
+          query: search,
+          sort: sort
         }
       }
 
@@ -65,15 +73,31 @@ class Predictions extends Component {
     }
   }
 
+
+  updateSearch = (search) => {
+    if (search != this.state.search) {
+      this.setState({ search: search, page: 1}, () => this.loadPredictions() )
+    }
+  }
+
+
+  updatePage = (page) => {
+    if (page != this.state.page) {
+      this.setState({ page: page}, () => this.loadPredictions() )
+    }
+  }
+
+
+
   render() {
     const { predictions } = this.props;
-    const { search, page, sort } = this.state; 
+    const { search, page, sort, number_of_pages } = this.state; 
     const items = Cache.items(predictions, { type: 'prediction', key: 'predictions_list', search: search, page: page, sort: sort})
 
     return <div>
       <Header/>
       <div className="container">
-        <InsideSearch />
+        <InsideSearch type={"prediction"} updateSearch={this.updateSearch} />
         <div className="predictions">
           {items === undefined && <LoadingIndicator />}
           {items &&
@@ -85,6 +109,7 @@ class Predictions extends Component {
             <div className="none-found">No Predictions Found</div>
           }
         </div>
+        <Pagination page={page} number_of_pages={number_of_pages} updatePage={this.updatePage} />
       </div>
       <Footer/>
     </div>

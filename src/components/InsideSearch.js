@@ -13,7 +13,7 @@ class InsideSearch extends Component {
 
   submitSearch () {
     const query = document.getElementById('inside-search-input').value
-    window.location = "/search?query=" + encodeURIComponent(query)
+    this.props.updateSearch(query)
   }
 
 
@@ -26,7 +26,7 @@ class InsideSearch extends Component {
           type="text"
           className="inside-search__text"
           id="inside-search-input"
-          placeholder="Search for an expert, claim or prediction!" 
+          placeholder={`Search for ${this.props.type}s`} 
           onKeyPress={this.keyPressHandler} />
         <div className="inside-search__button" onClick={this.submitSearch}><span className="fas fa-search" /></div>
       </div>

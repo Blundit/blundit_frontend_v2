@@ -8,6 +8,7 @@ import { connect } from 'react-redux'
 import ExpertCard from './../components/ExpertCard'
 import InsideSearch from './../components/InsideSearch'
 import LoadingIndicator from './../components/LoadingIndicator'
+import Pagination from './../components/Pagination'
 
 const mapStateToProps = (state) => {
   return {
@@ -34,23 +35,29 @@ class Experts extends Component {
     this.state = {
       search: '',
       page: 1,
-      sort: '',
+      sort: 2,
       number_of_pages: null
     }
   }
 
 
   componentDidMount () {
+    this.loadExperts()
+  }
+
+
+  loadExperts() {
     const { experts, set_expert_list } = this.props;
     const { search, page, sort } = this.state;
-
     const CacheCheck = Cache.invalid(experts, { type: 'expert', key: 'experts_list', search: search, page: page, sort: sort, created: Date.now() })
 
-    if (Cache.invalid(experts, { type: 'expert', key: 'experts_list', search: search, page: page, sort: sort, created: Date.now() })) {
+    if (CacheCheck) {
       const params = {
         path: "experts",
         data: {
-          page: page
+          page: page,
+          query: search,
+          sort: sort
         }
       }
 
@@ -68,15 +75,29 @@ class Experts extends Component {
   }
 
 
+  updateSearch = (search) => {
+    if (search != this.state.search) {
+      this.setState({ search: search, page: 1 }, () => this.loadExperts() )
+    }
+  }
+
+
+  updatePage = (page) => {
+    if (page != this.state.page) {
+      this.setState({ page: page}, () => this.loadExperts() )
+    }
+  }
+
+
   render() {
     const { experts } = this.props
-    const { search, page, sort } = this.state;
+    const { search, page, sort, number_of_pages } = this.state;
     const items = Cache.items(experts, { type: 'expert', key: 'experts_list', search: search, page: page, sort: sort})
 
     return <div>
       <Header/>
       <div className="container">
-        <InsideSearch />
+        <InsideSearch type={"expert"} updateSearch={this.updateSearch} />
         <div className="experts">
           {items === undefined && <LoadingIndicator />}
           {items &&
@@ -88,6 +109,7 @@ class Experts extends Component {
             <div className="none-found">No Experts Found</div>
           }
         </div>
+        <Pagination page={page} number_of_pages={number_of_pages} updatePage={this.updatePage} />
       </div>
       <Footer/>
     </div>

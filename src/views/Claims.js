@@ -8,6 +8,7 @@ import { connect } from 'react-redux'
 import ClaimCard from './../components/ClaimCard'
 import InsideSearch from './../components/InsideSearch'
 import LoadingIndicator from './../components/LoadingIndicator'
+import Pagination from './../components/Pagination'
 
 const mapStateToProps = (state) => {
   return {
@@ -39,7 +40,13 @@ class Claims extends Component {
     }
   }
 
+
   componentDidMount () {
+    this.loadClaims()
+  }
+
+
+  loadClaims() {
     // TODO: Have delay sent from server as a global variable, or send it calculated in the json.
     const { claims, set_claim_list } = this.props;
     const { search, page, sort } = this.state;
@@ -49,7 +56,9 @@ class Claims extends Component {
       const params = {
         path: "claims",
         data: {
-          page: page
+          page: page,
+          query: search,
+          sort: sort
         }
       }
 
@@ -66,15 +75,30 @@ class Claims extends Component {
     }
   }
 
+
+  updateSearch = (search) => {
+    if (search != this.state.search) {
+      this.setState({ search: search, page: 1 }, () => this.loadClaims() )
+    }
+  }
+
+
+  updatePage = (page) => {
+    if (page != this.state.page) {
+      this.setState({ page: page}, () => this.loadClaims() )
+    }
+  }
+
+
   render() {
     const { claims } = this.props;
-    const { search, page, sort } = this.state; 
+    const { search, page, sort, number_of_pages } = this.state; 
     const items = Cache.items(claims, { type: 'claim', key: 'claims_list', search: search, page: page, sort: sort})
-
+    
     return <div>
       <Header/>
       <div className="container">
-        <InsideSearch type={"claim"} />
+        <InsideSearch type={"claim"} updateSearch={this.updateSearch} />
         <div className="claims">
           {items === undefined && <LoadingIndicator />}
           {items &&
@@ -86,6 +110,7 @@ class Claims extends Component {
             <div className="none-found">No Claims Found</div>
           }
         </div>
+        <Pagination page={page} number_of_pages={number_of_pages} updatePage={this.updatePage} />
       </div>
       <Footer/>
     </div>
