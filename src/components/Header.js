@@ -34,6 +34,7 @@ class Header extends Component {
   render() {
     const menu_items = [
       { link: "/", title: "Home"},
+      { link: "/search", title: "Search" },
       { link: "/experts", title: "Experts" },
       { link: "/claims", title: "Claims" },
       { link: "/predictions", title: "Predictions" },
