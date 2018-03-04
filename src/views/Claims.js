@@ -3,6 +3,7 @@ import Header from './../components/Header'
 import Footer from './../components/Footer'
 import Cache from './../utilities/Cache'
 import API from './../utilities/API'
+import URL from './../utilities/URL'
 import { connect } from 'react-redux'
 
 import ClaimCard from './../components/ClaimCard'
@@ -33,9 +34,9 @@ class Claims extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      search: '',
-      page: 1,
-      sort: '',
+      search: URL.pathParam('search', ''),
+      page:  Number(URL.pathParam('page', 1)),
+      sort:  Number(URL.pathParam('sort', 2)),
       number_of_pages: null
     }
   }
@@ -78,15 +79,28 @@ class Claims extends Component {
 
   updateSearch = (search) => {
     if (search != this.state.search) {
-      this.setState({ search: search, page: 1 }, () => this.loadClaims() )
+      this.setState({ search: search, page: 1 }, () => {
+        this.loadClaims();
+        this.updateBrowserURL();
+      })
     }
   }
 
 
   updatePage = (page) => {
     if (page != this.state.page) {
-      this.setState({ page: page}, () => this.loadClaims() )
+      this.setState({ page: page}, () => { 
+        this.loadClaims();
+        this.updateBrowserURL();
+      })
     }
+  }
+
+
+  updateBrowserURL() {
+    const { search, page } = this.state
+    const new_html = "/claims/?search="+search+"&page="+page
+    window.history.pushState({ searcH: search, page: page }, "Blundit", new_html);
   }
 
 

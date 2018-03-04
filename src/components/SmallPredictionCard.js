@@ -8,7 +8,6 @@ class SmallPredictionCard extends Component {
 
   render() {
     const { category, alias, title, prediction_bookmarks_count, prediction_comments_count } = this.props.item
-    console.log(category)
 
     return <div className="small-card">
       <Link to={`/predictions/${alias}`}>

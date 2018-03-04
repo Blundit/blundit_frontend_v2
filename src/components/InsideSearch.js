@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import API from './../utilities/API'
+import URL from './../utilities/URL'
 import { Link, Redirect } from 'react-router-dom'
 
 
@@ -26,6 +27,7 @@ class InsideSearch extends Component {
           type="text"
           className="inside-search__text"
           id="inside-search-input"
+          defaultValue={URL.pathParam('search', null)}
           placeholder={`Search for ${this.props.type}s`} 
           onKeyPress={this.keyPressHandler} />
         <div className="inside-search__button" onClick={this.submitSearch}><span className="fas fa-search" /></div>

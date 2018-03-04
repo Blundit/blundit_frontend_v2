@@ -8,7 +8,6 @@ class SmallClaimCard extends Component {
 
   render() {
     const { category, alias, title, claim_bookmarks_count, claim_comments_count } = this.props.item
-    console.log(category)
 
     return <div className="small-card">
       <Link to={`/claims/${alias}`}>

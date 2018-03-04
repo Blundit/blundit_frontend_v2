@@ -3,6 +3,7 @@ import Header from './../components/Header'
 import Footer from './../components/Footer'
 import Cache from './../utilities/Cache'
 import API from './../utilities/API'
+import URL from './../utilities/URL'
 import { connect } from 'react-redux'
 
 import PredictionCard from './../components/PredictionCard'
@@ -33,9 +34,9 @@ class Predictions extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      search: '',
-      page: 1,
-      sort: '',
+      search: URL.pathParam('search', ''),
+      page:  Number(URL.pathParam('page', 1)),
+      sort:  Number(URL.pathParam('sort', 2)),
       number_of_pages: null
     }
   }
@@ -76,17 +77,29 @@ class Predictions extends Component {
 
   updateSearch = (search) => {
     if (search != this.state.search) {
-      this.setState({ search: search, page: 1}, () => this.loadPredictions() )
+      this.setState({ search: search, page: 1 }, () => {
+        this.loadPredictions();
+        this.updateBrowserURL();
+      })
     }
   }
 
 
   updatePage = (page) => {
     if (page != this.state.page) {
-      this.setState({ page: page}, () => this.loadPredictions() )
+      this.setState({ page: page}, () => { 
+        this.loadPredictions();
+        this.updateBrowserURL();
+      })
     }
   }
 
+
+  updateBrowserURL() {
+    const { search, page } = this.state
+    const new_html = "/predictions/?search="+search+"&page="+page
+    window.history.pushState({ searcH: search, page: page }, "Blundit", new_html);
+  }
 
 
   render() {

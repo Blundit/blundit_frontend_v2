@@ -1,0 +1,51 @@
+.pagination
+  text-align: center
+  margin: 10px 10px 15px 10px
+  font-family: $body-font
+  font-weight: bold
+  font-size: 16px
+  color: $black-color
+
+  &:last-of-type
+    margin: 20px 10px 15px 10px
+
+  &__next, &__back
+    cursor: pointer
+    color: $brand-primary
+    border-radius: 4px
+    font-size: 16px
+    +fast_transition(all)
+    padding: 0px 10px
+    
+    
+    
+    &:hover
+      color: $black-color
+      +fast_transition(all)
+
+  &__ellipsis
+    padding: 0px 10px
+
+
+
+  
+  &__item
+    color: $brand-primary
+    cursor: pointer
+    +fast_transition(all)
+    padding: 0px 5px
+    margin: 5px
+    border-radius: 4px
+
+    &:hover
+      background-color: $brand-primary
+      color: $white-color
+      +fast_transition(all)
+
+  
+    &--selected
+      padding: 0px
+      border-radius: 4px
+      color: $footer-text-color
+      padding: 0px 5px
+      margin: 5px

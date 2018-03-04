@@ -7,6 +7,7 @@ import { Link } from 'react-router-dom'
 import SmallExpertCard from './SmallExpertCard'
 import SmallClaimCard from './SmallClaimCard'
 import SmallPredictionCard from './SmallPredictionCard'
+import LoadingIndicator from './LoadingIndicator'
 
 
 const mapStateToProps = (state) => {
@@ -71,7 +72,6 @@ class PopularItems extends Component {
   }
 
   changeType = (t) => {
-    console.log("change type to ", t)
     this.setState({ view_type: t })
   }
 
@@ -101,10 +101,12 @@ class PopularItems extends Component {
             <span className={this.headerTypeClass('experts')} onClick={this.changeType.bind(this, 'experts')}>Experts</span>
             <span className={this.headerTypeClass('predictions')} onClick={this.changeType.bind(this, 'predictions')}>Predictions</span>
             <span className={this.headerTypeClass('claims')} onClick={this.changeType.bind(this, 'claims')}>Claims</span>
-
           </div>
         </div>
         <div className="recents__items">
+          {!popular && 
+            <LoadingIndicator />
+          }
           {(data && data.length > 0) &&
             data.map((item, index) => {
               if (view_type === 'experts') {
@@ -115,12 +117,6 @@ class PopularItems extends Component {
                 return <SmallPredictionCard key={`home_popular_${index}`} item={item} />
               }
             })
-          }
-          {!popular && 
-            <span>Loading...</span>
-          }
-          {(popular && data  && data.length === 0) &&
-            <span>No data.</span>
           }
         </div>
       </div>

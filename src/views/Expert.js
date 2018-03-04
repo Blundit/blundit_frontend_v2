@@ -90,7 +90,7 @@ class Expert extends Component {
 
 
   addEvidence (new_evidence) {
-    console.log("add evidence")
+    //console.log("add evidence")
   }
 
 

@@ -84,7 +84,6 @@ class RecentExperts extends Component {
 
   changeType = (t) => {
     if (t !== this.state.sort) {
-      console.log(t)
       this.setState({ sort: t }, () => { this.loadExperts() })
     }
   }

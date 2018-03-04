@@ -3,7 +3,7 @@ import React, { Component } from 'react'
 class Pagination extends Component {
   static defaultProps = {
     ...Component.defaultProps,
-    maxDistance: 2,
+    max_distance: 1,
   }
 
   
@@ -58,8 +58,14 @@ class Pagination extends Component {
   
   drawFirstPage () {
     const { page } = this.state
+    const { max_distance, number_of_pages } = this.props
+    const number_of_visible_pages = (max_distance * 2) + 1
 
-    if (page <= 3) { 
+    if (page <= 2 && number_of_pages > number_of_visible_pages) { 
+      return
+    }
+
+    if (number_of_pages <= number_of_visible_pages) {
       return
     }
 
@@ -67,7 +73,7 @@ class Pagination extends Component {
       <span className="pagination__first">
         <span className="pagination__item" onClick={this.specificPage.bind(this, 1)}>1</span>
       </span>
-      {page >= 5 &&
+      {(page >= number_of_visible_pages && (page - max_distance > 2))&&
         <span className="pagination__ellipsis">...</span>
       }
     </React.Fragment>
@@ -76,14 +82,19 @@ class Pagination extends Component {
 
   drawLastPage () {
     const { page } = this.state
-    const { number_of_pages } = this.props
+    const { number_of_pages, max_distance } = this.props
+    const number_of_visible_pages = (max_distance * 2) + 1
 
-    if (page >= number_of_pages - 2) { 
+    if (number_of_pages - page < (max_distance * 2)) { 
+      return
+    }
+
+    if (number_of_pages <= number_of_visible_pages) {
       return
     }
 
     return <React.Fragment>
-      {(page <= number_of_pages - 4) &&
+      {(number_of_pages - page >= (number_of_visible_pages)) &&
         <span className="pagination__ellipsis">...</span>
       }
       <span className="pagination__last">
@@ -95,12 +106,13 @@ class Pagination extends Component {
 
   drawPages () {
     const { page } = this.state
-    const { number_of_pages } = this.props
+    const { number_of_pages, max_distance } = this.props
 
-    let leftPage = page - 2
-    let rightPage = page + 2
+    let leftPage = page - max_distance
+    let rightPage = page + max_distance
+    const number_of_visible_pages = (max_distance * 2) + 1
 
-    if (number_of_pages <= 5) {
+    if (number_of_pages <= number_of_visible_pages) {
       leftPage = 1
       rightPage = number_of_pages
     }
@@ -122,9 +134,9 @@ class Pagination extends Component {
     let rows = []
     for (let i = leftPage; i <= rightPage; i++) {
       if (i == page) {
-        rows.push(<span className="pagination__item--selected">{i}</span>)
+        rows.push(<span className="pagination__item--selected" key={`pagination_${i}`}>{i}</span>)
       } else {
-        rows.push(<span className="pagination__item" onClick={this.specificPage.bind(this, i)}>{i}</span>)
+        rows.push(<span className="pagination__item" key={`pagination-${i}`} onClick={this.specificPage.bind(this, i)}>{i}</span>)
       }
     }
 
