@@ -13,7 +13,7 @@ class HomeSearch extends Component {
 
   submitSearch () {
     const query = document.getElementById('home-search-input').value
-    window.location = "/search?query=" + encodeURIComponent(query)
+    window.location = "/search?search=" + encodeURIComponent(query)
   }
 
 

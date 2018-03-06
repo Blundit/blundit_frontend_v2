@@ -53,7 +53,7 @@ class Claims extends Component {
     const { search, page, sort } = this.state;
 
     const CacheCheck = Cache.invalid(claims, { type: 'claim', key: 'claims_list', search: search, page: page, sort: sort, created: Date.now() })
-    if (Cache.invalid(claims, { type: 'claim', key: 'claims_list', search: search, page: page, sort: sort, created: Date.now() })) {
+    if (CacheCheck) {
       const params = {
         path: "claims",
         data: {
