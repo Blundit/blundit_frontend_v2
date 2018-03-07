@@ -24,10 +24,10 @@ class SearchExperts extends Component {
   render() {
     const { experts, query, total_items } = this.props;
     return <div>
-      <div className="recents" name="experts">
+      <div className="recents" name="experts" id="search_experts">
         <div className="recents__header">
           <div className="recents__header-title">
-            <a name="experts" />
+            
             Experts 
             <span>{` (${total_items} found)`}</span>
           </div>

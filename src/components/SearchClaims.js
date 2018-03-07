@@ -23,10 +23,9 @@ class SearchClaims extends Component {
   render() {
     const { claims, query, total_items } = this.props;
     return <div>
-      <div className="recents" name="claims">
+      <div className="recents" name="claims" id="search_claims">
         <div className="recents__header">
           <div className="recents__header-title">
-            <a name="claims" />
             Claims 
             <span>{` (${total_items} found)`}</span>
           </div>

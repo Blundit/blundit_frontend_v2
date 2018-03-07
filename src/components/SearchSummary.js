@@ -10,6 +10,17 @@ class SearchSummary extends Component {
   }
 
 
+  snapToSection = (key, e) => {
+    const id = "search_" + key
+    const el = document.getElementById(id)
+    const topPos = el.offsetTop - 78
+
+    window.scrollTo(0, topPos)
+    
+    e.preventDefault()
+  }
+
+
   render() {
     const { query, items } = this.props
     return <Card>
@@ -17,20 +28,29 @@ class SearchSummary extends Component {
         Your search for <span>'{query}'</span> returned the following results:
       </div>
       <div className="search-summary__info">
-        <a href="#predictions">
-          <span className="fas fa-lightbulb" />
+        <a
+          href="#"
+          onClick={this.snapToSection.bind(this, "predictions")}
+          >
+          <span className="icon fas fa-lightbulb" />
           {`${items.predictions_count} Prediction${this.pluralize(items.predictions_count)}`}
         </a>
       </div>
       <div className="search-summary__info">
-        <a href="#claims">
-          <span className="fas fa-bolt" />
+        <a 
+          href="#"
+          onClick={this.snapToSection.bind(this, "claims")}
+          >
+          <span className="icon fas fa-bolt" />
           {`${items.claims_count} Claim${this.pluralize(items.claims_count)}`}
         </a>
       </div>
       <div className="search-summary__info">
-        <a href="#experts">
-          <span className="fa fa-user-circle" />
+        <a 
+          href="#"
+          onClick={this.snapToSection.bind(this, "experts")}
+          >
+          <span className="icon fa fa-user-circle" />
           {`${items.experts_count} Expert${this.pluralize(items.experts_count)}`}
         </a>
       </div>

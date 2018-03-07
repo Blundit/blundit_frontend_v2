@@ -23,10 +23,9 @@ class SearchPredictions extends Component {
   render() {
     const { predictions, query, total_items } = this.props;
     return <div>
-      <div className="recents" name="predictions">
+      <div className="recents" name="predictions" id="search_predictions">
         <div className="recents__header">
           <div className="recents__header-title">
-            <a name="predictions" />
             Predictions 
             <span>{` (${total_items} found)`}</span>
           </div>
