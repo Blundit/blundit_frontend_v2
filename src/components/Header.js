@@ -42,7 +42,6 @@ class Header extends Component {
       { link: "/bookmarks", title: "Bookmarks", logged_in: true },
       { link: "/login", title: "Login", logged_in: false },
       { link: "/logout", title: "Logout", logged_in: true }
-
     ]
     
     return <header className="header">

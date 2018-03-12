@@ -72,9 +72,14 @@ class Sessions {
   }
 
   static getUserAvatar(store) {
-    let params = { path: "get_avatar" };
+    let params = { 
+      path: "get_avatar",
+      data: {
+        user_id: store.getState().user.id
+      }
+    };
+
     API.do(params).then((result) => {
-      
       store.dispatch({
         type: "USER_EDIT",
         value: { avatar_file_name: result.avatar }

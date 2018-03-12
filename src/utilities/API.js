@@ -254,7 +254,7 @@ class API {
       },
       get_avatar: {
         path: "user/get_avatar",
-        method: "POST"
+        method: "GET"
       },
       missing_method: {
         path: "!!!"
@@ -409,7 +409,7 @@ class API {
     let headers = {};
     if (Cookies.getCookie("Access-Token") && params.user !== null) {
       headers = {
-        "Access-Token": "Token " + Cookies.getCookie("Access-Token"),
+        "Access-Token": Cookies.getCookie("Access-Token"),
         "Uid": Cookies.getCookie('Uid'),
         "Client": Cookies.getCookie('Client'),
         "credentials": 'same-origin',

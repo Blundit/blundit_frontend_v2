@@ -11,13 +11,12 @@ export default ( state = null, action) => {
     case 'USER_EDIT':
       let state_changes = action.value;
       let new_state = state;
-
       if (typeof(new_state) === "object") {
         if (!state) {
           state = {}
         }
         new_state = Object.assign(state, state_changes);
-      } 
+      }
       
       return new_state;
     default:

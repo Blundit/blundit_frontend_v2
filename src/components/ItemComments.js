@@ -45,6 +45,7 @@ class ItemComments extends Component {
     this.loadComments()
   }
   
+  
   loadComments() {
     const { type, id } = this.props
     // TODO: Make sure paging data is properly set with comment loading

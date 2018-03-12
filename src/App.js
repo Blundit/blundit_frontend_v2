@@ -2,8 +2,11 @@ import React, { Component } from 'react'
 import {
   BrowserRouter as Router,
   Route,
-  Switch
+  Switch,
+
 } from 'react-router-dom'
+
+import ScrollToTop from './components/ScrollToTop'
 
 import Sessions from './utilities/Sessions'
 import store from './Store'
@@ -41,32 +44,34 @@ class Blundit extends Component {
     return (
       <Provider store={store}>
         <Router >
-          <div className="App">
-            <Switch>
-              <Route exact path="/" component={Home} />
-              <Route path="/login" component={Login} />
-              <Route path="/logout" component={Logout} />
-              <Route path="/register" component={Register} />
-              <Route exact path="/claims" component={Claims} />
-              <Route exact path="/claims/new" component={NewClaim} />
-              <Route path="/claims/:slug" component={Claim} />
-              <Route exact path="/predictions" component={Predictions} />
-              <Route exact path="/predictions/new" component={NewPrediction} />
-              <Route path="/predictions/:slug" component={Prediction} />
-              <Route exact path="/experts" component={Experts} />
-              <Route exact path="/experts/new" component={NewExpert} />
-              <Route path="/experts/:slug" component={Expert} />
-              <Route path="/about" component={About} />
-              <Route path="/contact" component={Contact} />
-              <Route path="/search" component={Search} />
-              <Route exact path="/categories" component={Categories} />
-              <Route path="/categories/:category" component={Categories} />
-              <Route path="/bookmarks" component={Bookmarks} />
-              <Route path="/me" component={EditProfile} />
-              <Route path="/privacy_policy" component={PrivacyPolicy} />
-              <Route component={NotFound} />
-            </Switch>
-          </div>
+          <ScrollToTop>
+            <div className="App">
+              <Switch>
+                <Route exact path="/" component={Home} />
+                <Route path="/login" component={Login} />
+                <Route path="/logout" component={Logout} />
+                <Route path="/register" component={Register} />
+                <Route exact path="/claims" component={Claims} />
+                <Route exact path="/claims/new" component={NewClaim} />
+                <Route path="/claims/:slug" component={Claim} />
+                <Route exact path="/predictions" component={Predictions} />
+                <Route exact path="/predictions/new" component={NewPrediction} />
+                <Route path="/predictions/:slug" component={Prediction} />
+                <Route exact path="/experts" component={Experts} />
+                <Route exact path="/experts/new" component={NewExpert} />
+                <Route path="/experts/:slug" component={Expert} />
+                <Route path="/about" component={About} />
+                <Route path="/contact" component={Contact} />
+                <Route path="/search" component={Search} />
+                <Route exact path="/categories" component={Categories} />
+                <Route path="/categories/:category" component={Categories} />
+                <Route path="/bookmarks" component={Bookmarks} />
+                <Route path="/me" component={EditProfile} />
+                <Route path="/privacy_policy" component={PrivacyPolicy} />
+                <Route component={NotFound} />
+              </Switch>
+            </div>
+          </ScrollToTop>
         </Router>
       </Provider>
     );
