@@ -130,7 +130,7 @@ class Prediction extends Component {
             <ExpertsList type="agree" experts={experts} />
             <ExpertsList type="disagree" experts={experts} />
             <AddExpertToItem type="prediction" itemAdded={this.expertAdded} id={prediction.id} />
-            <VoteForItem type="prediction" processVote={this.processVote} prediction={prediction} />
+            <VoteForItem type="prediction" obj={prediction} />
             {user && user.permissions > 0 &&
               <PredictionAdmin updatedPrediction={this.updatedPrediction} />
             }

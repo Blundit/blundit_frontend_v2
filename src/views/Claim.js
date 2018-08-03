@@ -130,7 +130,7 @@ class Claim extends Component {
             <ExpertsList type="agree" experts={experts} />
             <ExpertsList type="disagree" experts={experts} />
             <AddExpertToItem type="claim" itemAdded={this.expertAdded} id={claim.id} />
-            <VoteForItem type="claim" processVote={this.processVote} claim={claim} />
+            <VoteForItem type="claim" obj={claim} />
             {(user && user.permissions > 0) &&
               <ClaimAdmin id={claim.id} updatedClaim={this.updatedClaim} />
             }

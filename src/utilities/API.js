@@ -88,7 +88,7 @@ class API {
         method: "POST"
       },
       vote_for_claim: {
-        path: "claims/%claim_id%/vote",
+        path: "claims/%id%/vote",
         method: "POST"
       },
       claim_override_vote: {
@@ -124,7 +124,7 @@ class API {
         method: "POST"
       },
       vote_for_prediction: {
-        path: "predictions/%prediction_id%/vote",
+        path: "predictions/%id%/vote",
         method: "POST"
       },
       prediction_override_vote: {
